@@ -1,0 +1,22 @@
+security:
+  encoders:
+    Orkestra\Bundle\ApplicationBundle\Entity\User: sha512
+
+  providers:
+    entity:
+      entity: { class: Orkestra\Bundle\ApplicationBundle\Entity\User }
+
+  firewalls:
+    login:
+      pattern:  ^/login$
+      security: false
+
+    secured_area:
+      pattern: ^/login_check|/logout|/profile
+      form_login:
+        username_parameter: "form[username]"
+        password_parameter: "form[password]"
+      logout: ~
+      remember_me:
+        key: nice_remember_me_key_here
+        remember_me_parameter: "form[remember_me]"

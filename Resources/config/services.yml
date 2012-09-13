@@ -1,0 +1,43 @@
+parameters:
+
+services:
+  orkestra.entity_manager:
+    alias: doctrine.orm.entity_manager
+
+  # Form types
+  orkestra.type.enum:
+    class: Orkestra\OrkestraBundle\Form\EnumType
+    tags:
+      - { name: form.type, alias: enum }
+  orkestra.type.datetime:
+    class: Orkestra\OrkestraBundle\Form\DateTimeType
+    tags:
+      - { name: form.type, alias: datetime }
+  orkestra.type.date:
+    class: Orkestra\OrkestraBundle\Form\DateType
+    tags:
+      - { name: form.type, alias: date }
+
+  # Orkestra Common configuration
+  orkestra.kernel.logger:
+    class: Symfony\Bridge\Monolog\Logger
+    arguments: [ orkestra.kernel ]
+    calls:
+      - [ pushHandler, [ @orkestra.kernel.logger.handler ] ]
+  orkestra.kernel.logger.handler:
+    class: Monolog\Handler\StreamHandler
+    arguments: [ %kernel.root_dir%/logs/%kernel.environment%.kernel.log, 200 ]
+  orkestra.kernel.http:
+    class: Orkestra\Common\Kernel\HttpKernel
+    arguments: [ @orkestra.kernel.logger ]
+  orkestra.kernel.soap:
+    class: Orkestra\Common\Kernel\SoapKernel
+    arguments: [ @orkestra.kernel.logger ]
+
+  # Helpers
+  orkestra.mail_helper:
+    class: Orkestra\OrkestraBundle\Helper\MailHelper
+    arguments: [ @templating, @twig ]
+  orkestra.form_helper:
+    class: Orkestra\OrkestraBundle\Helper\FormHelper
+    arguments: [ @service_container ]

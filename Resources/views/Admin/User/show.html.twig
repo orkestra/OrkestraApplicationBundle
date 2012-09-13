@@ -1,0 +1,65 @@
+{% extends 'OrkestraBundle:Admin:base.html.twig' %}
+
+{% block subtitle %}User Summary{% endblock %}
+
+{% block panel %}
+  {{ panel(
+    { 'label' : 'Users', 'icon' : 'icon3005' },
+    { 'label' : user },
+    { 'label' : 'New User', 'icon' : 'icon2949', 'link' : path('admin_user_new') }
+  ) }}
+{% endblock %}
+
+{% block content %}
+<h1>User Summary</h1>
+
+<table class="record-properties">
+    <tbody>
+        <tr>
+            <th>ID:</th>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <th>Username:</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>First Name:</th>
+            <td>{{ user.firstName }}</td>
+        </tr>
+        <tr>
+            <th>Last Name:</th>
+            <td>{{ user.lastName }}</td>
+        </tr>
+        <tr>
+            <th>Expired?</th>
+            <td>{{ user.expired ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>Locked?</th>
+            <td>{{ user.locked ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>Active?</th>
+            <td>{{ user.active ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>Last Modified:</th>
+            <td>{{ user.dateModified | default('Never') }}</td>
+        </tr>
+        <tr>
+            <th>Date Created:</th>
+            <td>{{ user.dateCreated }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<p class="form-buttons">
+  <a href="{{ path('admin_user_edit', { 'id': user.id }) }}">
+    <button>Edit</button>
+  </a>   
+  <a href="{{ path('admin_user_password_reset', { 'id': user.id }) }}">
+    <button>Reset Password</button>
+  </a>
+</p>
+{% endblock %}

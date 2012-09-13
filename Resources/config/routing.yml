@@ -1,0 +1,15 @@
+# Authentication routes
+login:
+  pattern: /login
+  defaults: { _controller: OrkestraApplicationBundle:Auth:login }
+
+login_check:
+  pattern: /login_check
+
+logout:
+  pattern: /logout
+
+# Bundle routes
+OrkestraBundle_routes:
+  resource: "@OrkestraApplicationBundle/Controller"
+  type:     annotation

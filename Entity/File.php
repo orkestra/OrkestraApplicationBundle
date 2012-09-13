@@ -1,0 +1,263 @@
+<?php
+
+namespace Orkestra\Bundle\ApplicationBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM,
+    Doctrine\Common\Collections\ArrayCollection;
+
+use Symfony\Component\HttpFoundation\File\UploadedFile,
+    Symfony\Component\HttpFoundation\File\Exception\UploadException;
+
+use Orkestra\Common\Entity\EntityBase,
+    Orkestra\Common\Type\DateTime;
+
+/**
+ * File Entity
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="orkestra_files")
+ * @ORM\HasLifecycleCallbacks
+ */
+class File extends EntityBase
+{
+    /**
+     * Create From Uploaded File
+     *
+     * @param Symfony\Component\HttpFoundation\File\UploadedFile $upload
+     * @param string $uploadPath The directory to save the uploaded file to
+     * @return Orkestra\Bundle\ApplicationBundle\Entity\File
+     */
+    public static function createFromUploadedFile(UploadedFile $upload, $uploadPath)
+    {
+        if (!$upload->isValid()) {
+            throw new UploadException(sprintf('An error occurred during file upload. Error code: %s', $upload->getError()));
+        }
+        else if (($uploadPath = realpath($uploadPath . '/')) === null) {
+            throw new UploadException('An error occurred during file upload. The specified upload path is invalid.');
+        }
+
+        $uploadPath = sprintf('%s/%s.%s', $uploadPath, uniqid(), $upload->getExtension() ?: $upload->guessExtension() ?: 'file');
+
+        $file = new self($uploadPath, $upload->getClientOriginalName(), $upload->getMimeType(), $upload->getClientSize());
+        $file->_uploadedFile = $upload;
+
+        return $file;
+    }
+
+    /**
+     * @var Symfony\Component\HttpFoundation\File\UploadedFile
+     */
+    private $_uploadedFile = null;
+
+    /**
+     * @var string $path The full filesystem path to the file
+     *
+     * @ORM\Column(name="path", type="string", unique=true)
+     */
+    protected $path;
+
+    /**
+     * @var string $filename
+     *
+     * @ORM\Column(name="filename", type="string")
+     */
+    protected $filename;
+
+    /**
+     * @var string $mimeType
+     *
+     * @ORM\Column(name="mime_type", type="string")
+     */
+    protected $mimeType = '';
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Group", fetch="EAGER")
+     * @ORM\JoinTable(name="orkestra_file_groups",
+     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     * )
+     */
+    protected $groups;
+
+    /**
+     * @var string $user
+     *
+     * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    protected $user;
+
+    /**
+     * @var integer $fileSize
+     *
+     * @ORM\Column(name="file_size", type="integer")
+     */
+    protected $fileSize = 0;
+
+    /**
+     * Constructor
+     */
+    public function __construct($path, $filename, $mimeType = '', $fileSize = 0)
+    {
+        $this->path = $path;
+        $this->filename = $filename;
+        $this->mimeType = $mimeType ?: '';
+        $this->fileSize = $fileSize ?: 0;
+
+        $this->groups = new ArrayCollection();
+    }
+
+    /**
+     * Set Filename
+     *
+     * @param string $filename
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+    }
+
+    /**
+     * Get Filename
+     *
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Get Path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Get Mime Type
+     *
+     * @return string
+     */
+    public function getMimeType()
+    {
+        return $this->mimeType;
+    }
+
+    /**
+     * Get File Size
+     *
+     * @return float
+     */
+    public function getFileSize()
+    {
+        return $this->fileSize;
+    }
+
+    /**
+     * Get Content
+     *
+     * Returns the content of the file, unaltered
+     *
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return file_get_contents($this->path);
+    }
+
+    /**
+     * Add Group
+     *
+     * @param Orkestra\Bundle\ApplicationBundle\Entity\Group $group
+     */
+    public function addGroup(Group $group)
+    {
+        $this->groups[] = $group;
+    }
+
+    /**
+     * Remove Group
+     *
+     * @param Orkestra\Bundle\ApplicationBundle\Entity\Group $group
+     */
+    public function removeGroup(Group $group)
+    {
+        foreach ($this->groups as $index => $existingGroup) {
+            if ($existingGroup === $group) {
+                unset($this->groups[$index]);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Get Groups
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * Set User
+     *
+     * @param Orkestra\Bundle\ApplicationBundle\Entity\User
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Get User
+     *
+     * @return Orkestra\Bundle\ApplicationBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Move Uploaded File
+     *
+     * If the file was uploaded, then this method will move the uploaded file from the temporary
+     * directory to its new path.
+     *
+     * This is usually automatically handled as this method is a prePersist lifecycle callback.
+     *
+     * @ORM\prePersist
+     */
+    public function moveUploadedFile()
+    {
+        $this->dateCreated = new DateTime();
+
+        if (null === $this->_uploadedFile) {
+            return;
+        }
+
+        $this->_uploadedFile->move(dirname($this->path), basename($this->path));
+    }
+
+    /**
+     * Delete
+     *
+     * Unlinks the file. This does not do anything about the database side of things.
+     *
+     * This is usually automatically handled as this method is a postRemove lifecycle callback.
+     *
+     * @ORM\postRemove
+     */
+    public function delete()
+    {
+        unlink($this->path);
+    }
+}

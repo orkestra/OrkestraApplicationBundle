@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<div id="login-box">
+<form action="{{ path('login_check')}}" method="post" {{ form_enctype(form) }}>
+ {{ form_widget(form) }}
+</form>
+</div>
+<div id="footer">
+  {% block footer %}
+  &copy; Copyright 2011 Orkestra
+  {% endblock %}
+</div>
+{% endblock %}
