@@ -9,3 +9,6 @@
 nbproject/
 .idea/
 *.tmproj
+
+## Composer generated
+/vendor/
