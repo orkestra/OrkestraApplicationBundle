@@ -6,15 +6,15 @@ services:
 
   # Form types
   orkestra.type.enum:
-    class: Orkestra\OrkestraBundle\Form\EnumType
+    class: Orkestra\Bundle\ApplicationBundle\Form\EnumType
     tags:
       - { name: form.type, alias: enum }
   orkestra.type.datetime:
-    class: Orkestra\OrkestraBundle\Form\DateTimeType
+    class: Orkestra\Bundle\ApplicationBundle\Form\DateTimeType
     tags:
       - { name: form.type, alias: datetime }
   orkestra.type.date:
-    class: Orkestra\OrkestraBundle\Form\DateType
+    class: Orkestra\Bundle\ApplicationBundle\Form\DateType
     tags:
       - { name: form.type, alias: date }
 
@@ -36,8 +36,8 @@ services:
 
   # Helpers
   orkestra.mail_helper:
-    class: Orkestra\OrkestraBundle\Helper\MailHelper
+    class: Orkestra\Bundle\ApplicationBundle\Helper\MailHelper
     arguments: [ @templating, @twig ]
   orkestra.form_helper:
-    class: Orkestra\OrkestraBundle\Helper\FormHelper
+    class: Orkestra\Bundle\ApplicationBundle\Helper\FormHelper
     arguments: [ @service_container ]

@@ -1,6 +1,6 @@
 <?php
 
-namespace Orkestra\Bundle\ApplicationBundle\Controller\Admin;
+namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
@@ -10,8 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
 use Orkestra\Bundle\ApplicationBundle\Controller\Controller;
 
 use Orkestra\Bundle\ApplicationBundle\Entity\Group,
-    Orkestra\Bundle\ApplicationBundle\Form\GroupType,
-    Orkestra\Bundle\ApplicationBundle\Listing\Admin\GroupOptions;
+    Orkestra\Bundle\ApplicationBundle\Form\GroupType;
 
 /**
  * Group controller.
@@ -25,13 +24,16 @@ class GroupController extends Controller
      *
      * @Route("/groups", name="admin_groups")
      * @Template()
+     * @Secure(roles="ROLE_GROUP_READ")
      */
     public function indexAction()
     {
-        $listing = $this->createListing(new GroupOptions($this->getDoctrine()->getEntityManager()));
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('OrkestraApplicationBundle:Group')->findAll();
 
         return array(
-            'listing' => $listing
+            'entities' => $entities,
         );
     }
 
@@ -40,6 +42,7 @@ class GroupController extends Controller
      *
      * @Route("/group/{id}/show", name="admin_group_show")
      * @Template()
+     * @Secure(roles="ROLE_GROUP_READ")
      */
     public function showAction($id)
     {
@@ -61,6 +64,7 @@ class GroupController extends Controller
      *
      * @Route("/group/new", name="admin_group_new")
      * @Template()
+     * @Secure(roles="ROLE_GROUP_WRITE")
      */
     public function newAction()
     {
@@ -78,7 +82,8 @@ class GroupController extends Controller
      *
      * @Route("/group/create", name="admin_group_create")
      * @Method("post")
-     * @Template("OrkestraBundle:Group:new.html.twig")
+     * @Template("OrkestraApplicationBundle:Group:new.html.twig")
+     * @Secure(roles="ROLE_GROUP_WRITE")
      */
     public function createAction()
     {
@@ -109,6 +114,7 @@ class GroupController extends Controller
      *
      * @Route("/group/{id}/edit", name="admin_group_edit")
      * @Template()
+     * @Secure(roles="ROLE_GROUP_WRITE")
      */
     public function editAction($id)
     {
@@ -133,7 +139,8 @@ class GroupController extends Controller
      *
      * @Route("/group/{id}/update", name="admin_group_update")
      * @Method("post")
-     * @Template("OrkestraBundle:Group:edit.html.twig")
+     * @Template("OrkestraApplicationBundle:Group:edit.html.twig")
+     * @Secure(roles="ROLE_GROUP_WRITE")
      */
     public function updateAction($id)
     {

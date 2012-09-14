@@ -1,6 +1,6 @@
 <?php
 
-namespace Orkestra\Bundle\ApplicationBundle\Controller\Admin;
+namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
@@ -12,36 +12,39 @@ use Symfony\Component\Form\FormError;
 use Orkestra\Bundle\ApplicationBundle\Controller\Controller;
 
 use Orkestra\Bundle\ApplicationBundle\Entity\User,
-    Orkestra\Bundle\ApplicationBundle\Form\UserType,
-    Orkestra\Bundle\ApplicationBundle\Listing\Admin\UserOptions;
+    Orkestra\Bundle\ApplicationBundle\Form\UserType;
 
 /**
  * User controller.
  *
- * @Route("/admin")
+ * @Route("/user")
  */
 class UserController extends Controller
 {
     /**
      * Lists all User entities.
      *
-     * @Route("/users", name="admin_users")
+     * @Route("s/", name="orkestra_users")
      * @Template()
+     * @Secure(roles="ROLE_USER_READ")
      */
     public function indexAction()
     {
-        $listing = $this->createListing(new UserOptions($this->getDoctrine()->getEntityManager()));
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('OrkestraApplicationBundle:User')->findAll();
 
         return array(
-            'listing' => $listing
+            'entities' => $entities,
         );
     }
 
     /**
      * Finds and displays a User entity.
      *
-     * @Route("/user/{id}/show", name="admin_user_show")
+     * @Route("/{id}/show", name="orkestra_user_show")
      * @Template()
+     * @Secure(roles="ROLE_USER_READ")
      */
     public function showAction($id)
     {
@@ -61,8 +64,9 @@ class UserController extends Controller
     /**
      * Displays a form to create a new User entity.
      *
-     * @Route("/user/new", name="admin_user_new")
+     * @Route("/new", name="orkestra_user_new")
      * @Template()
+     * @Secure(roles="ROLE_USER_WRITE")
      */
     public function newAction()
     {
@@ -78,9 +82,10 @@ class UserController extends Controller
     /**
      * Creates a new User entity.
      *
-     * @Route("/user/create", name="admin_user_create")
+     * @Route("/create", name="orkestra_user_create")
      * @Method("post")
-     * @Template("OrkestraBundle:User:new.html.twig")
+     * @Template("OrkestraApplicationBundle:User:new.html.twig")
+     * @Secure(roles="ROLE_USER_WRITE")
      */
     public function createAction()
     {
@@ -98,7 +103,7 @@ class UserController extends Controller
             $em->flush();
 
             $this->get('session')->setFlash('success', 'The user has been created.');
-            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $user->getId())));
+            return $this->redirect($this->generateUrl('orkestra_user_show', array('id' => $user->getId())));
         }
 
         return array(
@@ -110,8 +115,9 @@ class UserController extends Controller
     /**
      * Reset Password Action
      *
-     * @Route("/user/{id}/reset-password", name="admin_user_password_reset")
+     * @Route("/{id}/reset-password", name="orkestra_user_password_reset")
      * @Template()
+     * @Secure(roles="ROLE_USER_WRITE")
      */
     public function resetPasswordAction($id)
     {
@@ -147,7 +153,7 @@ class UserController extends Controller
 
                 $this->get('session')->setFlash('success', 'The password has been changed.');
 
-                return $this->redirect($this->generateUrl('admin_user_show', array('id' => $id)));
+                return $this->redirect($this->generateUrl('orkestra_user_show', array('id' => $id)));
             }
         }
 
@@ -160,8 +166,9 @@ class UserController extends Controller
     /**
      * Displays a form to edit an existing User entity.
      *
-     * @Route("/user/{id}/edit", name="admin_user_edit")
+     * @Route("/{id}/edit", name="orkestra_user_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER_WRITE")
      */
     public function editAction($id)
     {
@@ -184,9 +191,10 @@ class UserController extends Controller
     /**
      * Edits an existing User entity.
      *
-     * @Route("/user/{id}/update", name="admin_user_update")
+     * @Route("/{id}/update", name="orkestra_user_update")
      * @Method("post")
-     * @Template("Orkestra\Bundle\ApplicationBundle\Entity\User:edit.html.twig")
+     * @Template("OrkestraApplicationBundle:User:edit.html.twig")
+     * @Secure(roles="ROLE_USER_WRITE")
      */
     public function updateAction($id)
     {
@@ -207,7 +215,7 @@ class UserController extends Controller
             $em->flush();
 
             $this->get('session')->setFlash('success', 'Your changes have been saved.');
-            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('orkestra_user_show', array('id' => $id)));
         }
 
         return array(

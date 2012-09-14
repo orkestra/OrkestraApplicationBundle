@@ -3,9 +3,11 @@
 namespace Orkestra\Bundle\ApplicationBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Doctrine\DBAL\Types\Type;
 use Orkestra\Common\Type\Date;
 use Orkestra\Common\Type\DateTime;
-use Doctrine\DBAL\Types\Type;
+use Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler\RegisterFormTypesPass;
 
 class OrkestraApplicationBundle extends Bundle
 {
@@ -27,5 +29,13 @@ class OrkestraApplicationBundle extends Bundle
         DateTime::setUserTimezone($defaultTimezone);
         DateTime::setDefaultFormat('Y-m-d H:i:s');
         Date::setDefaultFormat('Y-m-d');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new RegisterFormTypesPass());
     }
 }

@@ -1,0 +1,47 @@
+{% extends "::base.html.twig" %}
+
+{% block container %}
+    <h1>Group list</h1>
+
+    <table class="records_list">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Active</th>
+            <th>Datemodified</th>
+            <th>Datecreated</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('orkestra_group_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+            <td>{{ entity.role }}</td>
+            <td>{{ entity.active }}</td>
+            <td>{% if entity.dateModified %}{{ entity.dateModified|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.dateCreated %}{{ entity.dateCreated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('orkestra_group_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('orkestra_group_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+    <ul>
+    <li>
+        <a href="{{ path('orkestra_group_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock %}

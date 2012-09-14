@@ -3,13 +3,13 @@
 namespace Orkestra\Bundle\ApplicationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 use Orkestra\Bundle\ApplicationBundle\Form\DataTransformer\EnumTransformer;
 
 class EnumType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->appendNormTransformer(new EnumTransformer($options['enum']));
     }
@@ -26,7 +26,7 @@ class EnumType extends AbstractType
         );
     }
 
-    public function getParent(array $options)
+    public function getParent()
     {
         return 'choice';
     }

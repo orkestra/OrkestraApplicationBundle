@@ -22,7 +22,7 @@ class ProfileController extends Controller
     /**
      * Shows the user's profile
      *
-     * @Route("/", name="profile")
+     * @Route("/", name="orkestra_profile")
      * @Secure(roles="ROLE_USER")
      * @Template()
      */
@@ -59,7 +59,7 @@ class ProfileController extends Controller
     /**
      * Show the change password form
      *
-     * @Route("/password", name="profile_password")
+     * @Route("/change-password", name="orkestra_profile_password")
      * @Secure(roles="ROLE_USER")
      * @Template()
      */
@@ -94,39 +94,6 @@ class ProfileController extends Controller
                 $em->flush();
 
                 $this->get('session')->setFlash('success', 'Your password has been changed.');
-                return $this->redirect($this->generateUrl('profile'));
-            }
-        }
-
-        return array(
-            'form' => $form->createView(),
-        );
-    }
-
-    /**
-     * Show the preferences page
-     *
-     * @Route("/preferences", name="profile_preferences")
-     * @Secure(roles="ROLE_USER")
-     * @Template()
-     */
-    public function preferencesAction()
-    {
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $preferences = $user->getPreferences();
-
-        $form = $this->createForm(new PreferencesType(), $user->getPreferences());
-
-        if ($this->getRequest()->getMethod() == 'POST') {
-            $form->bindRequest($this->getRequest());
-
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($preferences);
-                $em->flush();
-
-                $this->get('session')->setFlash('success', 'Your preferences have been saved.');
                 return $this->redirect($this->generateUrl('profile'));
             }
         }
