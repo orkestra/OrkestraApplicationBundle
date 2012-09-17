@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<form action="{{ path('admin_user_create') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('orkestra_user_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p class="form-buttons">
         <button type="submit">Create</button>
