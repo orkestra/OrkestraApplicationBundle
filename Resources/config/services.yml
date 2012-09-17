@@ -41,3 +41,11 @@ services:
   orkestra.form_helper:
     class: Orkestra\Bundle\ApplicationBundle\Helper\FormHelper
     arguments: [ @service_container ]
+
+  # Twig extensions
+  orkestra.twig_extension:
+    class: Orkestra\Bundle\ApplicationBundle\Twig\OrkestraExtension
+    calls:
+      - [ setContainer, [ @service_container ] ]
+    tags:
+      - { name: twig.extension }
