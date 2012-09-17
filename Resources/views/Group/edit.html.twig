@@ -1,9 +1,7 @@
-{% extends '::popup_base.html.twig' %}
-
-{% block header %}Edit Group{% endblock %}
+{% extends '::base.html.twig' %}
 
 {% block body %}
-<form action="{{ path('admin_group_update', { 'id': group.id }) }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('orkestra_group_update', { 'id': group.id }) }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p class="form-buttons">
         <button type="submit">Save Changes</button>

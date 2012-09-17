@@ -1,6 +1,4 @@
-{% extends '::popup_base.html.twig' %}
-
-{% block header %}Edit User{% endblock %}
+{% extends '::base.html.twig' %}
 
 {% block body %}
 <form action="{{ path('admin_user_update', { 'id': user.id }) }}" method="post" {{ form_enctype(form) }}>

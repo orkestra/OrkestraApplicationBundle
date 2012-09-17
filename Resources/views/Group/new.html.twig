@@ -1,9 +1,7 @@
-{% extends '::popup_base.html.twig' %}
-
-{% block header %}New Group{% endblock %}
+{% extends '::base.html.twig' %}
 
 {% block body %}
-<form action="{{ path('admin_group_create') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('orkestra_group_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p class="form-buttons">
         <button type="submit">Create</button>

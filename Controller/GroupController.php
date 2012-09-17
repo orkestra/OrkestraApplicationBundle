@@ -15,14 +15,14 @@ use Orkestra\Bundle\ApplicationBundle\Entity\Group,
 /**
  * Group controller.
  *
- * @Route("/admin")
+ * @Route("/group")
  */
 class GroupController extends Controller
 {
     /**
      * Lists all Group entities.
      *
-     * @Route("/groups", name="admin_groups")
+     * @Route("s/", name="orkestra_groups")
      * @Template()
      * @Secure(roles="ROLE_GROUP_READ")
      */
@@ -40,7 +40,7 @@ class GroupController extends Controller
     /**
      * Finds and displays a Group entity.
      *
-     * @Route("/group/{id}/show", name="admin_group_show")
+     * @Route("/group/{id}/show", name="orkestra_group_show")
      * @Template()
      * @Secure(roles="ROLE_GROUP_READ")
      */
@@ -62,7 +62,7 @@ class GroupController extends Controller
     /**
      * Displays a form to create a new Group entity.
      *
-     * @Route("/group/new", name="admin_group_new")
+     * @Route("/group/new", name="orkestra_group_new")
      * @Template()
      * @Secure(roles="ROLE_GROUP_WRITE")
      */
@@ -80,7 +80,7 @@ class GroupController extends Controller
     /**
      * Creates a new Group entity.
      *
-     * @Route("/group/create", name="admin_group_create")
+     * @Route("/group/create", name="orkestra_group_create")
      * @Method("post")
      * @Template("OrkestraApplicationBundle:Group:new.html.twig")
      * @Secure(roles="ROLE_GROUP_WRITE")
@@ -99,7 +99,7 @@ class GroupController extends Controller
 
             $this->get('session')->setFlash('success', 'The group has been created.');
 
-            return $this->redirect($this->generateUrl('admin_group_show', array('id' => $group->getId())));
+            return $this->redirect($this->generateUrl('orkestra_group_show', array('id' => $group->getId())));
 
         }
 
@@ -112,7 +112,7 @@ class GroupController extends Controller
     /**
      * Displays a form to edit an existing Group entity.
      *
-     * @Route("/group/{id}/edit", name="admin_group_edit")
+     * @Route("/group/{id}/edit", name="orkestra_group_edit")
      * @Template()
      * @Secure(roles="ROLE_GROUP_WRITE")
      */
@@ -137,7 +137,7 @@ class GroupController extends Controller
     /**
      * Edits an existing Group entity.
      *
-     * @Route("/group/{id}/update", name="admin_group_update")
+     * @Route("/group/{id}/update", name="orkestra_group_update")
      * @Method("post")
      * @Template("OrkestraApplicationBundle:Group:edit.html.twig")
      * @Secure(roles="ROLE_GROUP_WRITE")
@@ -162,7 +162,7 @@ class GroupController extends Controller
 
             $this->get('session')->setFlash('success', 'Your changes have been saved.');
 
-            return $this->redirect($this->generateUrl('admin_group_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('orkestra_group_show', array('id' => $id)));
         }
 
         return array(

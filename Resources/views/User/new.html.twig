@@ -1,6 +1,4 @@
-{% extends '::popup_base.html.twig' %}
-
-{% block header %}New User{% endblock %}
+{% extends '::base.html.twig' %}
 
 {% block body %}
 <form action="{{ path('admin_user_create') }}" method="post" {{ form_enctype(form) }}>
@@ -9,5 +7,4 @@
         <button type="submit">Create</button>
     </p>
 </form>
-
 {% endblock %}
