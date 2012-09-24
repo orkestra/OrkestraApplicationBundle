@@ -35,6 +35,7 @@ class OrkestraExtension extends \Twig_Extension
             'current_controller' => new \Twig_Function_Method($this, 'getController'),
             'current_action'     => new \Twig_Function_Method($this, 'getAction'),
             'is_currently_on'    => new \Twig_Function_Method($this, 'isCurrentlyOn'),
+            'is_current_route'   => new \Twig_Function_Method($this, 'isCurrentRoute'),
         );
     }
 
@@ -72,6 +73,18 @@ class OrkestraExtension extends \Twig_Extension
         }
 
         return false;
+    }
+
+    /**
+     * Returns true if the given route matches the current route
+     *
+     * @param string $route
+     *
+     * @return bool
+     */
+    public function isCurrentRoute($route)
+    {
+        return $route === $this->getCurrentRequest()->get('_route');
     }
 
     /**

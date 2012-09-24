@@ -23,6 +23,13 @@ class Address extends EntityBase
     /**
      * @var string
      *
+     * @ORM\Column(name="alt_phone", type="string")
+     */
+    protected $altPhone;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="street", type="string")
      */
     protected $street;
@@ -57,6 +64,27 @@ class Address extends EntityBase
      * })
      */
     protected $region;
+
+    public function __toString()
+    {
+        return sprintf('%s %s, %s, %s %s', $this->street, $this->suite, $this->city, $this->region->getName(), $this->postalCode);
+    }
+
+    /**
+     * @param string $altPhone
+     */
+    public function setAltPhone($altPhone)
+    {
+        $this->altPhone = $altPhone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAltPhone()
+    {
+        return $this->altPhone;
+    }
 
     /**
      * @param string $city
