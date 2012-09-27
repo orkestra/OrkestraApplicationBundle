@@ -1,4 +1,5 @@
 parameters:
+  orkestra.file_manager.base_path: %kernel.root_dir%/files
 
 services:
   orkestra.entity_manager:
@@ -45,6 +46,10 @@ services:
   orkestra.form_helper:
     class: Orkestra\Bundle\ApplicationBundle\Helper\FormHelper
     arguments: [ @service_container ]
+
+  orkestra.file_manager:
+    class: Orkestra\Bundle\ApplicationBundle\Manager\FileManager
+    arguments: [ %orkestra.file_manager.base_path% ]
 
   # Twig extensions
   orkestra.twig_extension:
