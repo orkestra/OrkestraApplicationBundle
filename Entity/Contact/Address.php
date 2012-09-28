@@ -25,7 +25,7 @@ class Address extends EntityBase
      *
      * @ORM\Column(name="alt_phone", type="string")
      */
-    protected $altPhone;
+    protected $altPhone = '';
 
     /**
      * @var string
@@ -75,7 +75,7 @@ class Address extends EntityBase
      */
     public function setAltPhone($altPhone)
     {
-        $this->altPhone = $altPhone;
+        $this->altPhone = (string)$altPhone;
     }
 
     /**
