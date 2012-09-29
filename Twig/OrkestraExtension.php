@@ -94,7 +94,7 @@ class OrkestraExtension extends \Twig_Extension
     {
         // TODO Check if request is the same as it was so that the controller gets changed
         if (!$this->controller) {
-            $pattern = "#Controller\\\([a-zA-Z]*)Controller#";
+            $pattern = "#Controller\\\([a-zA-Z\\\\]*)Controller#";
             $matches = array();
             preg_match($pattern, $this->getCurrentRequest()->get('_controller'), $matches);
 
