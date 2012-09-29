@@ -22,6 +22,12 @@ class EnumType extends AbstractType
         $choiceList = function (Options $options) {
             $reflected = new \ReflectionClass($options['enum']);
             $values = $reflected->getConstants();
+            if (!empty($options['exclude'])) {
+                $exclude = !is_array($options['exclude']) ? array($options['exclude']) : $options['exclude'];
+                $values = array_filter($values, function($value) use ($exclude) {
+                    return !in_array($value, $exclude);
+                });
+            }
             $values = array_combine(array_values($values), array_values($values));
 
             return new SimpleChoiceList($values);
@@ -29,6 +35,10 @@ class EnumType extends AbstractType
 
         $resolver->setRequired(array(
             'enum'
+        ));
+
+        $resolver->setOptional(array(
+            'exclude'
         ));
 
         $resolver->setDefaults(array(
