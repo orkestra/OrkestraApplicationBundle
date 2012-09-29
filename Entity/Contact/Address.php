@@ -39,7 +39,7 @@ class Address extends EntityBase
      *
      * @ORM\Column(name="suite", type="string")
      */
-    protected $suite;
+    protected $suite = '';
 
     /**
      * @var string
@@ -155,7 +155,7 @@ class Address extends EntityBase
      */
     public function setSuite($suite)
     {
-        $this->suite = $suite;
+        $this->suite = (string)$suite;
     }
 
     /**
