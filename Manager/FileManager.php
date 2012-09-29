@@ -57,7 +57,7 @@ class FileManager
             throw new \RuntimeException(sprintf('Could not save image to %s', $fullPath));
         }
 
-        $file = new File($this->basePath, $filename, 'image/png', filesize($fullPath));
+        $file = new File($fullPath, $filename, 'image/png', filesize($fullPath));
 
         return $file;
     }
