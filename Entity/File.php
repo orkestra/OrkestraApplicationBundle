@@ -234,7 +234,7 @@ class File extends EntityBase
      *
      * This is usually automatically handled as this method is a prePersist lifecycle callback.
      *
-     * @ORM\prePersist
+     * @ORM\PrePersist
      */
     public function moveUploadedFile()
     {
@@ -254,7 +254,7 @@ class File extends EntityBase
      *
      * This is usually automatically handled as this method is a postRemove lifecycle callback.
      *
-     * @ORM\postRemove
+     * @ORM\PostRemove
      */
     public function delete()
     {
