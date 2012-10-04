@@ -22,6 +22,11 @@ services:
     class: Orkestra\Bundle\ApplicationBundle\Form\DateType
     tags:
       - { name: form.type, alias: date }
+  orkestra.type.entity_choice:
+    class: Orkestra\Bundle\ApplicationBundle\Form\EntityChoiceType
+    arguments: [ @doctrine ]
+    tags:
+      - { name: form.type, alias: entity_choice }
 
   # Orkestra Common configuration
   orkestra.kernel.logger:
