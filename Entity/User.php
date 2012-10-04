@@ -111,13 +111,31 @@ class User extends EntityBase implements AdvancedUserInterface
 
     public function addGroup(Group $group)
     {
-        $this->groups->add($group);
+        $this->groups[] = $group;
+    }
+
+    public function setGroups($groups)
+    {
+        if ($groups instanceof Group) {
+            $this->groups = new ArrayCollection(array($groups));
+        } elseif ($groups === null) {
+            $this->groups = new ArrayCollection();
+        } else {
+            $this->groups = $groups;
+        }
     }
 
     public function getGroups()
     {
         return $this->groups;
     }
+
+    public function removeGroup(Group $group)
+    {
+        $this->groups->removeElement($group);
+        return $this->groups;
+    }
+
 
     public function getPreferences()
     {
