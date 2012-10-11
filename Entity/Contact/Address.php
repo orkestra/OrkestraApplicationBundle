@@ -67,7 +67,7 @@ class Address extends EntityBase
 
     public function __toString()
     {
-        return sprintf('%s %s, %s, %s %s', $this->street, $this->suite, $this->city, $this->region->getName(), $this->postalCode);
+        return sprintf('%s, %s, %s %s', trim($this->street . ' ' . $this->suite), $this->city, $this->region->getCode(), $this->postalCode);
     }
 
     /**
