@@ -10,6 +10,10 @@ services:
     class: Orkestra\Bundle\ApplicationBundle\Form\EnumType
     tags:
       - { name: form.type, alias: enum }
+  orkestra.type.year:
+    class: Orkestra\Bundle\ApplicationBundle\Form\YearType
+    tags:
+      - { name: form.type, alias: year }
   orkestra.type.phone:
     class: Orkestra\Bundle\ApplicationBundle\Form\PhoneType
     tags:
