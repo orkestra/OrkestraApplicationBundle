@@ -21,11 +21,12 @@ abstract class Controller extends ControllerBase
      *
      * @param object $entity
      * @param string|null $className
+     * @param array $options
      *
      * @throws \RuntimeException
      * @return \Symfony\Component\Form\AbstractType
      */
-    public function getFormFor($entity, $className = null)
+    public function getFormFor($entity, $className = null, array $options = array())
     {
         if (empty($this->_formHelper) && ($this->_formHelper = $this->get('orkestra.form_helper')) == null) {
             throw new \RuntimeException('Orkestra FormHelper is not registered as a service');
@@ -33,6 +34,6 @@ abstract class Controller extends ControllerBase
 
         $type = $this->container->get('orkestra.form_helper')->getType($entity, $className);
 
-        return $this->createForm($type, $entity);
+        return $this->createForm($type, $entity, $options);
     }
 }

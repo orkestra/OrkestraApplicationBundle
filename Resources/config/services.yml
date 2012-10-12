@@ -1,5 +1,6 @@
 parameters:
   orkestra.file_manager.base_path: %kernel.root_dir%/files
+  orkestra.ca_bundle.path:
 
 services:
   orkestra.entity_manager:
@@ -44,6 +45,8 @@ services:
   orkestra.kernel.http:
     class: Orkestra\Common\Kernel\HttpKernel
     arguments: [ @orkestra.kernel.logger ]
+    calls:
+      - [ setCaBundlePath, [ %orkestra.ca_bundle.path% ] ]
   orkestra.kernel.soap:
     class: Orkestra\Common\Kernel\SoapKernel
     arguments: [ @orkestra.kernel.logger ]
