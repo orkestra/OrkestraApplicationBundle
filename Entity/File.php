@@ -23,29 +23,41 @@ class File extends EntityBase
     /**
      * Create From Uploaded File
      *
-     * @param Symfony\Component\HttpFoundation\File\UploadedFile $upload
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $upload
      * @param string $uploadPath The directory to save the uploaded file to
-     * @return Orkestra\Bundle\ApplicationBundle\Entity\File
+     * @param string $filename
+     *
+     * @throws \Symfony\Component\HttpFoundation\File\Exception\UploadException
+     * @return \Orkestra\Bundle\ApplicationBundle\Entity\File
      */
-    public static function createFromUploadedFile(UploadedFile $upload, $uploadPath)
+    public static function createFromUploadedFile(UploadedFile $upload, $uploadPath, $filename = null)
     {
         if (!$upload->isValid()) {
             throw new UploadException(sprintf('An error occurred during file upload. Error code: %s', $upload->getError()));
-        }
-        else if (($uploadPath = realpath($uploadPath . '/')) === null) {
+        } elseif (($uploadPath = realpath($uploadPath . '/')) === false) {
             throw new UploadException('An error occurred during file upload. The specified upload path is invalid.');
         }
 
-        $uploadPath = sprintf('%s/%s.%s', $uploadPath, uniqid(), $upload->getExtension() ?: $upload->guessExtension() ?: 'file');
+        if (!$filename) {
+            $fullPath = sprintf(
+                '%s%s%s.%s',
+                rtrim($uploadPath, DIRECTORY_SEPARATOR),
+                DIRECTORY_SEPARATOR,
+                uniqid(),
+                ($upload->getExtension() ?: ($upload->guessExtension() ?: 'file'))
+            );
+        } else {
+            $fullPath = rtrim($uploadPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
+        }
 
-        $file = new self($uploadPath, $upload->getClientOriginalName(), $upload->getMimeType(), $upload->getClientSize());
+        $file = new self($fullPath, $upload->getClientOriginalName(), $upload->getMimeType(), $upload->getClientSize());
         $file->_uploadedFile = $upload;
 
         return $file;
     }
 
     /**
-     * @var Symfony\Component\HttpFoundation\File\UploadedFile
+     * @var \Symfony\Component\HttpFoundation\File\UploadedFile
      */
     private $_uploadedFile = null;
 
@@ -174,7 +186,7 @@ class File extends EntityBase
     /**
      * Add Group
      *
-     * @param Orkestra\Bundle\ApplicationBundle\Entity\Group $group
+     * @param \Orkestra\Bundle\ApplicationBundle\Entity\Group $group
      */
     public function addGroup(Group $group)
     {
@@ -184,7 +196,7 @@ class File extends EntityBase
     /**
      * Remove Group
      *
-     * @param Orkestra\Bundle\ApplicationBundle\Entity\Group $group
+     * @param \Orkestra\Bundle\ApplicationBundle\Entity\Group $group
      */
     public function removeGroup(Group $group)
     {
@@ -199,7 +211,7 @@ class File extends EntityBase
     /**
      * Get Groups
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroups()
     {
@@ -219,7 +231,7 @@ class File extends EntityBase
     /**
      * Get User
      *
-     * @return Orkestra\Bundle\ApplicationBundle\Entity\User
+     * @return \Orkestra\Bundle\ApplicationBundle\Entity\User
      */
     public function getUser()
     {
