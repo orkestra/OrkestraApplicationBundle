@@ -3,6 +3,7 @@
 namespace Orkestra\Bundle\ApplicationBundle\Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Orkestra\Common\Entity\EntityBase;
 
 /**
@@ -37,7 +38,7 @@ class Country extends EntityBase
     /**
      * @var \Doctrine\Common\Collections\Collection Collection of region entities
      *
-     * @ORM\OneToMany(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Contact\Country", mappedBy="country", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region", mappedBy="country", cascade={"persist"})
      */
     protected $regions;
 
@@ -47,16 +48,14 @@ class Country extends EntityBase
      * @param string $name The name of the country
      * @param string $code The 2-letter ISO abbreviation
      * @param string $longCode The 3-letter ISO abbreviation
-     * @param string $phonePrefix The country's phone country code
-     * @param string $phoneFormat A regular expression describing how a phone number should look to an end user
      */
-    public function __construct($name = '', $code = '', $longCode = '', $phonePrefix = '', $phoneFormat = '')
+    public function __construct($name = '', $code = '', $longCode = '')
     {
+        $this->regions = new ArrayCollection();
+
         if (!empty($name)) { $this->name = $name; }
         if (!empty($code)) { $this->code = $code; }
         if (!empty($longCode)) { $this->longCode = $longCode; }
-        if (!empty($phonePrefix)) { $this->phonePrefix = $phonePrefix; }
-        if (!empty($phoneFormat)) { $this->phoneFormat = $phoneFormat; }
     }
 
     /**
