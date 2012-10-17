@@ -29,6 +29,11 @@ class EnumType extends AbstractType
                 });
             }
             $values = array_combine(array_values($values), array_values($values));
+            foreach ($options['labels'] as $value => $label) {
+                if (!empty($values[$value])) {
+                    $values[$value] = $label;
+                }
+            }
 
             return new SimpleChoiceList($values);
         };
@@ -38,11 +43,14 @@ class EnumType extends AbstractType
         ));
 
         $resolver->setOptional(array(
-            'exclude'
+            'exclude',
+            'labels'
         ));
 
         $resolver->setDefaults(array(
             'choice_list' => $choiceList,
+            'exclude' => array(),
+            'labels' => array()
         ));
     }
 
