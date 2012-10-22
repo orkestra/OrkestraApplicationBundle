@@ -38,19 +38,24 @@ class FileManager
     }
 
     /**
-     * @param resource $gdResource A GD image resource
-     * @param string $filename
+     * @param resource $gdResource  A GD image resource
+     * @param string $path          The path (no filename) to save the image
+     * @param string $filename      The filename to save the image as
      *
-     * @return \Orkestra\Bundle\ApplicationBundle\Entity\File
      * @throws \RuntimeException
+     * @return \Orkestra\Bundle\ApplicationBundle\Entity\File
      */
-    public function saveImageToPng($gdResource, $filename = null)
+    public function saveImageToPng($gdResource, $path = null, $filename = null)
     {
-        if (empty($filename)) {
+        if (null === $path) {
+            $path = $this->basePath;
+        }
+
+        if (null === $filename) {
             $filename = md5(uniqid('imagepng', true)) . '.png';
         }
 
-        $fullPath = $this->basePath . '/' . $filename;
+        $fullPath = $path . '/' . $filename;
         $result = imagepng($gdResource, $fullPath, 5);
 
         if (!$result) {

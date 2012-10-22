@@ -18,7 +18,7 @@ class Address extends EntityBase
      *
      * @ORM\Column(name="phone", type="string")
      */
-    protected $phone;
+    protected $phone = '';
 
     /**
      * @var string
@@ -107,7 +107,7 @@ class Address extends EntityBase
      */
     public function setPhone($phone)
     {
-        $this->phone = $phone;
+        $this->phone = (string)$phone;
     }
 
     /**
