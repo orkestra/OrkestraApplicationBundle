@@ -20,7 +20,7 @@ use Orkestra\Common\Entity\EntityBase;
 class User extends EntityBase implements AdvancedUserInterface
 {
     /**
-     * @ORM\Column(name="username", type="string", length=60, unique=true)
+     * @ORM\Column(name="username", type="string", length=100, unique=true)
      */
     private $username;
 
@@ -43,6 +43,11 @@ class User extends EntityBase implements AdvancedUserInterface
      * @ORM\Column(name="last_name", type="string", length=60)
      */
     private $lastName;
+
+    /**
+     * @ORM\Column(name="email", type="string", length=100, unique=true, nullable=true)
+     */
+    private $email;
 
     /**
      * @ORM\Column(name="expired", type="boolean")
@@ -77,6 +82,16 @@ class User extends EntityBase implements AdvancedUserInterface
     public function __toString()
     {
         return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     public function setUsername($username)
