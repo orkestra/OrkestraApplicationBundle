@@ -60,7 +60,7 @@ class User extends EntityBase implements AdvancedUserInterface
     private $locked = false;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Group", inversedBy="users", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Group", inversedBy="users")
      * @ORM\JoinTable(name="orkestra_user_groups",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
