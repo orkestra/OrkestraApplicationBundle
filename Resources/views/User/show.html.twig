@@ -1,55 +1,55 @@
 {% extends '::base.html.twig' %}
 
-{% block body %}
-<h1>User Summary</h1>
+{% block innerbody %}
+<h2>User Summary</h2>
 
-<table class="record-properties">
+<table class="table summary">
     <tbody>
         <tr>
-            <th>ID:</th>
+            <th>ID</th>
             <td>{{ user.id }}</td>
         </tr>
         <tr>
-            <th>Username:</th>
+            <th>Username</th>
             <td>{{ user.username }}</td>
         </tr>
         <tr>
-            <th>First Name:</th>
+            <th>First Name</th>
             <td>{{ user.firstName }}</td>
         </tr>
         <tr>
-            <th>Last Name:</th>
+            <th>Last Name</th>
             <td>{{ user.lastName }}</td>
         </tr>
         <tr>
-            <th>Expired?</th>
+            <th>Expired</th>
             <td>{{ user.expired ? 'Yes' : 'No' }}</td>
         </tr>
         <tr>
-            <th>Locked?</th>
+            <th>Locked</th>
             <td>{{ user.locked ? 'Yes' : 'No' }}</td>
         </tr>
         <tr>
-            <th>Active?</th>
+            <th>Active</th>
             <td>{{ user.active ? 'Yes' : 'No' }}</td>
         </tr>
         <tr>
-            <th>Last Modified:</th>
-            <td>{{ user.dateModified | default('Never') }}</td>
+            <th>Last Modified</th>
+            <td>{{ user.dateModified|default('Never') }}</td>
         </tr>
         <tr>
-            <th>Date Created:</th>
+            <th>Date Created</th>
             <td>{{ user.dateCreated }}</td>
         </tr>
     </tbody>
 </table>
-
+<div class="spacer"></div>
 <p class="form-buttons">
   <a href="{{ path('orkestra_user_edit', { 'id': user.id }) }}">
-    <button>Edit</button>
+    <button class="btn">Edit</button>
   </a>
   <a href="{{ path('orkestra_user_password_reset', { 'id': user.id }) }}">
-    <button>Reset Password</button>
+    <button class="btn">Reset Password</button>
   </a>
 </p>
 {% endblock %}

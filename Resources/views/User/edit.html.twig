@@ -1,10 +1,13 @@
 {% extends '::base.html.twig' %}
 
-{% block body %}
+{% block innerbody %}
 <form action="{{ path('orkestra_user_update', { 'id': user.id }) }}" method="post" {{ form_enctype(form) }}>
+<h2>Edit User</h2>
+<div class="well">
     {{ form_widget(form) }}
     <p class="form-buttons">
-        <button type="submit">Save Changes</button>
+        <button type="submit" class="btn">Save Changes</button>
     </p>
+</div>
 </form>
 {% endblock %}
