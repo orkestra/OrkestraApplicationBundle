@@ -36,4 +36,14 @@ abstract class Controller extends ControllerBase
 
         return $this->createForm($type, $entity, $options);
     }
+
+    /**
+     * Gets the session container
+     *
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     */
+    public function getSession()
+    {
+        return $this->get('session');
+    }
 }

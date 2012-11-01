@@ -1,6 +1,7 @@
 parameters:
   orkestra.file_manager.base_path: %kernel.root_dir%/files
   orkestra.ca_bundle.path:
+  orkestra.system_email_address:
 
 services:
   orkestra.entity_manager:
