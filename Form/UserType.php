@@ -24,6 +24,7 @@ class UserType extends AbstractType
 
         $builder->add('firstName', null, array('label' => 'First Name'))
                 ->add('lastName', null, array('label' => 'Last Name'))
+                ->add('email', null, array('label' => 'Email Address'))
                 ->add('expired', null, array('required' => false))
                 ->add('locked', null, array('required' => false))
                 ->add('active', null, array('required' => false))

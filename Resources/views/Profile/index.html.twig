@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block innerbody %}
+    <form action="{{ path('orkestra_profile') }}" method="post" {{ form_enctype(form) }}>
+<h2>Edit Profile</h2>
+<div class="well">
+    {{ form_widget(form) }}
+    <p class="form-buttons">
+        <button type="submit" class="btn">Save Changes</button>
+        <a href="{{ path('orkestra_profile_password') }}" class="btn">Change Password</a>
+    </p>
+</div>
+</form>
+{% endblock %}
