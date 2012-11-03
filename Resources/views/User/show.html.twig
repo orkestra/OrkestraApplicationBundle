@@ -1,8 +1,8 @@
 {% extends '::base.html.twig' %}
 
-{% block innerbody %}
-<h2>User Summary</h2>
+{% block title %}{{ user }}{% endblock %}
 
+{% block content %}
 <table class="table summary">
     <tbody>
         <tr>
@@ -46,7 +46,7 @@
 <div class="spacer"></div>
 <p class="form-buttons">
   <a href="{{ path('orkestra_user_edit', { 'id': user.id }) }}">
-    <button class="btn">Edit</button>
+    <button class="btn">Edit User</button>
   </a>
   <a href="{{ path('orkestra_user_password_reset', { 'id': user.id }) }}">
     <button class="btn">Reset Password</button>

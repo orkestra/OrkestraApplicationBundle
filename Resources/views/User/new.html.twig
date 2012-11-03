@@ -1,13 +1,14 @@
 {% extends '::base.html.twig' %}
 
-{% block innerbody %}
+{% block title %}New User{% endblock %}
+
+{% block content %}
 <form action="{{ path('orkestra_user_create') }}" method="post" {{ form_enctype(form) }}>
-<h2> New User </h2>
 <div class="well">
     {{ form_widget(form) }}
     <div class="control-group">
         <div class="controls">
-            <button type="submit" class="btn">Create</button>
+            <button type="submit" class="btn btn-primary">Create User</button>
         </div>
     </div>
 </div>

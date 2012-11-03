@@ -1,8 +1,8 @@
 {% extends '::base.html.twig' %}
 
-{% block innerbody %}
-<h2>Group Summary</h2>
+{% block title %}{{ group }}{% endblock %}
 
+{% block content %}
 <table class="table summary">
     <tbody>
         <tr>
@@ -34,7 +34,7 @@
 
 <p class="form-buttons">
   <a href="{{ path('orkestra_group_edit', { 'id': group.id }) }}">
-    <button class="btn">Edit</button>
+    <button class="btn">Edit Group</button>
   </a>
 </p>
 {% endblock %}
