@@ -40,7 +40,7 @@ class GroupController extends Controller
     /**
      * Finds and displays a Group entity.
      *
-     * @Route("/group/{id}/show", name="orkestra_group_show")
+     * @Route("/{id}/show", name="orkestra_group_show")
      * @Template()
      * @Secure(roles="ROLE_GROUP_READ")
      */
@@ -62,7 +62,7 @@ class GroupController extends Controller
     /**
      * Displays a form to create a new Group entity.
      *
-     * @Route("/group/new", name="orkestra_group_new")
+     * @Route("/new", name="orkestra_group_new")
      * @Template()
      * @Secure(roles="ROLE_GROUP_WRITE")
      */
@@ -80,7 +80,7 @@ class GroupController extends Controller
     /**
      * Creates a new Group entity.
      *
-     * @Route("/group/create", name="orkestra_group_create")
+     * @Route("/create", name="orkestra_group_create")
      * @Method("post")
      * @Template("OrkestraApplicationBundle:Group:new.html.twig")
      * @Secure(roles="ROLE_GROUP_WRITE")
@@ -112,7 +112,7 @@ class GroupController extends Controller
     /**
      * Displays a form to edit an existing Group entity.
      *
-     * @Route("/group/{id}/edit", name="orkestra_group_edit")
+     * @Route("/{id}/edit", name="orkestra_group_edit")
      * @Template()
      * @Secure(roles="ROLE_GROUP_WRITE")
      */
@@ -137,7 +137,7 @@ class GroupController extends Controller
     /**
      * Edits an existing Group entity.
      *
-     * @Route("/group/{id}/update", name="orkestra_group_update")
+     * @Route("/{id}/update", name="orkestra_group_update")
      * @Method("post")
      * @Template("OrkestraApplicationBundle:Group:edit.html.twig")
      * @Secure(roles="ROLE_GROUP_WRITE")
