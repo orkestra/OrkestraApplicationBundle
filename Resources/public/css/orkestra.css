@@ -3,3 +3,5 @@
 form.inline { display: inline; }
 .table.summary th, .table.summary td { padding: 5px; border: 0 }
 .table.summary th { width: 150px; text-align: left }
+.subheader { padding-top: 15px; }
+.subheader form { margin-bottom: 0; }
