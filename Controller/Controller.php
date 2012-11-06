@@ -46,4 +46,16 @@ abstract class Controller extends ControllerBase
     {
         return $this->get('session');
     }
+
+    /**
+     * Gets the repository for the given class
+     *
+     * @param string $className
+     *
+     * @return \Doctrine\Common\Persistence\ObjectRepository
+     */
+    public function getRepository($className)
+    {
+        return $this->getDoctrine()->getManagerForClass($className)->getRepository($className);
+    }
 }
