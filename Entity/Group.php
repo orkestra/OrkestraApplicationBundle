@@ -20,12 +20,12 @@ use Orkestra\Common\Entity\EntityBase,
 class Group extends EntityBase implements RoleInterface
 {
     /**
-     * @ORM\Column(name="name", type="string", length=30)
+     * @ORM\Column(name="name", type="string", length=100)
      */
     private $name;
 
     /**
-     * @ORM\Column(name="role", type="string", length=20, unique=true)
+     * @ORM\Column(name="role", type="string", length=100, unique=true)
      */
     private $role;
 
