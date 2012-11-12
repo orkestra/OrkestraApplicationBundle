@@ -43,7 +43,7 @@ class ProfileController extends Controller
                     $em->flush();
 
                     $this->get('session')->setFlash('success', 'Your changes have been saved.');
-                    return $this->redirect($this->generateUrl('profile'));
+                    return $this->redirect($this->generateUrl('orkestra_profile'));
                 }
                 catch (\Exception $e) {
                     $form->addError(new FormError('Could not save changes. If the problem persists, please contact support.'));
