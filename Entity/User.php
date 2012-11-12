@@ -135,6 +135,8 @@ class User extends EntityBase implements AdvancedUserInterface
             $this->groups = new ArrayCollection(array($groups));
         } elseif ($groups === null) {
             $this->groups = new ArrayCollection();
+        } elseif (is_array($groups)) {
+            $this->groups = new ArrayCollection($groups);
         } else {
             $this->groups = $groups;
         }
