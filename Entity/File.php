@@ -50,7 +50,7 @@ class File extends EntityBase
             $fullPath = rtrim($uploadPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
         }
 
-        $file = new self($fullPath, $upload->getClientOriginalName(), $upload->getMimeType(), $upload->getClientSize());
+        $file = new self($fullPath, $upload->getClientOriginalName(), $upload->getMimeType(), $upload->getClientSize(), md5_file($upload->getRealPath()));
         $file->_uploadedFile = $upload;
 
         return $file;
@@ -109,11 +109,24 @@ class File extends EntityBase
     protected $fileSize = 0;
 
     /**
+     * @var string $md5
+     *
+     * @ORM\Column(name="md5_hash", type="string")
+     */
+    protected $md5 = '';
+
+    /**
      * Constructor
      */
-    public function __construct($path, $filename, $mimeType = '', $fileSize = 0)
+    public function __construct($path, $filename, $mimeType = '', $fileSize = 0, $md5 = '')
     {
         $this->path = $path;
+        if (!empty($md5)) {
+            $this->md5 = $md5;
+        } elseif (file_exists($path)) {
+            $this->md5 = md5_file($path);
+        }
+
         $this->filename = $filename;
         $this->mimeType = $mimeType ?: '';
         $this->fileSize = $fileSize ?: 0;
@@ -169,6 +182,16 @@ class File extends EntityBase
     public function getFileSize()
     {
         return $this->fileSize;
+    }
+
+    /**
+     * Get MD5 hash of the file
+     *
+     * @return string
+     */
+    public function getMd5()
+    {
+        return $this->md5;
     }
 
     /**

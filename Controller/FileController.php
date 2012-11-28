@@ -20,13 +20,13 @@ class FileController extends Controller
      * @Route("/{id}/view", name="view_file")
      * @Secure(roles="ROLE_USER")
      */
-    public function viewAction($id)
+    public function viewAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
         $file = $em->find('Orkestra\Bundle\ApplicationBundle\Entity\File', $id);
 
-        if (!$file) {
+        if (!$file || !file_exists($file->getPath())) {
             throw $this->createNotFoundException('Unable to locate File');
         }
 
@@ -38,9 +38,23 @@ class FileController extends Controller
             }
         }
 
-        return new Response($file->getContent(), 200, array(
+        $response = new Response();
+        $response->setLastModified(new \DateTime('@' . filemtime($file->getPath())));
+        $response->setPublic();
+        if (($hash = $file->getMd5()) !== '') {
+            $response->setEtag($hash);
+        }
+
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
+
+        $response->setContent($file->getContent());
+        $response->headers->add(array(
             'Content-Type' => $file->getMimeType(),
         ));
+
+        return $response;
     }
 
     /**
