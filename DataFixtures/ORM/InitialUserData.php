@@ -41,6 +41,8 @@ class InitialUserData extends AbstractFixture implements ContainerAwareInterface
         $encoder = $factory->getEncoder($user);
         $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
 
+        $this->setReference('admin-user', $user);
+
         $manager->persist($user);
 
         $manager->flush();
