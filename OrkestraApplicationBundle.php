@@ -18,6 +18,7 @@ class OrkestraApplicationBundle extends Bundle
     {
         Type::overrideType('datetime', 'Orkestra\Common\DBAL\Types\DateTimeType');
         Type::overrideType('date', 'Orkestra\Common\DBAL\Types\DateType');
+        Type::overrideType('time', 'Orkestra\Common\DBAL\Types\TimeType');
         Type::addType('encrypted_string', 'Orkestra\Common\DBAL\Types\EncryptedStringType');
 
         $encryptedStringType = Type::getType('encrypted_string');
