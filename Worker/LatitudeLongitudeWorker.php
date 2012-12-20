@@ -69,7 +69,7 @@ class LatitudeLongitudeWorker implements WorkerInterface
         $addresses = $this->addressRepository->createQueryBuilder('a')
             ->where('a.latitude IS NULL')
             ->orWhere('a.longitude IS NULL')
-            ->setMaxResults(2000)
+            ->setMaxResults(500)
             ->getQuery()
             ->getResult();
 

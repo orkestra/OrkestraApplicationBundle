@@ -17,8 +17,13 @@ class LatitudeLongitudeSubscriber implements EventSubscriber
             return;
         }
 
-        $entity->setLatitude(null);
-        $entity->setLongitude(null);
+        if (!$event->hasChangedField('latitude')) {
+            $entity->setLatitude(null);
+        }
+
+        if (!$event->hasChangedField('longitude')) {
+            $entity->setLongitude(null);
+        }
 
         // This "hack" is the only way to change a 'new' value in a preUpdate
         $em = $event->getEntityManager();
