@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Type;
 use Orkestra\Common\Type\Date;
 use Orkestra\Common\Type\DateTime;
 use Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler\RegisterFormTypesPass;
+use Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler\RegisterWorkersPass;
 
 class OrkestraApplicationBundle extends Bundle
 {
@@ -38,5 +39,6 @@ class OrkestraApplicationBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new RegisterFormTypesPass());
+        $container->addCompilerPass(new RegisterWorkersPass());
     }
 }

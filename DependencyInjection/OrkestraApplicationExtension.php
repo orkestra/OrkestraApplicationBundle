@@ -19,5 +19,10 @@ class OrkestraApplicationExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        if (true !== $config['enable_latlong_lookup']) {
+            $container->removeDefinition('orkestra.worker.latitude_longitude');
+            $container->removeDefinition('orkestra.subscriber.latitude_longitude');
+        }
     }
 }

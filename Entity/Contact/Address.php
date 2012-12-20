@@ -56,6 +56,20 @@ class Address extends EntityBase
     protected $postalCode;
 
     /**
+     * @var float $latitude
+     *
+     * @ORM\Column(name="latitude", type="decimal", precision=9, scale=6, nullable=true)
+     */
+    protected $latitude = null;
+
+    /**
+     * @var float $longitude
+     *
+     * @ORM\Column(name="longitude", type="decimal", precision=9, scale=6, nullable=true)
+     */
+    protected $longitude = null;
+
+    /**
      * @var \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region
      *
      * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region")
@@ -65,6 +79,9 @@ class Address extends EntityBase
      */
     protected $region;
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return sprintf('%s, %s, %s %s', trim($this->street . ' ' . $this->suite), $this->city, $this->region->getCode(), $this->postalCode);
@@ -180,5 +197,37 @@ class Address extends EntityBase
     public function getPostalCode()
     {
         return $this->postalCode;
+    }
+
+    /**
+     * @param float $latitude
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @param float $longitude
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
     }
 }

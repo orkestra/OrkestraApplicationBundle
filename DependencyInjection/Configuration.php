@@ -13,7 +13,12 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('orkestra');
+        $rootNode = $treeBuilder->root('orkestra_application');
+        $rootNode->children()
+                ->booleanNode('enable_latlong_lookup')
+                    ->defaultFalse()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
