@@ -40,7 +40,7 @@ abstract class Controller extends ControllerBase
     /**
      * Gets the session container
      *
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface|\Symfony\Component\HttpFoundation\Session\Session
      */
     public function getSession()
     {
