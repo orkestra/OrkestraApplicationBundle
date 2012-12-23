@@ -7,18 +7,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UserType extends AbstractType
 {
-    protected $_includePassword = true;
-
-    public function __construct($includePassword = true)
-    {
-        $this->_includePassword = $includePassword;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('username');
 
-        if ($this->_includePassword) {
+        if (false !== $options['include_password']) {
             $builder->add('password', 'password');
         }
 
@@ -35,6 +28,7 @@ class UserType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
+            'include_password' => true,
             'data_class' => 'Orkestra\Bundle\ApplicationBundle\Entity\User',
         );
     }

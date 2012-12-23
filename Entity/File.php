@@ -234,7 +234,7 @@ class File extends EntityBase
     /**
      * Get Groups
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|\Orkestra\Bundle\ApplicationBundle\Entity\Group[]
      */
     public function getGroups()
     {
@@ -244,7 +244,7 @@ class File extends EntityBase
     /**
      * Set User
      *
-     * @param Orkestra\Bundle\ApplicationBundle\Entity\User
+     * @param \Orkestra\Bundle\ApplicationBundle\Entity\User
      */
     public function setUser(User $user)
     {

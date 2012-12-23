@@ -46,9 +46,7 @@ class PasswordResetController extends Controller
 
         if ($form->isValid()) {
             $email = $form->get('email')->getData();
-
             $em = $this->getDoctrine()->getManager();
-
             $user = $em->getRepository('OrkestraApplicationBundle:User')->findOneBy(array('email' => $email));
 
             if ($user) {

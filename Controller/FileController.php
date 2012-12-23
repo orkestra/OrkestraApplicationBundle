@@ -2,10 +2,10 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\HttpFoundation\Response,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * File controller
@@ -22,8 +22,9 @@ class FileController extends Controller
      */
     public function viewAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
+        /** @var $file \Orkestra\Bundle\ApplicationBundle\Entity\File */
         $file = $em->find('Orkestra\Bundle\ApplicationBundle\Entity\File', $id);
 
         if (!$file || !file_exists($file->getPath())) {
@@ -65,8 +66,9 @@ class FileController extends Controller
      */
     public function downloadAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
+        /** @var $file \Orkestra\Bundle\ApplicationBundle\Entity\File */
         $file = $em->find('Orkestra\Bundle\ApplicationBundle\Entity\File', $id);
 
         if (!$file) {

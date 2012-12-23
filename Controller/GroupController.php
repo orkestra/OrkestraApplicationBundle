@@ -2,15 +2,13 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    JMS\SecurityExtraBundle\Annotation\Secure;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Orkestra\Bundle\ApplicationBundle\Controller\Controller;
-
-use Orkestra\Bundle\ApplicationBundle\Entity\Group,
-    Orkestra\Bundle\ApplicationBundle\Form\GroupType;
+use Orkestra\Bundle\ApplicationBundle\Entity\Group;
+use Orkestra\Bundle\ApplicationBundle\Form\GroupType;
 
 /**
  * Group controller.

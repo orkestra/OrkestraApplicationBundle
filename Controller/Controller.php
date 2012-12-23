@@ -2,14 +2,12 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller as ControllerBase;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 
 /**
- * Controller
- *
  * Base class for any controller
  */
-abstract class Controller extends ControllerBase
+abstract class Controller extends BaseController
 {
     /**
      * @var \Orkestra\Bundle\ApplicationBundle\Helper\FormHelper
@@ -19,9 +17,10 @@ abstract class Controller extends ControllerBase
     /**
      * Get Form Type
      *
-     * @param object $entity
-     * @param string|null $className
-     * @param array $options
+     * @param object      $entity
+     * @param string|null $className If the object being passed is a subclass,
+     *    specify the superclass that should be used to find the form type.
+     * @param array       $options
      *
      * @throws \RuntimeException
      * @return \Symfony\Component\Form\AbstractType

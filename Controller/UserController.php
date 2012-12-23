@@ -2,17 +2,14 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    JMS\SecurityExtraBundle\Annotation\Secure;
-
-use Symfony\Component\Form\FormError;
-
-use Orkestra\Bundle\ApplicationBundle\Controller\Controller;
-
-use Orkestra\Bundle\ApplicationBundle\Entity\User,
-    Orkestra\Bundle\ApplicationBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Orkestra\Bundle\ApplicationBundle\Entity\User;
+use Orkestra\Bundle\ApplicationBundle\Form\UserType;
+use Orkestra\Bundle\ApplicationBundle\Form\ChangePasswordType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * User controller.
@@ -48,7 +45,7 @@ class UserController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $user = $em->getRepository('Orkestra\Bundle\ApplicationBundle\Entity\User')->find($id);
 
@@ -87,22 +84,23 @@ class UserController extends Controller
      * @Template("OrkestraApplicationBundle:User:new.html.twig")
      * @Secure(roles="ROLE_USER_WRITE")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $user = new User();
         $form = $this->createForm(new UserType(), $user);
-        $form->bindRequest($this->getRequest());
+        $form->bind($request);
 
         if ($form->isValid()) {
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($user);
             $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
             $this->get('session')->setFlash('success', 'The user has been created.');
+
             return $this->redirect($this->generateUrl('orkestra_user_show', array('id' => $user->getId())));
         }
 
@@ -119,27 +117,19 @@ class UserController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER_WRITE")
      */
-    public function resetPasswordAction($id)
+    public function resetPasswordAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
+        $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('Orkestra\Bundle\ApplicationBundle\Entity\User')->find($id);
 
         if (!$user) {
             throw $this->createNotFoundException('Unable to locate User');
         }
 
-        $form = $this->createFormBuilder()
-                     ->add('password', 'repeated', array(
-                         'type' => 'password',
-                         'invalid_message' => 'The passwords must match.',
-                         'first_name' => 'password',
-                         'second_name' => 'confirm',
-                     ))
-                     ->getForm();
+        $form = $this->createForm(new ChangePasswordType(), null, array('require_current' => false));
 
-        if ($this->getRequest()->getMethod() == 'POST') {
-            $form->bindRequest($this->getRequest());
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
 
             if ($form->isValid()) {
                 $data = $form->getData();
@@ -172,15 +162,14 @@ class UserController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
+        $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('Orkestra\Bundle\ApplicationBundle\Entity\User')->find($id);
 
         if (!$user) {
             throw $this->createNotFoundException('Unable to locate User');
         }
 
-        $form = $this->createForm(new UserType(false), $user);
+        $form = $this->createForm(new UserType(), $user, array('include_password' => false));
 
         return array(
             'user' => $user,
@@ -196,19 +185,17 @@ class UserController extends Controller
      * @Template("OrkestraApplicationBundle:User:edit.html.twig")
      * @Secure(roles="ROLE_USER_WRITE")
      */
-    public function updateAction($id)
+    public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
+        $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('Orkestra\Bundle\ApplicationBundle\Entity\User')->find($id);
 
         if (!$user) {
             throw $this->createNotFoundException('Unable to locate User');
         }
 
-        $form = $this->createForm(new UserType(false), $user);
-
-        $form->bindRequest($this->getRequest());
+        $form = $this->createForm(new UserType(), $user, array('include_password' => false));
+        $form->bind($request);
 
         if ($form->isValid()) {
             $em->persist($user);

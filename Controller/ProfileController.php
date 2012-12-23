@@ -2,15 +2,14 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\Form\FormError,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    JMS\SecurityExtraBundle\Annotation\Secure,
-    Orkestra\Bundle\ApplicationBundle\Form\ProfileType,
-    Orkestra\Bundle\ApplicationBundle\Form\PreferencesType,
-    Orkestra\Bundle\ApplicationBundle\Form\ChangePasswordType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormError;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Orkestra\Bundle\ApplicationBundle\Form\ProfileType;
+use Orkestra\Bundle\ApplicationBundle\Form\ChangePasswordType;
 
 /**
  * Profile controller.
@@ -20,32 +19,32 @@ use Symfony\Component\HttpFoundation\Request,
 class ProfileController extends Controller
 {
     /**
-     * Shows the user's profile
+     * Shows the form and handles updating user information
      *
-     * @Route("/", name="orkestra_profile")
+     * @Route("", name="orkestra_profile")
      * @Secure(roles="ROLE_USER")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $user = $this->get('security.context')->getToken()->getUser();
-
+        $user = $this->getUser();
         $form = $this->createForm(new ProfileType(), $user);
 
-        if ($this->getRequest()->getMethod() == 'POST') {
-            $form->bindRequest($this->getRequest());
+        if ($request->isMethod('POST')) {
+            $form->bind($this->getRequest());
 
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
 
                 try {
                     $em->persist($user);
                     $em->flush();
 
                     $this->get('session')->setFlash('success', 'Your changes have been saved.');
+
                     return $this->redirect($this->generateUrl('orkestra_profile'));
-                }
-                catch (\Exception $e) {
+                } catch (\Exception $e) {
+                    // TODO: Why is this being caught?
                     $form->addError(new FormError('Could not save changes. If the problem persists, please contact support.'));
                 }
             }
@@ -57,44 +56,40 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show the change password form
+     * Shows and handles changing a user's password
      *
      * @Route("/change-password", name="orkestra_profile_password")
      * @Secure(roles="ROLE_USER")
      * @Template()
      */
-    public function passwordAction()
+    public function passwordAction(Request $request)
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
+        $form = $this->createForm(new ChangePasswordType());
 
-        $form = $this->createForm(new ChangePasswordType(), array());
-
-        if ($this->getRequest()->getMethod() == 'POST') {
-            $form->bindRequest($this->getRequest());
-
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
             $data = $form->getData();
 
-            if ($data['password'] !== $data['confirm']) {
-                $form->addError(new FormError('New password and confirm password must match!'));
-            }
-
+            /** @var $factory \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface */
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($user);
             $current = $encoder->encodePassword($data['current'], $user->getSalt());
 
             if ($current !== $user->getPassword()) {
-                $form->addError(new FormError('Current password is not correct'));
+                $form->get('current')->addError(new FormError('Current password is not correct'));
             }
 
             if ($form->isValid()) {
                 $user->setPassword($encoder->encodePassword($data['password'], $user->getSalt()));
 
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
 
                 $this->get('session')->setFlash('success', 'Your password has been changed.');
-                return $this->redirect($this->generateUrl('profile'));
+
+                return $this->redirect($this->generateUrl('orkestra_profile'));
             }
         }
 

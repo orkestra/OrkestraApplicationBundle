@@ -5,8 +5,16 @@ namespace Orkestra\Bundle\ApplicationBundle\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormError;
 
+/**
+ * User authentication controller
+ */
 class AuthController extends Controller
 {
+    /**
+     * Displays a form to login
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function loginAction()
     {
         $request = $this->getRequest();
