@@ -45,11 +45,11 @@ class PasswordResetController extends Controller
         $reset = false;
 
         if ($form->isValid()) {
-            $emailField = $form->get('email');
+            $email = $form->get('email')->getData();
 
             $em = $this->getDoctrine()->getManager();
 
-            $user = $em->getRepository('OrkestraApplicationBundle:User')->findOneBy(array('email' => $emailField->getData()));
+            $user = $em->getRepository('OrkestraApplicationBundle:User')->findOneBy(array('email' => $email));
 
             if ($user) {
                 $password = $this->generatePassword();
@@ -75,7 +75,7 @@ class PasswordResetController extends Controller
 
                 $reset = true;
             } else {
-                $emailField->addError(new FormError('Invalid or unknown email address'));
+                $form->addError(new FormError('Invalid or unknown email address'));
             }
         }
 
