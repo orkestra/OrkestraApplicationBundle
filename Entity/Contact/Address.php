@@ -3,7 +3,7 @@
 namespace Orkestra\Bundle\ApplicationBundle\Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
-use Orkestra\Common\Entity\EntityBase;
+use Orkestra\Common\Entity\AbstractEntity;
 
 /**
  * A physical address
@@ -11,7 +11,7 @@ use Orkestra\Common\Entity\EntityBase;
  * @ORM\Entity
  * @ORM\Table(name="orkestra_addresses")
  */
-class Address extends EntityBase
+class Address extends AbstractEntity
 {
     /**
      * @var string

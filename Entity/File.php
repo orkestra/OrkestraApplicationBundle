@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM,
 use Symfony\Component\HttpFoundation\File\UploadedFile,
     Symfony\Component\HttpFoundation\File\Exception\UploadException;
 
-use Orkestra\Common\Entity\EntityBase,
+use Orkestra\Common\Entity\AbstractEntity,
     Orkestra\Common\Type\DateTime;
 
 /**
@@ -18,7 +18,7 @@ use Orkestra\Common\Entity\EntityBase,
  * @ORM\Table(name="orkestra_files")
  * @ORM\HasLifecycleCallbacks
  */
-class File extends EntityBase
+class File extends AbstractEntity
 {
     /**
      * Create From Uploaded File

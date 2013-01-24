@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface,
     Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ORM\Mapping as ORM;
 
-use Orkestra\Common\Entity\EntityBase,
+use Orkestra\Common\Entity\AbstractEntity,
     Orkestra\Bundle\ApplicationBundle\Entity\User;
 
 /**
@@ -17,7 +17,7 @@ use Orkestra\Common\Entity\EntityBase,
  * @ORM\Table(name="orkestra_groups")
  * @ORM\Entity
  */
-class Group extends EntityBase implements RoleInterface
+class Group extends AbstractEntity implements RoleInterface
 {
     /**
      * @ORM\Column(name="name", type="string", length=100)

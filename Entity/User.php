@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface,
     Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ORM\Mapping as ORM;
 
-use Orkestra\Common\Entity\EntityBase;
+use Orkestra\Common\Entity\AbstractEntity;
 
 /**
  * User Entity
@@ -17,7 +17,7 @@ use Orkestra\Common\Entity\EntityBase;
  * @ORM\Table(name="orkestra_users")
  * @ORM\Entity(repositoryClass="Orkestra\Bundle\ApplicationBundle\Repository\UserRepository")
  */
-class User extends EntityBase implements AdvancedUserInterface
+class User extends AbstractEntity implements AdvancedUserInterface
 {
     /**
      * @ORM\Column(name="username", type="string", length=100, unique=true)

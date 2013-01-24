@@ -3,7 +3,7 @@
 namespace Orkestra\Bundle\ApplicationBundle\Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
-use Orkestra\Common\Entity\EntityBase;
+use Orkestra\Common\Entity\AbstractEntity;
 
 /**
  * A region within a country
@@ -11,7 +11,7 @@ use Orkestra\Common\Entity\EntityBase;
  * @ORM\Table(name="orkestra_countries_regions")
  * @ORM\Entity
  */
-class Region extends EntityBase
+class Region extends AbstractEntity
 {
     /**
      * @var string $name

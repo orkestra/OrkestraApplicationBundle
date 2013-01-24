@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface,
     Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ORM\Mapping as ORM;
 
-use Orkestra\Common\Entity\EntityBase;
+use Orkestra\Common\Entity\AbstractEntity;
 
 /**
  * Preferences Entity
@@ -17,7 +17,7 @@ use Orkestra\Common\Entity\EntityBase;
  * @ORM\Table(name="orkestra_user_preferences")
  * @ORM\Entity()
  */
-class Preferences extends EntityBase
+class Preferences extends AbstractEntity
 {
     /**
      * @ORM\Column(name="timezone", type="string", length=255)

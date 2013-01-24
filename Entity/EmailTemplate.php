@@ -4,7 +4,7 @@ namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Orkestra\Common\Entity\EntityBase;
+use Orkestra\Common\Entity\AbstractEntity;
 
 /**
  * EmailTemplate Entity
@@ -14,7 +14,7 @@ use Orkestra\Common\Entity\EntityBase;
  * @ORM\Table(name="orkestra_email_templates")
  * @ORM\Entity()
  */
-class EmailTemplate extends EntityBase
+class EmailTemplate extends AbstractEntity
 {
     /**
      * @var string $name
