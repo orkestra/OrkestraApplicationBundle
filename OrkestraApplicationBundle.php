@@ -17,10 +17,11 @@ class OrkestraApplicationBundle extends Bundle
      */
     public function boot()
     {
-        Type::overrideType('datetime', 'Orkestra\Common\DBAL\Types\DateTimeType');
-        Type::overrideType('date', 'Orkestra\Common\DBAL\Types\DateType');
-        Type::overrideType('time', 'Orkestra\Common\DBAL\Types\TimeType');
-        Type::addType('encrypted_string', 'Orkestra\Common\DBAL\Types\EncryptedStringType');
+        Type::overrideType('datetime', 'Orkestra\Common\DbalType\DateTimeType');
+        Type::overrideType('date',     'Orkestra\Common\DbalType\DateType');
+        Type::overrideType('time',     'Orkestra\Common\DbalType\TimeType');
+
+        Type::addType('encrypted_string', 'Orkestra\Common\DbalType\EncryptedStringType');
 
         $encryptedStringType = Type::getType('encrypted_string');
         $encryptedStringType->setKey($this->container->getParameter('secret'));
