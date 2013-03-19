@@ -17,7 +17,7 @@ use Orkestra\Common\Entity\AbstractEntity;
  * @ORM\Table(name="orkestra_users")
  * @ORM\Entity(repositoryClass="Orkestra\Bundle\ApplicationBundle\Repository\UserRepository")
  */
-class User extends AbstractEntity implements AdvancedUserInterface
+class User extends AbstractEntity implements AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Column(name="username", type="string", length=100, unique=true)
@@ -226,4 +226,20 @@ class User extends AbstractEntity implements AdvancedUserInterface
     }
 
     #endregion
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        return \json_encode(array($this->username, $this->id));
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        list($this->username, $this->id) = json_decode($serialized);
+    }
 }
