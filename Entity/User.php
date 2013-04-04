@@ -153,14 +153,14 @@ class User extends AbstractEntity implements AdvancedUserInterface, \Serializabl
         return $this->groups;
     }
 
+    public function setPreferences(Preferences $preferences)
+    {
+        $this->preferences = $preferences;
+        $this->preferences->setUser($this);
+    }
 
     public function getPreferences()
     {
-        if (empty($this->preferences)) {
-            $this->preferences = new Preferences();
-            $this->preferences->setUser($this);
-        }
-
         return $this->preferences;
     }
 
