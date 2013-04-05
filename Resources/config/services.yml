@@ -7,6 +7,11 @@ parameters:
 services:
   orkestra.entity_manager:
     alias: doctrine.orm.entity_manager
+  orkestra.guzzle_client:
+    class: Guzzle\Http\Client
+    arguments:
+      - ''
+      - { 'curl.options': { 'CURLOPT_CAINFO': %orkestra.ca_bundle.path%, 'CURLOPT_SSL_VERIFYPEER': true } }
 
   # Form types
   orkestra.type.enum:
@@ -34,24 +39,6 @@ services:
     arguments: [ @doctrine ]
     tags:
       - { name: form.type, alias: entity_choice }
-
-  # Orkestra Common configuration
-  orkestra.kernel.logger:
-    class: Symfony\Bridge\Monolog\Logger
-    arguments: [ orkestra.kernel ]
-    calls:
-      - [ pushHandler, [ @orkestra.kernel.logger.handler ] ]
-  orkestra.kernel.logger.handler:
-    class: Monolog\Handler\StreamHandler
-    arguments: [ %kernel.root_dir%/logs/%kernel.environment%.kernel.log, 200 ]
-  orkestra.kernel.http:
-    class: Orkestra\Common\Kernel\HttpKernel
-    arguments: [ @orkestra.kernel.logger ]
-    calls:
-      - [ setCaBundlePath, [ %orkestra.ca_bundle.path% ] ]
-  orkestra.kernel.soap:
-    class: Orkestra\Common\Kernel\SoapKernel
-    arguments: [ @orkestra.kernel.logger ]
 
   # Helpers
   orkestra.mail_helper:
@@ -91,6 +78,6 @@ services:
     class: %orkestra.worker_factory.class%
   orkestra.worker.latitude_longitude:
     class: Orkestra\Bundle\ApplicationBundle\Worker\LatitudeLongitudeWorker
-    arguments: [ @doctrine.orm.entity_manager, @orkestra.kernel.http ]
+    arguments: [ @orkestra.entity_manager, @orkestra.guzzle_client ]
     tags:
       - { name: orkestra.worker }
