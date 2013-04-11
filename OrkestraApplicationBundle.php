@@ -9,6 +9,7 @@ use Orkestra\Common\Type\Date;
 use Orkestra\Common\Type\DateTime;
 use Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler\RegisterFormTypesPass;
 use Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler\RegisterWorkersPass;
+use Orkestra\Common\DbalType\EncryptedStringType;
 
 class OrkestraApplicationBundle extends Bundle
 {
@@ -20,8 +21,13 @@ class OrkestraApplicationBundle extends Bundle
         Type::overrideType('datetime', 'Orkestra\Common\DBAL\Types\DateTimeType');
         Type::overrideType('date', 'Orkestra\Common\DBAL\Types\DateType');
         Type::overrideType('time', 'Orkestra\Common\DBAL\Types\TimeType');
-        Type::addType('encrypted_string', 'Orkestra\Common\DBAL\Types\EncryptedStringType');
-
+        
+        if (!Type::hasType('encrypted_string')) {
+            Type::addType('encrypted_string', 'Orkestra\Common\DbalType\EncryptedStringType');
+        } elseif (!(Type::getType('encrypted_string') instanceof EncryptedStringType)) {
+            throw new \UnexpectedValueException('Type encrypted_string must be instance of Orkestra\Common\DbalType\EncryptedStringType');
+        }
+        
         $encryptedStringType = Type::getType('encrypted_string');
         $encryptedStringType->setKey($this->container->getParameter('secret'));
 
