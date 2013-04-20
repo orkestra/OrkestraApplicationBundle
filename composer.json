@@ -1,27 +1,28 @@
 {
-    "name": "orkestra/application-bundle",
-    "description": "Provides useful base functionality for any Symfony 2 application",
-    "type": "symfony-bundle",
-    "license": "MIT",
-    "require": {
-        "php": ">=5.3.0",
-        "orkestra/common": "1.0.*"
-    },
-    "suggest": {
-        "doctrine/doctrine-fixtures-bundle": "Allows easy initial database population"
-    },
-    "require-dev": {
-        "symfony/framework-bundle": "2.1.*",
-        "symfony/dependency-injection": "2.1.*",
-        "symfony/yaml": "2.1.*",
-        "symfony/form": "2.1.*",
-        "symfony/security": "2.1.*",
-        "doctrine/orm": "2.3.*",
-        "doctrine/doctrine-bundle": "1.0.*",
-        "twig/twig": "1.*"
-    },
-    "autoload": {
-        "psr-0": { "Orkestra\\Bundle\\ApplicationBundle": "" }
-    },
-    "target-dir": "Orkestra/Bundle/ApplicationBundle"
+  "name": "orkestra/application-bundle",
+  "description": "Provides useful base functionality for any Symfony 2 application",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.3.3",
+    "orkestra/common": "1.0.*"
+  },
+  "suggest": {
+    "doctrine/doctrine-fixtures-bundle": "Allows easy initial database population"
+  },
+  "require-dev": {
+    "symfony/framework-bundle": "~2.2",
+    "symfony/dependency-injection": "~2.2",
+    "symfony/yaml": "~2.2",
+    "symfony/form": "~2.2",
+    "symfony/security": "~2.2",
+    "symfony/property-access": "~2.2",
+    "doctrine/orm": "2.3.*",
+    "doctrine/doctrine-bundle": "1.2.*",
+    "twig/twig": "1.*"
+  },
+  "autoload": {
+    "psr-0": { "Orkestra\\Bundle\\ApplicationBundle": "" }
+  },
+  "target-dir": "Orkestra/Bundle/ApplicationBundle"
 }
