@@ -58,14 +58,14 @@ class Address extends AbstractEntity
     /**
      * @var float $latitude
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=9, scale=6, nullable=true)
+     * @ORM\Column(name="latitude", type="decimal", precision=16, scale=12, nullable=true)
      */
     protected $latitude = null;
 
     /**
      * @var float $longitude
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=9, scale=6, nullable=true)
+     * @ORM\Column(name="longitude", type="decimal", precision=16, scale=12, nullable=true)
      */
     protected $longitude = null;
 
@@ -84,7 +84,7 @@ class Address extends AbstractEntity
      */
     public function __toString()
     {
-        return sprintf('%s, %s, %s %s', trim($this->street . ' ' . $this->suite), $this->city, $this->region->getCode(), $this->postalCode);
+        return sprintf('%s, %s, %s %s', trim($this->street . ' ' . $this->suite), $this->city, ($this->region ? $this->region->getCode() : ''), $this->postalCode);
     }
 
     /**
