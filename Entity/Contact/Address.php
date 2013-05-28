@@ -72,14 +72,14 @@ class Address extends AbstractEntity
     /**
      * @var bool Whether this address has been validated with a validation service
      *
-     * @ORM\Column(name="validated", type="string")
+     * @ORM\Column(name="validated", type="boolean")
      */
     protected $validated = false;
 
     /**
      * @var bool If validated, whether this address is valid or not
      *
-     * @ORM\Column(name="valid", type="string")
+     * @ORM\Column(name="valid", type="boolean")
      */
     protected $valid = true;
 
