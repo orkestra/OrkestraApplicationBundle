@@ -70,6 +70,20 @@ class Address extends AbstractEntity
     protected $longitude = null;
 
     /**
+     * @var bool Whether this address has been validated with a validation service
+     *
+     * @ORM\Column(name="validated", type="string")
+     */
+    protected $validated = false;
+
+    /**
+     * @var bool If validated, whether this address is valid or not
+     *
+     * @ORM\Column(name="valid", type="string")
+     */
+    protected $valid = true;
+
+    /**
      * @var \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region
      *
      * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region")
@@ -229,5 +243,53 @@ class Address extends AbstractEntity
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * @param boolean $valid
+     */
+    public function setValid($valid)
+    {
+        $this->valid = (bool) $valid;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @param boolean $validated
+     */
+    public function setValidated($validated)
+    {
+        $this->validated = (bool) $validated;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getValidated()
+    {
+        return $this->validated;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isValidated()
+    {
+        return $this->validated;
     }
 }
