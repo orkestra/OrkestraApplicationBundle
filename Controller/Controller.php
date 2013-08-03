@@ -20,7 +20,7 @@ abstract class Controller extends BaseController
      * @param object      $entity
      * @param string|null $className If the object being passed is a subclass,
      *    specify the superclass that should be used to find the form type.
-     * @param array       $options
+     * @param array $options
      *
      * @throws \RuntimeException
      * @return \Symfony\Component\Form\AbstractType
