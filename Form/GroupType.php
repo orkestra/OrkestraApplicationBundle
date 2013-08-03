@@ -4,6 +4,7 @@ namespace Orkestra\Bundle\ApplicationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class GroupType extends AbstractType
 {
@@ -16,11 +17,11 @@ class GroupType extends AbstractType
         ;
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Orkestra\Bundle\ApplicationBundle\Entity\Group',
-        );
+        ));
     }
 
     public function getName()

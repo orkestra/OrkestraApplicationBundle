@@ -4,6 +4,7 @@ namespace Orkestra\Bundle\ApplicationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PreferencesType extends AbstractType
 {
@@ -35,11 +36,11 @@ class PreferencesType extends AbstractType
         ;
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Orkestra\Bundle\ApplicationBundle\Entity\Preferences',
-        );
+        ));
     }
 
     public function getName()
