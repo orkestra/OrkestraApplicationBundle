@@ -2,11 +2,9 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
-use Symfony\Component\Security\Core\User\AdvancedUserInterface,
-    Symfony\Component\Security\Core\User\UserInterface,
-    Doctrine\Common\Collections\ArrayCollection,
-    Doctrine\ORM\Mapping as ORM;
-
+use Orkestra\Bundle\ApplicationBundle\Model\PreferencesInterface;
+use Doctrine\ORM\Mapping as ORM;
+use Orkestra\Bundle\ApplicationBundle\Model\UserInterface;
 use Orkestra\Common\Entity\AbstractEntity;
 
 /**
@@ -17,7 +15,7 @@ use Orkestra\Common\Entity\AbstractEntity;
  * @ORM\Table(name="orkestra_user_preferences")
  * @ORM\Entity()
  */
-class Preferences extends AbstractEntity
+class Preferences extends AbstractEntity implements PreferencesInterface
 {
     /**
      * @ORM\Column(name="timezone", type="string", length=255)
@@ -40,6 +38,9 @@ class Preferences extends AbstractEntity
      */
     private $user;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->timezone = date_default_timezone_get();
@@ -47,42 +48,66 @@ class Preferences extends AbstractEntity
         $this->timeFormat = 'H:i:s';
     }
 
+    /**
+     * @return string
+     */
     public function getTimezone()
     {
         return $this->timezone;
     }
 
+    /**
+     * @param $timezone
+     */
     public function setTimezone($timezone)
     {
         $this->timezone = $timezone;
     }
 
+    /**
+     * @return string
+     */
     public function getDateFormat()
     {
         return $this->dateFormat;
     }
 
+    /**
+     * @param string $dateFormat
+     */
     public function setDateFormat($dateFormat)
     {
         $this->dateFormat = $dateFormat;
     }
 
+    /**
+     * @return string
+     */
     public function getTimeFormat()
     {
         return $this->timeFormat;
     }
 
+    /**
+     * @param string $timeFormat
+     */
     public function setTimeFormat($timeFormat)
     {
-        $this->timeFormat = (string)$timeFormat;
+        $this->timeFormat = (string) $timeFormat;
     }
 
+    /**
+     * @return mixed
+     */
     public function getUser()
     {
         return $this->user;
     }
 
-    public function setUser($user)
+    /**
+     * @param UserInterface $user
+     */
+    public function setUser(UserInterface $user)
     {
         $this->user = $user;
     }

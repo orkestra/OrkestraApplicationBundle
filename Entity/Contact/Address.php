@@ -108,7 +108,7 @@ class Address extends AbstractEntity implements AddressInterface
      */
     public function setAltPhone($altPhone)
     {
-        $this->altPhone = (string)$altPhone;
+        $this->altPhone = (string) $altPhone;
     }
 
     /**
@@ -140,7 +140,7 @@ class Address extends AbstractEntity implements AddressInterface
      */
     public function setPhone($phone)
     {
-        $this->phone = (string)$phone;
+        $this->phone = (string) $phone;
     }
 
     /**
@@ -188,7 +188,7 @@ class Address extends AbstractEntity implements AddressInterface
      */
     public function setSuite($suite)
     {
-        $this->suite = (string)$suite;
+        $this->suite = (string) $suite;
     }
 
     /**

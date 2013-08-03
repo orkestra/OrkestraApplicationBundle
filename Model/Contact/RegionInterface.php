@@ -2,7 +2,6 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Model\Contact;
 
-use Doctrine\ORM\Mapping as ORM;
 use Orkestra\Bundle\ApplicationBundle\Model\PersistentModelInterface;
 
 /**

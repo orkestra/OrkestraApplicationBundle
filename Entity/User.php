@@ -2,11 +2,12 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
-use Symfony\Component\Security\Core\User\AdvancedUserInterface,
-    Symfony\Component\Security\Core\User\UserInterface,
-    Doctrine\Common\Collections\ArrayCollection,
-    Doctrine\ORM\Mapping as ORM;
-
+use Orkestra\Bundle\ApplicationBundle\Model\GroupInterface;
+use Orkestra\Bundle\ApplicationBundle\Model\PreferencesInterface;
+use Orkestra\Bundle\ApplicationBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Orkestra\Common\Entity\AbstractEntity;
 
 /**
@@ -17,7 +18,7 @@ use Orkestra\Common\Entity\AbstractEntity;
  * @ORM\Table(name="orkestra_users")
  * @ORM\Entity(repositoryClass="Orkestra\Bundle\ApplicationBundle\Repository\UserRepository")
  */
-class User extends AbstractEntity implements AdvancedUserInterface, \Serializable
+class User extends AbstractEntity implements UserInterface, AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Column(name="username", type="string", length=100, unique=true)
@@ -73,62 +74,98 @@ class User extends AbstractEntity implements AdvancedUserInterface, \Serializabl
      */
     private $preferences;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->groups = new ArrayCollection();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
     }
 
+    /**
+     * @param $email
+     */
     public function setEmail($email)
     {
         $this->email = $email;
     }
 
+    /**
+     * @return mixed
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
+    /**
+     * @param $username
+     */
     public function setUsername($username)
     {
         $this->username = $username;
     }
 
+    /**
+     * @param $password
+     */
     public function setPassword($password)
     {
         $this->password = $password;
     }
 
+    /**
+     * @param $firstName
+     */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFirstName()
     {
         return $this->firstName;
     }
 
+    /**
+     * @param $lastName
+     */
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
     }
 
+    /**
+     * @return mixed
+     */
     public function getLastName()
     {
         return $this->lastName;
     }
 
-    public function addGroup(Group $group)
+    /**
+     * @param GroupInterface $group
+     */
+    public function addGroup(GroupInterface $group)
     {
         $this->groups[] = $group;
     }
 
+    /**
+     * @param $groups
+     */
     public function setGroups($groups)
     {
         if ($groups instanceof Group) {
@@ -142,23 +179,38 @@ class User extends AbstractEntity implements AdvancedUserInterface, \Serializabl
         }
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getGroups()
     {
         return $this->groups;
     }
 
-    public function removeGroup(Group $group)
+    /**
+     * @param GroupInterface $group
+     *
+     * @return ArrayCollection
+     */
+    public function removeGroup(GroupInterface $group)
     {
         $this->groups->removeElement($group);
+
         return $this->groups;
     }
 
-    public function setPreferences(Preferences $preferences)
+    /**
+     * @param PreferencesInterface $preferences
+     */
+    public function setPreferences(PreferencesInterface $preferences)
     {
         $this->preferences = $preferences;
         $this->preferences->setUser($this);
     }
 
+    /**
+     * @return mixed
+     */
     public function getPreferences()
     {
         return $this->preferences;
@@ -166,60 +218,98 @@ class User extends AbstractEntity implements AdvancedUserInterface, \Serializabl
 
     #region AdvancedUserInterface members
 
+    /**
+     * @return array
+     */
     public function getRoles()
     {
         return $this->groups->toArray();
     }
 
+    /**
+     * @param UserInterface $user
+     *
+     * @return bool
+     */
     public function equals(UserInterface $user)
     {
         return $user->getUsername() === $this->username;
     }
 
+    /**
+     *
+     */
     public function eraseCredentials()
     {
     }
 
+    /**
+     * @return mixed
+     */
     public function getUsername()
     {
         return $this->username;
     }
 
+    /**
+     * @return string
+     */
     public function getSalt()
     {
         return $this->salt;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
+    /**
+     * @return bool
+     */
     public function isAccountNonExpired()
     {
         return !$this->expired;
     }
 
+    /**
+     * @return bool
+     */
     public function isAccountNonLocked()
     {
         return !$this->locked;
     }
 
+    /**
+     * @return bool
+     */
     public function isCredentialsNonExpired()
     {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function isEnabled()
     {
         return $this->active;
     }
 
+    /**
+     * @return bool
+     */
     public function isExpired()
     {
         return $this->expired;
     }
 
+    /**
+     * @return bool
+     */
     public function isLocked()
     {
         return $this->locked;

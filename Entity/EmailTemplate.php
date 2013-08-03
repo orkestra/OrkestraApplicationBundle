@@ -3,7 +3,6 @@
 namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Orkestra\Common\Entity\AbstractEntity;
 
 /**
@@ -130,7 +129,7 @@ class EmailTemplate extends AbstractEntity
      */
     public function setDescription($description)
     {
-        $this->description = (string)$description;
+        $this->description = (string) $description;
     }
 
     /**
@@ -200,7 +199,7 @@ class EmailTemplate extends AbstractEntity
      */
     public function setCc($cc)
     {
-        $this->cc = (string)$cc;
+        $this->cc = (string) $cc;
     }
 
     /**
@@ -310,7 +309,7 @@ class EmailTemplate extends AbstractEntity
      */
     public function setAltBody($body)
     {
-        $this->altBody = (string)$body;
+        $this->altBody = (string) $body;
     }
 
     /**

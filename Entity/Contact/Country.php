@@ -47,8 +47,8 @@ class Country extends AbstractEntity implements CountryInterface
     /**
      * Constructor
      *
-     * @param string $name The name of the country
-     * @param string $code The 2-letter ISO abbreviation
+     * @param string $name     The name of the country
+     * @param string $code     The 2-letter ISO abbreviation
      * @param string $longCode The 3-letter ISO abbreviation
      */
     public function __construct($name = '', $code = '', $longCode = '')

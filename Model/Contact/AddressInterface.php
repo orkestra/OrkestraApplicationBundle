@@ -2,7 +2,6 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Model\Contact;
 
-use Doctrine\ORM\Mapping as ORM;
 use Orkestra\Bundle\ApplicationBundle\Model\PersistentModelInterface;
 
 /**
@@ -41,12 +40,12 @@ interface AddressInterface extends PersistentModelInterface
     public function getPhone();
 
     /**
-     * @param \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region $region
+     * @param \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface $region
      */
-    public function setRegion(Region $region);
+    public function setRegion(RegionInterface $region);
 
     /**
-     * @return \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region
+     * @return \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface
      */
     public function getRegion();
 
