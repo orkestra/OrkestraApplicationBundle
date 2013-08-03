@@ -3,6 +3,8 @@
 namespace Orkestra\Bundle\ApplicationBundle\Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface;
 use Orkestra\Common\Entity\AbstractEntity;
 
 /**
@@ -11,7 +13,7 @@ use Orkestra\Common\Entity\AbstractEntity;
  * @ORM\Table(name="orkestra_countries_regions")
  * @ORM\Entity
  */
-class Region extends AbstractEntity
+class Region extends AbstractEntity implements RegionInterface
 {
     /**
      * @var string $name
@@ -28,9 +30,9 @@ class Region extends AbstractEntity
     protected $code;
 
     /**
-     * @var \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Country
+     * @var \Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface
      *
-     * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Contact\Country", inversedBy="regions", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface", inversedBy="regions", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      * })
@@ -100,9 +102,9 @@ class Region extends AbstractEntity
     /**
      * Set country
      *
-     * @param \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Country $country
+     * @param \Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface $country
      */
-    public function setCountry(Country $country)
+    public function setCountry(CountryInterface $country)
     {
         $this->country = $country;
     }
@@ -110,7 +112,7 @@ class Region extends AbstractEntity
     /**
      * Get country
      *
-     * @return \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Country
+     * @return \Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface
      */
     public function getCountry()
     {

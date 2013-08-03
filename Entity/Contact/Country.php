@@ -4,6 +4,8 @@ namespace Orkestra\Bundle\ApplicationBundle\Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface;
 use Orkestra\Common\Entity\AbstractEntity;
 
 /**
@@ -12,7 +14,7 @@ use Orkestra\Common\Entity\AbstractEntity;
  * @ORM\Entity
  * @ORM\Table(name="orkestra_countries")
  */
-class Country extends AbstractEntity
+class Country extends AbstractEntity implements CountryInterface
 {
     /**
      * @var string $name
@@ -38,7 +40,7 @@ class Country extends AbstractEntity
     /**
      * @var \Doctrine\Common\Collections\Collection Collection of region entities
      *
-     * @ORM\OneToMany(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region", mappedBy="country", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface", mappedBy="country", cascade={"persist"})
      */
     protected $regions;
 
@@ -129,9 +131,9 @@ class Country extends AbstractEntity
     /**
      * Add a region to this country
      *
-     * @param \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region $region
+     * @param \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface $region
      */
-    public function addRegion(Region $region)
+    public function addRegion(RegionInterface $region)
     {
         $region->setCountry($this);
         $this->regions->add($region);

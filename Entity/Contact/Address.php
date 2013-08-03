@@ -3,6 +3,8 @@
 namespace Orkestra\Bundle\ApplicationBundle\Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\AddressInterface;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface;
 use Orkestra\Common\Entity\AbstractEntity;
 
 /**
@@ -11,7 +13,7 @@ use Orkestra\Common\Entity\AbstractEntity;
  * @ORM\Entity
  * @ORM\Table(name="orkestra_addresses")
  */
-class Address extends AbstractEntity
+class Address extends AbstractEntity implements AddressInterface
 {
     /**
      * @var string
@@ -84,9 +86,9 @@ class Address extends AbstractEntity
     protected $valid = true;
 
     /**
-     * @var \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region
+     * @var \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface
      *
-     * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region")
+     * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * })
@@ -150,15 +152,15 @@ class Address extends AbstractEntity
     }
 
     /**
-     * @param \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region $region
+     * @param \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface $region
      */
-    public function setRegion(Region $region)
+    public function setRegion(RegionInterface $region)
     {
         $this->region = $region;
     }
 
     /**
-     * @return \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region
+     * @return \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface
      */
     public function getRegion()
     {
