@@ -24,5 +24,10 @@
   "autoload": {
     "psr-0": { "Orkestra\\Bundle\\ApplicationBundle": "" }
   },
-  "target-dir": "Orkestra/Bundle/ApplicationBundle"
+  "target-dir": "Orkestra/Bundle/ApplicationBundle",
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "1.0-dev"
+    }
+  }
 }
