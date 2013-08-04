@@ -13,6 +13,8 @@ class DateTimeType extends BaseDateTimeType
 {
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        parent::setDefaultOptions($resolver);
+
         $resolver->setDefaults(array(
             'data_timezone' => DateTime::getServerTimezone()->getName(),
             'user_timezone' => DateTime::getUserTimezone()->getName()
