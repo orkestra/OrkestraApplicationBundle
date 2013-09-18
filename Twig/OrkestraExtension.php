@@ -26,6 +26,8 @@ class OrkestraExtension extends \Twig_Extension
      */
     protected $action;
 
+    private $request;
+
     /**
      * @return array
      */
@@ -53,6 +55,7 @@ class OrkestraExtension extends \Twig_Extension
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
+        $this->request = $this->container->get('request');
     }
 
     /**
@@ -125,6 +128,6 @@ class OrkestraExtension extends \Twig_Extension
      */
     protected function getCurrentRequest()
     {
-        return $this->container->get('request');
+        return $this->request;
     }
 }
