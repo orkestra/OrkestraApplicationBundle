@@ -55,7 +55,9 @@ class OrkestraExtension extends \Twig_Extension
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->request = $this->container->get('request');
+        if ($this->container->isScopeActive('request')) {
+            $this->request = $this->container->get('request');
+        }
     }
 
     /**
@@ -128,6 +130,14 @@ class OrkestraExtension extends \Twig_Extension
      */
     protected function getCurrentRequest()
     {
+        if (!$this->request) {
+            if ($this->container->isScopeActive('request')) {
+                $this->request = $this->container->get('request');
+            } else {
+                throw new \RuntimeException('Unable to get "request" service');
+            }
+        }
+
         return $this->request;
     }
 }
