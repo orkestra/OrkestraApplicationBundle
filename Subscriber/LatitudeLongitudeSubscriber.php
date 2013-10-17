@@ -17,6 +17,14 @@ class LatitudeLongitudeSubscriber implements EventSubscriber
             return;
         }
 
+        if (!$event->hasChangedField('street')
+            || !$event->hasChangedField('city')
+            || !$event->hasChangedField('region')
+            || !$event->hasChangedField('postalCode')
+        ) {
+            return;
+        }
+
         if (!$event->hasChangedField('latitude')) {
             $entity->setLatitude(null);
         }
