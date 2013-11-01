@@ -34,7 +34,7 @@ class Address extends AbstractEntity implements AddressInterface
      *
      * @ORM\Column(name="street", type="string")
      */
-    protected $street;
+    protected $street = '';
 
     /**
      * @var string
@@ -48,14 +48,14 @@ class Address extends AbstractEntity implements AddressInterface
      *
      * @ORM\Column(name="city", type="string")
      */
-    protected $city;
+    protected $city = '';
 
     /**
      * @var string
      *
      * @ORM\Column(name="postal_code", type="string")
      */
-    protected $postalCode;
+    protected $postalCode = '';
 
     /**
      * @var float $latitude
@@ -124,7 +124,7 @@ class Address extends AbstractEntity implements AddressInterface
      */
     public function setCity($city)
     {
-        $this->city = $city;
+        $this->city = (string) $city;
     }
 
     /**
@@ -154,7 +154,7 @@ class Address extends AbstractEntity implements AddressInterface
     /**
      * @param \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface $region
      */
-    public function setRegion(RegionInterface $region)
+    public function setRegion(RegionInterface $region = null)
     {
         $this->region = $region;
     }
@@ -172,7 +172,7 @@ class Address extends AbstractEntity implements AddressInterface
      */
     public function setStreet($street)
     {
-        $this->street = $street;
+        $this->street = (string) $street;
     }
 
     /**
@@ -204,7 +204,7 @@ class Address extends AbstractEntity implements AddressInterface
      */
     public function setPostalCode($postalCode)
     {
-        $this->postalCode = $postalCode;
+        $this->postalCode = (string) $postalCode;
     }
 
     /**
