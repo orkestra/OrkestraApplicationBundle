@@ -1,0 +1,132 @@
+{% block form_row %}
+{% spaceless %}
+<div class="form-group">
+    {{ form_label(form) }}
+    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+</div>
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block form_errors %}
+{% spaceless %}
+<span class="help-block"{% if errors|length <= 0 %} style="display: none"{% endif %}>
+{% for error in errors %}
+    {{ error.message }}
+{% endfor %}
+</span>
+{% endspaceless %}
+{% endblock form_errors %}
+
+{% block form_widget_simple %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    {% set attr = attr|merge({ class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    {% set prepend = prepend|default(false) %}
+    {% set append = append|default(false) %}
+    {% if prepend or append %}
+    <div class="input-group">
+    {% endif %}
+        {% if prepend %}<span class="input-group-addon">{{ prepend|raw }}</span>{% endif %}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        {% if append %}<span class="input-group-addon">{{ append|raw }}</span>{% endif %}
+    {% if prepend is not empty or append is not empty %}
+    </div>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+{% block choice_widget_collapsed %}
+{% spaceless %}
+    {% set attr = attr|merge({ class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    {% if empty_value is not none %}
+        <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+    {% endif %}
+        {% if preferred_choices|length > 0 %}
+            {% set options = preferred_choices %}
+            {{ block('choice_widget_options') }}
+            {% if choices|length > 0 and separator is not none %}
+                <option disabled="disabled">{{ separator }}</option>
+            {% endif %}
+        {% endif %}
+        {% set options = choices %}
+        {{ block('choice_widget_options') }}
+</select>
+{% endspaceless %}
+{% endblock choice_widget_collapsed %}
+
+{% block textarea_widget %}
+{% spaceless %}
+    {% set attr = attr|default([])|merge({ class: 'form-control' }) %}
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+{% endspaceless %}
+{% endblock textarea_widget %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+    {% for child in form %}
+        <div class="checkbox">
+            {{ form_widget(child) }}
+            {{ form_label(child) }}
+        </div>
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block tel_widget %}
+{% spaceless %}
+    {% set type = 'text' %}
+    {% set attr = attr|merge({ class: (attr.class|default('') ~ ' telephone')|trim }) %}
+    {% set prepend = '<i class="icon-phone"></i>' %}
+    {{ block('form_widget_simple') }}
+{% endspaceless %}
+{% endblock tel_widget %}
+
+{% block email_widget %}
+{% spaceless %}
+    {% set type = 'text' %}
+    {% set attr = attr|merge({ class: (attr.class|default('') ~ ' email')|trim }) %}
+    {% set prepend = '@' %}
+    {{ block('form_widget_simple') }}
+{% endspaceless %}
+{% endblock email_widget %}
+
+{% block url_widget %}
+{% spaceless %}
+    {% set type = 'url' %}
+    {% set attr = attr|merge({ class: (attr.class|default('') ~ ' url')|trim }) %}
+    {% set prepend = '<i class="icon-terminal"></i>' %}
+    {{ block('form_widget_simple') }}
+{% endspaceless %}
+{% endblock url_widget %}
+
+{% block money_widget %}
+{% spaceless %}
+    {% set type = 'text' %}
+    {% set attr = attr|merge({ class: (attr.class|default('') ~ ' currency')|trim }) %}
+    {% set prepend = '<i class="icon-usd"></i>' %}
+    {{ block('form_widget_simple') }}
+{% endspaceless %}
+{% endblock money_widget %}
+
+{% block date_widget %}
+{% spaceless %}
+    {% if widget == 'single_text' %}
+        {% set type = 'text' %}
+        {% set attr = attr|merge({ class: (attr.class|default('') ~ ' date')|trim, autocomplete: 'off' }) %}
+        {% set prepend = '<i class="icon-calendar"></i>' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+    <div {{ block('widget_container_attributes') }}>
+        {{ date_pattern|replace({
+        '{{ year }}':  form_widget(form.year),
+        '{{ month }}': form_widget(form.month),
+        '{{ day }}':   form_widget(form.day),
+        })|raw }}
+    </div>
+    {% endif %}
+{% endspaceless %}
+{% endblock date_widget %}
