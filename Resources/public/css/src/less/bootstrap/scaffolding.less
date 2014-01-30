@@ -4,8 +4,13 @@
 
 
 // Reset the box-sizing
-
-*,
+//
+// Heads up! This reset may cause conflicts with some third-party widgets.
+// For recommendations on resolving such conflicts, see
+// http://getbootstrap.com/getting-started/#third-box-sizing
+* {
+  .box-sizing(border-box);
+}
 *:before,
 *:after {
   .box-sizing(border-box);
@@ -25,9 +30,6 @@ body {
   line-height: @line-height-base;
   color: @text-color;
   background-color: @body-bg;
-  background-image: url(@body-bgi);
-  background-repeat: repeat;
-  background-position: top left;
 }
 
 // Reset fonts for relevant elements
@@ -38,17 +40,6 @@ textarea {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-}
-
-// Reset unusual Firefox-on-Android default style.
-//
-// See https://github.com/necolas/normalize.css/issues/214
-
-button,
-input,
-select[multiple],
-textarea {
-  background-image: none;
 }
 
 
@@ -67,6 +58,16 @@ a {
   &:focus {
     .tab-focus();
   }
+}
+
+
+// Figures
+//
+// We reset this here because previously Normalize had no `figure` margins. This
+// ensures we don't break anyone's use of the element.
+
+figure {
+  margin: 0;
 }
 
 
@@ -128,6 +129,6 @@ hr {
   margin: -1px;
   padding: 0;
   overflow: hidden;
-  clip: rect(0 0 0 0);
+  clip: rect(0,0,0,0);
   border: 0;
 }
