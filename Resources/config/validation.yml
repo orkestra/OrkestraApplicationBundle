@@ -1,0 +1,5 @@
+Orkestra\Bundle\ApplicationBundle\Entity\HashedEntity:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: hash
+        message: 'This field must be unique.'
