@@ -1,9 +1,9 @@
 <?php
 
-namespace Terramar\Bundle\ApplicationBundle\Listener;
+namespace Orkestra\Bundle\ApplicationBundle\Listener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Terramar\Bundle\ApplicationBundle\Http\JsonRedirectResponse;
+use Orkestra\Bundle\ApplicationBundle\Http\JsonRedirectResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class JsonResponseListener

@@ -1,6 +1,6 @@
 <?php
 
-namespace Terramar\Bundle\ApplicationBundle\Model;
+namespace Orkestra\Bundle\ApplicationBundle\Model;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
