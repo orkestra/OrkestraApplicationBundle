@@ -1,0 +1,82 @@
+// FORMS
+
+.form-title  {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  .box-shadow(0px 1px 0px 0px #fff);
+  font-weight: 300;
+  font-family: @font-family-alt;
+  text-transform: uppercase;
+  i {
+    font-size: 22px;
+    margin-right: 10px;
+    color: #444342;
+  }
+  &.form-title-first {
+    margin-top: 0px;
+  }
+}
+
+
+// SLIDERS
+
+.ui-slider-i {
+  padding: 10px;
+  background-color: #F7F5ED;
+  border-radius: 10px;
+}
+
+.ui-slider {
+  background-color: #EDE8D3;
+  .box-shadow(~"inset 0px 3px 3px 0px rgba(0,0,0,0.15), 0px 2px 2px 0px #fff");
+  border-radius: 6px;
+  border: 1px solid #B5A982;
+  border-bottom: 1px solid lighten(#B2A67C, 20%);
+  border-top: 1px solid darken(#B2A67C, 10%);
+}
+
+
+// PERIOD SELECTOR FORM
+
+.form-period-selector {
+  .control-label {
+  }
+  .form-control {
+    width: 45%;
+    @media (min-width: @screen-xs) and (max-width: @screen-xs-max) {
+      display: inline-block;
+    }
+    @media (max-width: @screen-xs) {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.form-group {
+  .help-block {
+    margin: 0;
+    line-height: @input-height-base;
+  }
+
+  &.error {
+    label {
+      color: saturate(@btn-danger-bg, 25%);
+    }
+
+    .form-control, .input-group-addon {
+      border-color: saturate(@btn-danger-bg, 25%);
+      color: saturate(@btn-danger-bg, 25%);
+
+      &:focus {
+        box-shadow: 0 1px 1px rgba(255, 0, 0, 0.075) inset, 0 0 8px rgba(155, 0, 0, 0.6);
+        outline: 0 none;
+      }
+    }
+
+    .help-block {
+      color: saturate(@btn-danger-bg, 25%);
+    }
+  }
+}
