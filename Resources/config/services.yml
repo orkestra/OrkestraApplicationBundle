@@ -3,6 +3,9 @@ imports:
   - { resource: services/helpers.yml }
   - { resource: services/workers.yml }
 
+parameters:
+  app.version: 
+
 services:
   orkestra.entity_manager:
     alias: doctrine.orm.entity_manager
@@ -23,13 +26,11 @@ services:
 
   # Listeners
   orkestra.application.user_preferences_listener:
-    public: false
     class: Orkestra\Bundle\ApplicationBundle\Listener\UserPreferencesListener
     arguments: [ @service_container ]
     tags:
        - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
   orkestra.application.json_response_listener:
-    public: false
     class: Orkestra\Bundle\ApplicationBundle\Listener\JsonResponseListener
     tags:
       - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 128 }

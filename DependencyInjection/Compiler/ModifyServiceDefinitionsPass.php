@@ -2,6 +2,7 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler;
 
+use Orkestra\Bundle\ApplicationBundle\OrkestraApplicationBundle;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

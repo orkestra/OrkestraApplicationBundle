@@ -14,6 +14,8 @@ use Orkestra\Common\DbalType\EncryptedStringType;
 
 class OrkestraApplicationBundle extends Bundle
 {
+    const VERSION = '1.0.0-DEV';
+    
     /**
      * {@inheritDoc}
      */
