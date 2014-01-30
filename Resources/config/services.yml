@@ -55,14 +55,21 @@ services:
       - { name: twig.extension }
 
   # Listeners
-  orkestra.user_preferences_listener:
+  orkestra.application.user_preferences_listener:
+    public: false
     class: Orkestra\Bundle\ApplicationBundle\Listener\UserPreferencesListener
     arguments: [ @service_container ]
     tags:
        - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+  orkestra.application.json_response_listener:
+    public: false
+    class: Orkestra\Bundle\ApplicationBundle\Listener\JsonResponseListener
+    tags:
+      - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 128 }
 
   # Subscribers
   orkestra.subscriber.latitude_longitude:
+    public: false
     class: Orkestra\Bundle\ApplicationBundle\Subscriber\LatitudeLongitudeSubscriber
     tags:
       - { name: doctrine.event_subscriber }
