@@ -1,3 +1,11 @@
+Orkestra\Bundle\ApplicationBundle\Entity\User:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: { fields: username, message: 'Username is already taken.' }
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: { fields: email, message: 'Email address is already taken.' }
+  properties:
+    email:
+      - Email: ~
+
 Orkestra\Bundle\ApplicationBundle\Entity\HashedEntity:
   constraints:
     - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
