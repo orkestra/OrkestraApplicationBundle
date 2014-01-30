@@ -1,0 +1,15 @@
+parameters:
+  orkestra.file_manager.base_path:          %kernel.root_dir%/files
+
+services:
+  # Helpers
+  orkestra.email_helper:
+    class: Orkestra\Bundle\ApplicationBundle\Helper\EmailHelper
+    arguments: [ @templating, @twig, @mailer, %orkestra.system_email_address% ]
+  orkestra.form_helper:
+    class: Orkestra\Bundle\ApplicationBundle\Helper\FormHelper
+    arguments: [ @service_container ]
+
+  orkestra.file_manager:
+    class: Orkestra\Bundle\ApplicationBundle\Manager\FileManager
+    arguments: [ %orkestra.file_manager.base_path% ]
