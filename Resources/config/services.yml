@@ -35,9 +35,9 @@ services:
       - { name: form.type, alias: entity_choice }
 
   # Helpers
-  orkestra.mail_helper:
-    class: Orkestra\Bundle\ApplicationBundle\Helper\MailHelper
-    arguments: [ @templating, @twig ]
+  orkestra.email_helper:
+    class: Orkestra\Bundle\ApplicationBundle\Helper\EmailHelper
+    arguments: [ @templating, @twig, @mailer, %orkestra.system_email_address% ]
   orkestra.form_helper:
     class: Orkestra\Bundle\ApplicationBundle\Helper\FormHelper
     arguments: [ @service_container ]
