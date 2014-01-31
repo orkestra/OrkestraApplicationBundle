@@ -2,9 +2,10 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller\Auth;
 
+use Orkestra\Bundle\ApplicationBundle\Http\JsonErrorResponse;
+use Orkestra\Bundle\ApplicationBundle\Http\JsonSuccessResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Orkestra\Bundle\ApplicationBundle\Controller\Controller;
-use Symfony\Component\Form\FormError;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -17,7 +18,7 @@ class PasswordResetController extends Controller
     /**
      * Displays a form to request a reset
      *
-     * @Route("/reset-password", name="reset_password")
+     * @Route("/reset-password", name="orkestra_password_reset_new")
      * @Template
      */
     public function newAction()
@@ -32,16 +33,13 @@ class PasswordResetController extends Controller
     /**
      * Resets a user's password and emails them the temporary password
      *
-     * @Route("/reset-password/reset", name="reset_password_reset")
+     * @Route("/reset-password/reset", name="orkestra_password_reset_create", defaults={"_format"="json"})
      * @Method("POST")
-     * @Template("OrkestraApplicationBundle:Auth/PasswordReset:new.html.twig")
      */
     public function createAction(Request $request)
     {
         $form = $this->getResetForm();
         $form->bind($request);
-
-        $reset = false;
 
         if ($form->isValid()) {
             $email = $form->get('email')->getData();
@@ -49,49 +47,20 @@ class PasswordResetController extends Controller
             $user = $em->getRepository('OrkestraApplicationBundle:User')->findOneBy(array('email' => $email));
 
             if ($user) {
-                $password = $this->generatePassword();
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($user);
-                $user->setPassword($encoder->encodePassword($password, $user->getSalt()));
-
-                // Send email
-                $body = $this->renderView('OrkestraApplicationBundle:Auth/PasswordReset:resetEmail.html.twig', array('user' => $user, 'password' => $password));
-                $from = $this->container->getParameter('orkestra.system_email_address');
-
-                $message = new \Swift_Message();
-                $message->setFrom($from)
-                    ->setReplyTo($from)
-                    ->setTo($user->getEmail())
-                    ->setSubject('Your password has been reset')
-                    ->setBody($body, 'text/html');
-
-                $this->get('mailer')->send($message);
+                $passwordHelper = $this->get('epk.application.helper.password');
+                $hashedEntity = $passwordHelper->sendEmail($user, 'Password Reset Request');
 
                 $em->persist($user);
+                $em->persist($hashedEntity);
                 $em->flush();
 
-                $reset = true;
-            } else {
-                $form->addError(new FormError('Invalid or unknown email address'));
+                return new JsonSuccessResponse('Your password has been reset. Please check your email for further instructions.');
             }
         }
 
-        return array(
-            'reset' => $reset,
-            'form' => $form->createView()
-        );
-    }
+        sleep(2);
 
-    /**
-     * Semi-random password generator for generating temporary passwords
-     */
-    private function generatePassword()
-    {
-        $salt = md5(uniqid(mt_rand()));
-
-        $slice = mt_rand(0, 21);
-
-        return substr(md5(uniqid($salt, true)), $slice, 10);
+        return new JsonErrorResponse('Invalid or unknown email address');
     }
 
     private function getResetForm()
