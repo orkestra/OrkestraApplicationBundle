@@ -1,0 +1,43 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Password Set{% endblock %}
+
+{% block body %}
+    <div class="all-wrapper no-menu-wrapper">
+        <div class="login-logo-w">
+            <a href="#set-password" class="logo">
+                <span>Application</span>
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="content-wrapper">
+                    <div class="content-inner">
+                        <div class="main-content main-content-grey-gradient no-page-header">
+                            <div class="main-content-inner">
+                                <form id="set-password" action="{{ path('orkestra_password_set_create') }}" role="form" method="post">
+                                    <div class="form-group">
+                                        {{ form_widget(form.password, { attr: { placeholder: 'Password' } }) }}
+                                    </div>
+                                    <div class="hidden">
+                                        {{ form_rest(form) }}
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additional_javascripts %}
+    <script type="text/javascript">
+        $(function() {
+            Orkestra.form.bind(document.getElementById('set-password'));
+        });
+    </script>
+{% endblock %}
