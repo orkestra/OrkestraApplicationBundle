@@ -1,0 +1,60 @@
+{% macro navitem(options, level) %}
+{% spaceless %}
+    {# Available options #}
+    {% set label = options.label %}
+    {% set route = options.route|default('') %}
+    {% set params = options.params|default([]) %}
+    {% set active = options.active|default(false) %}
+    {% set icon = options.icon|default(false) %}
+    {% set role = options.role|default(false) %}
+    {% set not_role = options.not_role|default(false) %}
+    {% set li_class = options.li_class|default('') %}
+    {% set a_class = options.a_class|default('') %}
+    {% set modal = options.modal|default(false) %}
+    {% set children = options.children|default(false) %}
+
+    {% set level = level|default(1) %}
+
+    {# Should this item be open? Currently supports 3 levels deep #}
+    {% set open = false %}
+    {% for child in children if children %}
+        {% if child.active|default(false) %}
+            {% set open = true %}
+        {% else %}
+            {% for child in child.children|default([]) %}
+                {% if child.active|default(false) %}
+                    {% set open = true %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    {% if (not role or is_granted(role)) and (not not_role or not is_granted(role)) %}
+        {% if open or active %}
+            {% set li_class = li_class ~ ' current' %}
+        {% endif %}
+        {% if open %}
+            {% set a_class = a_class ~ ' current' %}
+        {% endif %}
+        {% if children %}{% set a_class = a_class ~ ' dropdown-toggle' %}{% endif %}
+
+<li{% if li_class %} class="{{ li_class|trim }}"{% endif %}>
+    <a {% if modal and not children %}data-modal="true" {% endif %}{% if a_class %}class="{{ a_class|trim }}" {% endif %}href="{{ children ? '#' : path(route, params) }}">
+        {% if icon %}<i class="{{ icon }}"></i>{% endif %}
+        {{ label }}
+        {% if children %}
+            <b class="icon-angle-down pull-right"></b>
+        {% endif %}
+    </a>
+
+        {% if children %}
+    <ul>
+            {% for child in children %}
+    {{ _self.navitem(child, level + 1) }}
+            {% endfor %}
+    </ul>
+        {% endif %}
+</li>
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
