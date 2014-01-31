@@ -2,7 +2,6 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Helper;
 
-use EPK\Bundle\ApplicationBundle\Helper\HashedEntityHelper;
 use Orkestra\Bundle\ApplicationBundle\Entity\HashedEntity;
 use Orkestra\Bundle\ApplicationBundle\Entity\User;
 

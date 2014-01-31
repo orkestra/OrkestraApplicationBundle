@@ -1,6 +1,6 @@
 <?php
 
-namespace EPK\Bundle\ApplicationBundle\Helper;
+namespace Orkestra\Bundle\ApplicationBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 use Orkestra\Bundle\ApplicationBundle\Entity\HashedEntity;
@@ -32,7 +32,7 @@ class HashedEntityHelper
     {
         $entityClass = get_class($entity);
 
-        $hash = $this->entityManager->getRepository('EPKApplicationBundle:HashedEntity')
+        $hash = $this->entityManager->getRepository('OrkestraApplicationBundle:HashedEntity')
             ->createQueryBuilder('h')
             ->where('h.referenceId = :refId')
             ->andWhere('h.className = :className')
@@ -66,7 +66,7 @@ class HashedEntityHelper
      */
     public function lookup($hash, $class)
     {
-        $qb = $this->entityManager->getRepository('EPKApplicationBundle:HashedEntity')
+        $qb = $this->entityManager->getRepository('OrkestraApplicationBundle:HashedEntity')
             ->createQueryBuilder('h');
 
         $result = $qb->where('h.hash = :hash')

@@ -47,8 +47,8 @@ class PasswordResetController extends Controller
             $user = $em->getRepository('OrkestraApplicationBundle:User')->findOneBy(array('email' => $email));
 
             if ($user) {
-                $passwordHelper = $this->get('epk.application.helper.password');
-                $hashedEntity = $passwordHelper->sendEmail($user, 'Password Reset Request');
+                $passwordHelper = $this->get('orkestra.application.helper.password');
+                $hashedEntity = $passwordHelper->sendPasswordResetEmail($user, 'Password Reset Request');
 
                 $em->persist($user);
                 $em->persist($hashedEntity);
