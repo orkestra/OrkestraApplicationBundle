@@ -1,6 +1,6 @@
 {% extends '::modal_base.html.twig' %}
 
-{% form_theme form '::_form_fields_horizontal.html.twig' %}
+{% form_theme form 'OrkestraApplicationBundle::_form_fields_horizontal.html.twig' %}
 
 {% block title %}My Profile{% endblock %}
 
@@ -25,7 +25,7 @@
                 </form>
             </div>
             <div id="password-tab" class="tab-pane">
-                {{ render(controller('OrkestraApplication:Profile:editPassword')) }}
+                {{ render(controller('OrkestraApplicationBundle:Profile:editPassword')) }}
             </div>
         </div>
     </div>
