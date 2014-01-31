@@ -1,6 +1,7 @@
 // Main classes start here
 
 body {
+  background: url("@{images-path}/brickwall.png") #efefef repeat;
 }
 
 .bottom-margin {
@@ -19,22 +20,21 @@ body {
   position: relative;
 }
 
-
 // all content wrapper
 .all-wrapper {
   padding: 40px;
 
   @media (min-width: @screen-md) and (max-width: @screen-md-max) {
-    padding: 20px;
+    padding:         20px;
   }
   @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
-    padding: 0px 20px 20px;
+    padding:         0px 20px 20px;
     &.no-menu-wrapper {
       padding: 30px;
     }
   }
   @media (max-width: @screen-sm) {
-    padding: 0px 10px 10px;
+    padding:         0px 10px 10px;
     &.no-menu-wrapper {
       padding: 20px;
     }
@@ -44,51 +44,51 @@ body {
 .content-wrapper {
 
   .content-inner {
-    .box-shadow(4px 4px 6px rgba(0,0,0,0.4));
+    .box-shadow(4px 4px 6px rgba(0, 0, 0, 0.4));
     border-radius: 4px;
-    border: 1px solid #542420;
-    border-top: 1px solid #542420;
+    border:        1px solid darken(@page-header-bg, 10%);
+    border-top:    1px solid darken(@page-header-bg, 10%);
   }
 
   .page-header {
-    background-color: #82403b;
-    color: #fff;
-    padding: 15px 20px; 
-    margin: 0;
-    border-radius: 4px 4px 0px 0px;
+    background-color: @page-header-bg;
+    color:            #ffffff;
+    padding:          15px 20px;
+    margin:           0;
+    border-radius:    4px 4px 0px 0px;
     .box-shadow(~"inset 0px 2px 1px rgba(255,255,255,0.1), 0px 2px 3px 0px rgba(0,0,0,0.2)");
-    position: relative;
-    z-index: 20;
-    border-bottom: 1px solid #542420;
+    position:         relative;
+    z-index:          20;
+    border-bottom:    1px solid darken(@page-header-bg, 10%);
 
     h1 {
-      margin: 0px;
-      font-family: @font-family-alt;
+      margin:         0px;
+      font-family:    @font-family-alt;
       text-transform: uppercase;
-      font-weight: 300;
-      text-shadow: 0px 0px 3px rgba(0,0,0,0.6);
-      font-size: 28px;
-      line-height: 40px;
+      font-weight:    300;
+      text-shadow:    0px 0px 3px rgba(0, 0, 0, 0.6);
+      font-size:      28px;
+      line-height:    40px;
 
       i {
-        font-size: 32px;
+        font-size:    32px;
         margin-right: 10px;
       }
     }
     .header-links {
-      border-bottom: 1px solid darken(#82403b, 5%);
-      .box-shadow(0px 1px 0px 0px rgba(255,255,255,0.1));
+      border-bottom:  1px solid darken(@page-header-bg, 10%);
+      .box-shadow(0px 1px 0px 0px rgba(255, 255, 255, 0.1));
       padding-bottom: 5px;
-      margin-top: -10px;
-      float: right;
+      margin-top:     -10px;
+      float:          right;
 
       > a {
-        color: #fff;
-        padding: 0px 5px;
-        margin: 0px 5px;
-        border-left: 1px solid lighten(#82403b, 10%);
-        font-weight: 300;
-        font-size: 11px;
+        color:          #ffffff;
+        padding:        0px 5px;
+        margin:         0px 5px;
+        border-left:    1px solid lighten(@page-header-bg, 10%);
+        font-weight:    300;
+        font-size:      11px;
         text-transform: uppercase;
         &:first-child {
           border-left: none;
@@ -96,24 +96,24 @@ body {
         &:hover {
           text-decoration: none;
           i {
-            color: #fff;
+            color: #ffffff;
           }
         }
         i {
-          font-size: 16px;
-          color: #AD8380;
+          font-size:    16px;
+          color:        #efefef;
           margin-right: 5px;
-          margin-left: 5px;
+          margin-left:  5px;
         }
       }
 
       @media (max-width: @screen-sm) {
-        float: none;
-        margin-bottom: 10px;
+        float:           none;
+        margin-bottom:   10px;
         > a {
           border-left: none;
           &:first-child {
-            margin-left: 0px;
+            margin-left:  0px;
             padding-left: 0px;
           }
           i {
@@ -125,36 +125,33 @@ body {
   }
 
   .main-content {
-    background-color: #f3eee7;
-    border-top: none;
-    border-radius: 0px 0px 4px 4px;
-    padding: 30px;
+    background-color: @main-content-bg;
+    border-top:       none;
+    border-radius:    0px 0px 4px 4px;
+    padding:          30px;
     @media (min-width: @screen-md) and (max-width: @screen-md-max) {
-      padding: 20px;
+      padding:         20px;
     }
     @media (max-width: @screen-sm) {
-      padding: 15px;
-    }
-    &.main-content-white {
-      background-color: #fff;
+      padding:         15px;
     }
     &.main-content-grey-gradient {
-      background-color: #fff;
-      .box-shadow(inset 0px 2px 2px 0px #fff);
-      padding: 15px;
-      background-color: #fff;
+      background-color: #ffffff;
+      .box-shadow(inset 0px 2px 2px 0px #ffffff);
+      padding:          15px;
+      background-color: #ffffff;
       .box-shadow(~"inset 3px 3px 3px 0px #fff, inset 0px -3px 0px 0px rgba(0,0,0,0.04)");
       // margin-bottom: 20px;
 
       .main-content-inner {
-        padding: 30px;
-        background-color: #EFEFEF;
-        #gradient > .vertical(@start-color: #fff; @end-color: #EFEFEF);
-        border: 1px solid #bbb;
-        border-top: 1px solid #aaa;
-        border-left: 1px solid #aaa;
+        padding:          30px;
+        background-color: #efefef;
+        #gradient > .vertical(@start-color: #ffffff; @end-color: #efefef);
+        border:           1px solid #bbbbbb;
+        border-top:       1px solid #aaaaaa;
+        border-left:      1px solid #aaaaaa;
         .box-shadow(~"inset 2px 2px 4px 0px #ddd, 0px 2px 3px 0px #fff");
-        border-radius: 4px;
+        border-radius:    4px;
       }
     }
     &.no-page-header {
@@ -164,28 +161,26 @@ body {
 
 }
 
-
 .shadowed-bottom {
-  border-bottom: 1px solid #bbb;
+  border-bottom:    1px solid #bbbbbb;
   .box-shadow(~"inset 0px -2px 2px 0px rgba(0,0,0,0.05), inset 1px 1px 2px 0px #fff");
-  padding: 20px;
-  background-color: #F9F7F4;
-  border-radius: 4px 4px 0px 0px;
+  padding:          20px;
+  background-color: #f9f7f4;
+  border-radius:    4px 4px 0px 0px;
 }
-
 
 // TITLE
 
 .section-title {
-  border-bottom: 1px solid #E0DACF;
+  border-bottom:  1px solid #e0dacf;
   padding-bottom: 10px;
-  font-family: @font-family-alt;
-  color: #493a38;
+  font-family:    @font-family-alt;
+  color:          #493a38;
   text-transform: uppercase;
-  font-size: 22px;
+  font-size:      22px;
   i {
     margin-right: 10px;
-    font-size: 26px;
+    font-size:    26px;
   }
   &.first-title {
     margin-top: 0px;
@@ -194,18 +189,19 @@ body {
     margin-bottom: 40px;
   }
 }
+
 .section-sub-title {
-  border-bottom: 1px solid #E0DACF;
+  border-bottom:  1px solid #e0dacf;
   padding-bottom: 10px;
-  font-family: @font-family-alt;
-  color: #493a38;
+  font-family:    @font-family-alt;
+  color:          #493a38;
   text-transform: uppercase;
-  font-size: 16px;
-  margin-bottom: 20px;
-  margin-top: 40px;
+  font-size:      16px;
+  margin-bottom:  20px;
+  margin-top:     40px;
   i {
     margin-right: 10px;
-    font-size: 26px;
+    font-size:    26px;
   }
   &.first-title {
     margin-top: 0px;
@@ -213,22 +209,21 @@ body {
 }
 
 h4 {
-  font-weight: 300;
-  font-family: @font-family-alt;
+  font-weight:    300;
+  font-family:    @font-family-alt;
   text-transform: uppercase;
-  font-size: 20px;
-  border-bottom: 1px solid #ddd;
-  .box-shadow(0px 1px 0px 0px #fff);
+  font-size:      20px;
+  border-bottom:  1px solid #dddddd;
+  .box-shadow(0px 1px 0px 0px #ffffff);
   padding-bottom: 10px;
-  margin-bottom: 15px;
-  display: inline-block;
+  margin-bottom:  15px;
+  display:        inline-block;
 }
-
 
 /* spinner */
 .loading-spinner {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 99999999;
+  top:      50%;
+  left:     50%;
+  z-index:  99999999;
 }

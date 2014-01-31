@@ -5,40 +5,39 @@
 
   background-color: @rgba-color;
   // IE9 and down
-  background: none\9;
-  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d')", argb(@rgba-color),argb(@rgba-color))); // IE9 and down
+  background:       none\9;
+  filter:           e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d')", argb(@rgba-color), argb(@rgba-color))); // IE9 and down
 }
 
-.animation-duration(@sec){
+.animation-duration(@sec) {
   -webkit-animation-duration: @sec;
-  -moz-animation-duration: @sec;
-  -o-animation-duration: @sec;
-  animation-duration: @sec;
+  -moz-animation-duration:    @sec;
+  -o-animation-duration:      @sec;
+  animation-duration:         @sec;
 }
 
-.animation-delay(@sec){
+.animation-delay(@sec) {
   -webkit-animation-delay: @sec;
-  -moz-animation-delay: @sec;
-  -o-animation-delay: @sec;
-  animation-delay: @sec;
+  -moz-animation-delay:    @sec;
+  -o-animation-delay:      @sec;
+  animation-delay:         @sec;
 }
 
-.animation-name(@name){
+.animation-name(@name) {
   -webkit-animation-name: @name;
-  -moz-animation-name: @name;
-  -o-animation-name: @name;
-  animation-name: @name;
+  -moz-animation-name:    @name;
+  -o-animation-name:      @name;
+  animation-name:         @name;
 }
 
 .animated-infinite {
   -webkit-animation-iteration-count: infinite;
-  -moz-animation-iteration-count: infinite;
-  -o-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
+  -moz-animation-iteration-count:    infinite;
+  -o-animation-iteration-count:      infinite;
+  animation-iteration-count:         infinite;
 }
 
-
-.transform(@string){
+.transform(@string) {
   -webkit-transform: @string;
   -moz-transform:    @string;
   -ms-transform:     @string;

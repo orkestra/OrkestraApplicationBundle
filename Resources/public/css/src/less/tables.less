@@ -5,31 +5,33 @@
   }
 
   .dataTable {
-    margin-top: 10px;
-    margin-bottom:0;
+    margin-top:    10px;
+    margin-bottom: 0;
     td {
       &.expander {
-        width: 50px;
+        width:      50px;
         text-align: center;
       }
     }
 
     tr.clickable {
       background-color: @table-bg-hover;
-      cursor: pointer;
+      cursor:           pointer;
     }
 
     th {
       &[class*=sort] {
-        cursor:pointer;
+        cursor: pointer;
         &:after {
-          content:"\f0dc";
-          display:inline-block;
-          color:#555;
-          font-family:FontAwesome; font-size:13px; font-weight:normal;
-          float:right;
-          margin-right:4px;
-          position:relative;
+          content:      "\f0dc";
+          display:      inline-block;
+          color:        #555555;
+          font-family:  FontAwesome;
+          font-size:    13px;
+          font-weight:  normal;
+          float:        right;
+          margin-right: 4px;
+          position:     relative;
         }
 
         &:hover {
@@ -50,22 +52,22 @@
       }
 
       &.sorting_desc:after {
-        content:"\f0dd";
-        top:-6px;
+        content: "\f0dd";
+        top:     -6px;
         //color:@table-sort-active;
       }
       &.sorting_asc:after {
-        content:"\f0de";
-        top:4px;
-       //color:@table-sort-active;
+        content: "\f0de";
+        top:     4px;
+        //color:@table-sort-active;
       }
 
       &.sorting_disabled {
-        color: inherit;
-        cursor:inherit;
+        color:  inherit;
+        cursor: inherit;
 
         &:after {
-          display:none;
+          display: none;
         }
 
         &:hover {

@@ -1,13 +1,27 @@
-// Custom variables
-@widget-bg:       #F9F8F7;
-@images-path:     "../../../img/";
-@font-family-alt: "Oswald", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-
 // Bootstrap
 @import "bootstrap/bootstrap.less";
-
 // Custom mixins
 @import "mixins.less";
+
+// Custom variables
+@images-path: "../../../img/";
+@font-family-alt: "Oswald", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+@page-header-bg: #82a28b;
+@sidebar-bg: rgba(0, 0, 0, 0);
+@sidebar-hover-bg: #82a28b;
+@sidebar-border: darken(@sidebar-bg, 10%);
+@sidebar-hover-border: darken(@sidebar-hover-bg, 10%);
+@sidebar-box-shadow: transparent;
+// ~"inset 0px 2px 3px 0px rgba(0,0,0,0.4), 0px 1px 2px 0px rgba(255,255,255,0.2)";
+@sidebar-border: rgba(0, 0, 0, 0);
+@sidebar-text: black;
+@sidebar-text-shadow: none;
+@sidebar-hover-text: white;
+@sidebar-item-box-shadow: ~"inset 0px 1px 0px 0px #434756";
+
+@main-content-bg: #ffffff;
+@widget-bg: #efefef;
 
 // Application specific styles
 @import "layout.less";
@@ -18,6 +32,7 @@
 @import "widgets.less";
 @import "tables.less";
 @import "modals.less";
+@import "tabs.less";
 
 // Application specific modules
 @import "module/login.less";
