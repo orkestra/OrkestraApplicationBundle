@@ -12,7 +12,7 @@ services:
     arguments: [ @service_container ]
 
   orkestra.application.helper.password:
-    class: EPK\Bundle\ApplicationBundle\Helper\PasswordHelper
+    class: Orkestra\Bundle\ApplicationBundle\Helper\PasswordHelper
     arguments:
       - @orkestra.application.helper.email
       - @orkestra.application.helper.hashed_entity

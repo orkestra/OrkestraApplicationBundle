@@ -60,7 +60,7 @@ class PasswordHelper
     {
         $hashedEntity = $this->createHash($user);
         $this->emailHelper->createAndSendMessageFromTemplate(
-            'EPKApplicationBundle:Auth/PasswordSet:setEmail.html.twig',
+            'OrkestraApplicationBundle:Email:setPassword.html.twig',
             array(
                 'user' => $user,
                 'hash' => $hashedEntity->getHash()
