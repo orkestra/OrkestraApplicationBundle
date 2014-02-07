@@ -21,7 +21,9 @@
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
-    {% set attr = attr|merge({ class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    {% if not omit_form_control|default(false) %}
+        {% set attr = attr|merge({ class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    {% endif %}
     {% set prepend = prepend|default(false) %}
     {% set append = append|default(false) %}
     {% if prepend or append %}
@@ -111,6 +113,14 @@
     {{ block('form_widget_simple') }}
 {% endspaceless %}
 {% endblock money_widget %}
+
+{% block file_widget %}
+    {% spaceless %}
+        {% set type = 'file' %}
+        {% set omit_form_control = true %}
+        {{ block('form_widget_simple') }}
+    {% endspaceless %}
+{% endblock file_widget %}
 
 {% block date_widget %}
 {% spaceless %}
