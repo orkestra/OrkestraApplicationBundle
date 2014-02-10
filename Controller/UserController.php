@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -99,7 +108,7 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->get('session')->setFlash('success', 'The user has been created.');
+            $this->get('session')->getFlashBag()->set('success', 'The user has been created.');
 
             return $this->redirect($this->generateUrl('orkestra_user_show', array('id' => $user->getId())));
         }
@@ -141,7 +150,7 @@ class UserController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                $this->get('session')->setFlash('success', 'The password has been changed.');
+                $this->get('session')->getFlashBag()->set('success', 'The password has been changed.');
 
                 return $this->redirect($this->generateUrl('orkestra_user_show', array('id' => $id)));
             }
@@ -201,7 +210,8 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->get('session')->setFlash('success', 'Your changes have been saved.');
+            $this->get('session')->getFlashBag()->set('success', 'Your changes have been saved.');
+
             return $this->redirect($this->generateUrl('orkestra_user_show', array('id' => $id)));
         }
 

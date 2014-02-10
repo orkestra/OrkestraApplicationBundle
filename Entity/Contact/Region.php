@@ -1,9 +1,20 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
-use Orkestra\Common\Entity\EntityBase;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface;
+use Orkestra\Common\Entity\AbstractEntity;
 
 /**
  * A region within a country
@@ -11,7 +22,7 @@ use Orkestra\Common\Entity\EntityBase;
  * @ORM\Table(name="orkestra_countries_regions")
  * @ORM\Entity
  */
-class Region extends EntityBase
+class Region extends AbstractEntity implements RegionInterface
 {
     /**
      * @var string $name
@@ -28,9 +39,9 @@ class Region extends EntityBase
     protected $code;
 
     /**
-     * @var \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Country
+     * @var \Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface
      *
-     * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Contact\Country", inversedBy="regions", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface", inversedBy="regions", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      * })
@@ -100,9 +111,9 @@ class Region extends EntityBase
     /**
      * Set country
      *
-     * @param \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Country $country
+     * @param \Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface $country
      */
-    public function setCountry(Country $country)
+    public function setCountry(CountryInterface $country)
     {
         $this->country = $country;
     }
@@ -110,7 +121,7 @@ class Region extends EntityBase
     /**
      * Get country
      *
-     * @return \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Country
+     * @return \Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface
      */
     public function getCountry()
     {

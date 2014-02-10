@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -14,7 +23,7 @@ class EnumType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->appendNormTransformer(new EnumTransformer($options['enum']));
+        $builder->addModelTransformer(new EnumTransformer($options['enum']));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

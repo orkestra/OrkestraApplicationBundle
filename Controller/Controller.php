@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
@@ -20,7 +29,7 @@ abstract class Controller extends BaseController
      * @param object      $entity
      * @param string|null $className If the object being passed is a subclass,
      *    specify the superclass that should be used to find the form type.
-     * @param array       $options
+     * @param array $options
      *
      * @throws \RuntimeException
      * @return \Symfony\Component\Form\AbstractType

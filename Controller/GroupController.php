@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -95,7 +104,7 @@ class GroupController extends Controller
             $em->persist($group);
             $em->flush();
 
-            $this->get('session')->setFlash('success', 'The group has been created.');
+            $this->get('session')->getFlashBag()->set('success', 'The group has been created.');
 
             return $this->redirect($this->generateUrl('orkestra_group_show', array('id' => $group->getId())));
 
@@ -158,7 +167,7 @@ class GroupController extends Controller
             $em->persist($group);
             $em->flush();
 
-            $this->get('session')->setFlash('success', 'Your changes have been saved.');
+            $this->get('session')->getFlashBag()->set('success', 'Your changes have been saved.');
 
             return $this->redirect($this->generateUrl('orkestra_group_show', array('id' => $id)));
         }

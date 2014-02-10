@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
-use Orkestra\Common\Entity\EntityBase;
+use Orkestra\Common\Entity\AbstractEntity;
 
 /**
  * EmailTemplate Entity
@@ -14,7 +22,7 @@ use Orkestra\Common\Entity\EntityBase;
  * @ORM\Table(name="orkestra_email_templates")
  * @ORM\Entity()
  */
-class EmailTemplate extends EntityBase
+class EmailTemplate extends AbstractEntity
 {
     /**
      * @var string $name
@@ -130,7 +138,7 @@ class EmailTemplate extends EntityBase
      */
     public function setDescription($description)
     {
-        $this->description = (string)$description;
+        $this->description = (string) $description;
     }
 
     /**
@@ -200,7 +208,7 @@ class EmailTemplate extends EntityBase
      */
     public function setCc($cc)
     {
-        $this->cc = (string)$cc;
+        $this->cc = (string) $cc;
     }
 
     /**
@@ -310,7 +318,7 @@ class EmailTemplate extends EntityBase
      */
     public function setAltBody($body)
     {
-        $this->altBody = (string)$body;
+        $this->altBody = (string) $body;
     }
 
     /**

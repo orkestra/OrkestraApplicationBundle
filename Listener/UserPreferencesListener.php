@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Listener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -30,10 +39,7 @@ class UserPreferencesListener
         if (!empty($token)) {
             $user = $token->getUser();
 
-            if ($user instanceof User) {
-                /** @var \Orkestra\Bundle\ApplicationBundle\Entity\User $user */
-                $preferences = $user->getPreferences();
-
+            if ($user instanceof User && ($preferences = $user->getPreferences())) {
                 DateTime::setUserTimezone(new \DateTimeZone($preferences->getTimezone()));
                 $timeFormat = $preferences->getTimeFormat() ? ' ' . $preferences->getTimeFormat() : '';
                 DateTime::setDefaultFormat($preferences->getDateFormat() . $timeFormat);

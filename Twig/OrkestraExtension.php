@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -25,6 +34,8 @@ class OrkestraExtension extends \Twig_Extension
      * @var string
      */
     protected $action;
+
+    private $request;
 
     /**
      * @return array
@@ -53,6 +64,9 @@ class OrkestraExtension extends \Twig_Extension
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
+        if ($this->container->isScopeActive('request')) {
+            $this->request = $this->container->get('request');
+        }
     }
 
     /**
@@ -125,6 +139,14 @@ class OrkestraExtension extends \Twig_Extension
      */
     protected function getCurrentRequest()
     {
-        return $this->container->get('request');
+        if (!$this->request) {
+            if ($this->container->isScopeActive('request')) {
+                $this->request = $this->container->get('request');
+            } else {
+                throw new \RuntimeException('Unable to get "request" service');
+            }
+        }
+
+        return $this->request;
     }
 }

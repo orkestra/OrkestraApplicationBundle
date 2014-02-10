@@ -1,15 +1,22 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM,
-    Doctrine\Common\Collections\ArrayCollection;
-
-use Symfony\Component\HttpFoundation\File\UploadedFile,
-    Symfony\Component\HttpFoundation\File\Exception\UploadException;
-
-use Orkestra\Common\Entity\EntityBase,
-    Orkestra\Common\Type\DateTime;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
+use Orkestra\Common\Entity\AbstractEntity;
+use Orkestra\Common\Type\DateTime;
 
 /**
  * File Entity
@@ -18,14 +25,14 @@ use Orkestra\Common\Entity\EntityBase,
  * @ORM\Table(name="orkestra_files")
  * @ORM\HasLifecycleCallbacks
  */
-class File extends EntityBase
+class File extends AbstractEntity
 {
     /**
      * Create From Uploaded File
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $upload
-     * @param string $uploadPath The directory to save the uploaded file to
-     * @param string $filename
+     * @param string                                              $uploadPath The directory to save the uploaded file to
+     * @param string                                              $filename
      *
      * @throws \Symfony\Component\HttpFoundation\File\Exception\UploadException
      * @return \Orkestra\Bundle\ApplicationBundle\Entity\File
@@ -226,6 +233,7 @@ class File extends EntityBase
         foreach ($this->groups as $index => $existingGroup) {
             if ($existingGroup === $group) {
                 unset($this->groups[$index]);
+
                 return;
             }
         }

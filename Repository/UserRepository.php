@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Repository;
 
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,7 +30,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         try {
             $user = $query->getSingleResult();
         } catch (NoResultException $e) {
-            throw new UsernameNotFoundException(sprintf('Unable to find an active user object identified by "%s".', $username), null, 0, $e);
+            throw new UsernameNotFoundException(sprintf('Unable to find an active user object identified by "%s".', $username));
         }
 
         return $user;

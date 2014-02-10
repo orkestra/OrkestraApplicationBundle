@@ -1,8 +1,18 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Worker;
 
 use Doctrine\ORM\EntityManager;
+use Guzzle\Http\ClientInterface;
 use Orkestra\Bundle\ApplicationBundle\Entity\Contact\Address;
 use Symfony\Component\HttpFoundation\Request;
 use Orkestra\Common\Kernel\HttpKernel;
@@ -12,6 +22,8 @@ use Orkestra\Common\Kernel\HttpKernel;
  */
 class LatitudeLongitudeWorker implements WorkerInterface
 {
+    const MILLISECONDS_PAUSE_BETWEEN_QUERIES = 0;
+
     /**
      * @var \Doctrine\ORM\EntityManager
      */
@@ -23,20 +35,21 @@ class LatitudeLongitudeWorker implements WorkerInterface
     protected $addressRepository;
 
     /**
-     * @var \Orkestra\Common\Kernel\HttpKernel
+     * @var \Guzzle\Http\ClientInterface
      */
-    protected $kernel;
+    private $client;
 
     /**
      * Constructor
      *
      * @param \Doctrine\ORM\EntityManager $entityManager
+     * @param \Guzzle\Http\ClientInterface $client
      */
-    public function __construct(EntityManager $entityManager, HttpKernel $kernel)
+    public function __construct(EntityManager $entityManager, ClientInterface $client)
     {
         $this->entityManager = $entityManager;
         $this->addressRepository = $entityManager->getRepository('OrkestraApplicationBundle:Contact\Address');
-        $this->kernel = $kernel;
+        $this->client = $client;
     }
 
     /**
@@ -74,9 +87,17 @@ class LatitudeLongitudeWorker implements WorkerInterface
             ->getResult();
 
         foreach ($addresses as $address) {
-            $this->updateLatLong($address);
+            try {
+                $this->updateLatLong($address);
+            } catch (\RuntimeException $e) {
+                echo "Stopping work -- over the API query limit.\n";
+
+                break;
+            }
 
             $this->entityManager->persist($address);
+
+            usleep(self::MILLISECONDS_PAUSE_BETWEEN_QUERIES);
         }
 
         $this->entityManager->flush();
@@ -84,19 +105,22 @@ class LatitudeLongitudeWorker implements WorkerInterface
 
     private function updateLatLong(Address $address)
     {
-        $request = Request::create('https://maps.googleapis.com/maps/api/geocode/json', 'GET', array(
-            'address' => $address->__toString(),
-            'sensor' => 'false'
-        ));
+        $request = $this->client->get('https://maps.googleapis.com/maps/api/geocode/json');
+        $request->getQuery()
+            ->set('address', $address->__toString())
+            ->set('sensor', 'false');
 
-        $response = $this->kernel->handle($request);
+        $response = $request->send();
 
-        $data = json_decode($response->getContent());
+        $data = json_decode($response->getBody(true));
 
-        if (isset($data->status) && 'OK' === $data->status) {
-            if (isset($data->results[0]->geometry->location)) {
+        if (isset($data->status)) {
+            if ('OK' === $data->status && isset($data->results[0]->geometry->location)) {
                 $address->setLatitude((float)$data->results[0]->geometry->location->lat);
                 $address->setLongitude((float)$data->results[0]->geometry->location->lng);
+                
+            }  elseif ('OVER_QUERY_LIMIT' === $data->status) {
+                throw new \RuntimeException('Over the query limit');
             }
         }
     }

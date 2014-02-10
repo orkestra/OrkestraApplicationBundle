@@ -1,9 +1,20 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface,
     Symfony\Component\Form\AbstractType;
+use Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class FormHelper
 {
@@ -82,17 +93,11 @@ class FormHelper
      */
     protected function _parseValue($item, $content)
     {
-        $chain = explode('.', $content);
-
-        $value = $item;
-
-        foreach ($chain as $property) {
-            try {
-                $value = call_user_func(array($value, 'get' . $property));
-            }
-            catch (\Exception $e) {
-                return null;
-            }
+        $value = null;
+        try {
+            $value = PropertyAccess::getPropertyAccessor()->getValue($item, $content);
+        } catch (UnexpectedTypeException $e) {
+            // Suppress potentially null values
         }
 
         return $value;

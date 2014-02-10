@@ -1,9 +1,20 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
-use Orkestra\Common\Entity\EntityBase;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\AddressInterface;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface;
+use Orkestra\Common\Entity\AbstractEntity;
 
 /**
  * A physical address
@@ -11,7 +22,7 @@ use Orkestra\Common\Entity\EntityBase;
  * @ORM\Entity
  * @ORM\Table(name="orkestra_addresses")
  */
-class Address extends EntityBase
+class Address extends AbstractEntity implements AddressInterface
 {
     /**
      * @var string
@@ -32,7 +43,7 @@ class Address extends EntityBase
      *
      * @ORM\Column(name="street", type="string")
      */
-    protected $street;
+    protected $street = '';
 
     /**
      * @var string
@@ -46,33 +57,47 @@ class Address extends EntityBase
      *
      * @ORM\Column(name="city", type="string")
      */
-    protected $city;
+    protected $city = '';
 
     /**
      * @var string
      *
      * @ORM\Column(name="postal_code", type="string")
      */
-    protected $postalCode;
+    protected $postalCode = '';
 
     /**
      * @var float $latitude
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=9, scale=6, nullable=true)
+     * @ORM\Column(name="latitude", type="decimal", precision=16, scale=12, nullable=true)
      */
     protected $latitude = null;
 
     /**
      * @var float $longitude
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=9, scale=6, nullable=true)
+     * @ORM\Column(name="longitude", type="decimal", precision=16, scale=12, nullable=true)
      */
     protected $longitude = null;
 
     /**
-     * @var \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region
+     * @var bool Whether this address has been validated with a validation service
      *
-     * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region")
+     * @ORM\Column(name="validated", type="boolean")
+     */
+    protected $validated = false;
+
+    /**
+     * @var bool If validated, whether this address is valid or not
+     *
+     * @ORM\Column(name="valid", type="boolean")
+     */
+    protected $valid = true;
+
+    /**
+     * @var \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface
+     *
+     * @ORM\ManyToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * })
@@ -84,7 +109,7 @@ class Address extends EntityBase
      */
     public function __toString()
     {
-        return sprintf('%s, %s, %s %s', trim($this->street . ' ' . $this->suite), $this->city, $this->region->getCode(), $this->postalCode);
+        return sprintf('%s, %s, %s %s', trim($this->street . ' ' . $this->suite), $this->city, ($this->region ? $this->region->getCode() : ''), $this->postalCode);
     }
 
     /**
@@ -92,7 +117,7 @@ class Address extends EntityBase
      */
     public function setAltPhone($altPhone)
     {
-        $this->altPhone = (string)$altPhone;
+        $this->altPhone = (string) $altPhone;
     }
 
     /**
@@ -108,7 +133,7 @@ class Address extends EntityBase
      */
     public function setCity($city)
     {
-        $this->city = $city;
+        $this->city = (string) $city;
     }
 
     /**
@@ -124,7 +149,7 @@ class Address extends EntityBase
      */
     public function setPhone($phone)
     {
-        $this->phone = (string)$phone;
+        $this->phone = (string) $phone;
     }
 
     /**
@@ -136,15 +161,15 @@ class Address extends EntityBase
     }
 
     /**
-     * @param \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region $region
+     * @param \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface $region
      */
-    public function setRegion(Region $region)
+    public function setRegion(RegionInterface $region = null)
     {
         $this->region = $region;
     }
 
     /**
-     * @return \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region
+     * @return \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface
      */
     public function getRegion()
     {
@@ -156,7 +181,7 @@ class Address extends EntityBase
      */
     public function setStreet($street)
     {
-        $this->street = $street;
+        $this->street = (string) $street;
     }
 
     /**
@@ -172,7 +197,7 @@ class Address extends EntityBase
      */
     public function setSuite($suite)
     {
-        $this->suite = (string)$suite;
+        $this->suite = (string) $suite;
     }
 
     /**
@@ -188,7 +213,7 @@ class Address extends EntityBase
      */
     public function setPostalCode($postalCode)
     {
-        $this->postalCode = $postalCode;
+        $this->postalCode = (string) $postalCode;
     }
 
     /**
@@ -229,5 +254,53 @@ class Address extends EntityBase
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * @param boolean $valid
+     */
+    public function setValid($valid)
+    {
+        $this->valid = (bool) $valid;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @param boolean $validated
+     */
+    public function setValidated($validated)
+    {
+        $this->validated = (bool) $validated;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getValidated()
+    {
+        return $this->validated;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isValidated()
+    {
+        return $this->validated;
     }
 }

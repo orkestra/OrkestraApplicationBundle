@@ -1,13 +1,22 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
-use Symfony\Component\Security\Core\Role\RoleInterface,
-    Doctrine\Common\Collections\ArrayCollection,
-    Doctrine\ORM\Mapping as ORM;
-
-use Orkestra\Common\Entity\EntityBase,
-    Orkestra\Bundle\ApplicationBundle\Entity\User;
+use Orkestra\Bundle\ApplicationBundle\Model\GroupInterface;
+use Orkestra\Bundle\ApplicationBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Orkestra\Common\Entity\AbstractEntity;
 
 /**
  * Group Entity
@@ -17,7 +26,7 @@ use Orkestra\Common\Entity\EntityBase,
  * @ORM\Table(name="orkestra_groups")
  * @ORM\Entity
  */
-class Group extends EntityBase implements RoleInterface
+class Group extends AbstractEntity implements RoleInterface, GroupInterface
 {
     /**
      * @ORM\Column(name="name", type="string", length=100)
@@ -34,26 +43,41 @@ class Group extends EntityBase implements RoleInterface
      */
     private $users;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->users = new ArrayCollection();
     }
 
+    /**
+     * @return mixed
+     */
     public function __toString()
     {
         return $this->getName();
     }
 
+    /**
+     * @param string $name
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param string $role
+     */
     public function setRole($role)
     {
         $this->role = $role;
@@ -67,12 +91,18 @@ class Group extends EntityBase implements RoleInterface
         return $this->role;
     }
 
-    public function addUser(User $user)
+    /**
+     * @param UserInterface $user
+     */
+    public function addUser(UserInterface $user)
     {
         $this->users->add($user);
         $user->addGroup($this);
     }
 
+    /**
+     * @return \Doctrine\Common\Collections\Collection|UserInterface[]
+     */
     public function getUsers()
     {
         return $this->users;

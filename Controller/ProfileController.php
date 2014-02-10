@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -40,7 +48,7 @@ class ProfileController extends Controller
                     $em->persist($user);
                     $em->flush();
 
-                    $this->get('session')->setFlash('success', 'Your changes have been saved.');
+                    $this->get('session')->getFlashBag()->set('success', 'Your changes have been saved.');
 
                     return $this->redirect($this->generateUrl('orkestra_profile'));
                 } catch (\Exception $e) {
@@ -87,7 +95,7 @@ class ProfileController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                $this->get('session')->setFlash('success', 'Your password has been changed.');
+                $this->get('session')->getFlashBag()->set('success', 'Your password has been changed.');
 
                 return $this->redirect($this->generateUrl('orkestra_profile'));
             }

@@ -1,10 +1,20 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Form\EntityChoice;
 
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
 use Symfony\Component\Form\Util\PropertyPath;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ArbitrarySetLoader implements EntityLoaderInterface
 {
@@ -44,10 +54,9 @@ class ArbitrarySetLoader implements EntityLoaderInterface
      */
     public function getEntitiesByIds($identifier, array $values)
     {
-        return array_filter($this->entities->toArray(), function ($entity) use ($identifier, $values) {
-            $propertyPath = new PropertyPath($identifier);
-
-            return in_array($propertyPath->getValue($entity), $values);
+        $accessor = PropertyAccess::getPropertyAccessor();
+        return array_filter($this->entities->toArray(), function ($entity) use ($identifier, $values, $accessor) {
+            return in_array($accessor->getValue($entity, $identifier), $values);
         });
     }
 }

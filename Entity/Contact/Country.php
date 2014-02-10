@@ -1,10 +1,21 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle\Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Orkestra\Common\Entity\EntityBase;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface;
+use Orkestra\Common\Entity\AbstractEntity;
 
 /**
  * A country
@@ -12,7 +23,7 @@ use Orkestra\Common\Entity\EntityBase;
  * @ORM\Entity
  * @ORM\Table(name="orkestra_countries")
  */
-class Country extends EntityBase
+class Country extends AbstractEntity implements CountryInterface
 {
     /**
      * @var string $name
@@ -38,15 +49,15 @@ class Country extends EntityBase
     /**
      * @var \Doctrine\Common\Collections\Collection Collection of region entities
      *
-     * @ORM\OneToMany(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region", mappedBy="country", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface", mappedBy="country", cascade={"persist"})
      */
     protected $regions;
 
     /**
      * Constructor
      *
-     * @param string $name The name of the country
-     * @param string $code The 2-letter ISO abbreviation
+     * @param string $name     The name of the country
+     * @param string $code     The 2-letter ISO abbreviation
      * @param string $longCode The 3-letter ISO abbreviation
      */
     public function __construct($name = '', $code = '', $longCode = '')
@@ -129,9 +140,9 @@ class Country extends EntityBase
     /**
      * Add a region to this country
      *
-     * @param \Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region $region
+     * @param \Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface $region
      */
-    public function addRegion(Region $region)
+    public function addRegion(RegionInterface $region)
     {
         $region->setCountry($this);
         $this->regions->add($region);

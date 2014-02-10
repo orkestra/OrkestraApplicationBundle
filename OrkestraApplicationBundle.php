@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the OrkestraApplicationBundle package.
+ *
+ * Copyright (c) Orkestra Community
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace Orkestra\Bundle\ApplicationBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -18,16 +27,16 @@ class OrkestraApplicationBundle extends Bundle
      */
     public function boot()
     {
-        Type::overrideType('datetime', 'Orkestra\Common\DBAL\Types\DateTimeType');
-        Type::overrideType('date', 'Orkestra\Common\DBAL\Types\DateType');
-        Type::overrideType('time', 'Orkestra\Common\DBAL\Types\TimeType');
-        
+        Type::overrideType('datetime', 'Orkestra\Common\DbalType\DateTimeType');
+        Type::overrideType('date',     'Orkestra\Common\DbalType\DateType');
+        Type::overrideType('time',     'Orkestra\Common\DbalType\TimeType');
+
         if (!Type::hasType('encrypted_string')) {
             Type::addType('encrypted_string', 'Orkestra\Common\DbalType\EncryptedStringType');
         } elseif (!(Type::getType('encrypted_string') instanceof EncryptedStringType)) {
             throw new \UnexpectedValueException('Type encrypted_string must be instance of Orkestra\Common\DbalType\EncryptedStringType');
         }
-        
+
         $encryptedStringType = Type::getType('encrypted_string');
         $encryptedStringType->setKey($this->container->getParameter('secret'));
 
