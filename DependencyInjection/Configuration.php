@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('orkestra_application');
         $rootNode->children()
-            ->variableNode('system_email_address')->defaultValue(array('Easy Payment Kiosk' => 'system@easypaymentkiosk.com'))->end()
+            ->variableNode('system_email_address')->defaultValue('system@terramarlabs.com')->end()
             ->scalarNode('ca_bundle_path')->defaultValue('%kernel.root_dir%/Resources/curl/ca-bundle.crt')->end()
             ->booleanNode('enable_latlong_lookup')->defaultFalse()->end();
 

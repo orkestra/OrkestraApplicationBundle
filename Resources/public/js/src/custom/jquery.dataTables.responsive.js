@@ -1,5 +1,5 @@
 /**
- * This file has been customized specifically for Easy Payment Kiosk.
+ * This file has been customized specifically for OrkestraApplicationBundle
  *
  * Changes:
  *  - Wrapped in module pattern
