@@ -30,24 +30,30 @@
   };
 
   helper.prototype = $.extend(helper.prototype, {
+    getDataTableDefaults: function(options) {
+      return {
+        aaSorting : options.sort,
+        bLengthChange : true,
+        iDisplayLength : options.displayLength,
+        fnInitComplete : options.initComplete,
+        bAutoWidth : options.autoWidth,
+        oTableTools : {
+          sSwfPath : Orkestra.basePath + '/bundles/orkestraapplication/swf/copy_csv_xls_pdf.swf',
+          aButtons : [
+            {
+              sExtends : 'collection',
+              sButtonText : 'Save',
+              aButtons : [ 'xls', 'pdf', 'print' ]
+            }
+          ]
+        }
+      }
+    },
+
     bind: function(table, options) {
       options = $.extend(true, _defaults, options);
 
-      var dtOptions = {
-        aaSorting: options.sort,
-        bLengthChange: true,
-        iDisplayLength: options.displayLength,
-        fnInitComplete: options.initComplete,
-        bAutoWidth:     options.autoWidth,
-        oTableTools:    {
-          sSwfPath: Orkestra.basePath + '/bundles/orkestraapplication/swf/copy_csv_xls_pdf.swf',
-          aButtons: [{
-            sExtends:    'collection',
-            sButtonText: 'Save',
-            aButtons:    [ 'xls', 'pdf', 'print' ]
-          }]
-        }
-      };
+      var dtOptions = this.getDataTableDefaults(options);
 
       var $table = $(table),
         headRow = $table.find('tr:first'),
