@@ -40,7 +40,7 @@
         fnInitComplete: options.initComplete,
         bAutoWidth:     options.autoWidth,
         oTableTools:    {
-          sSwfPath: Orkestra.basePath + '/swf/copy_csv_xls_pdf.swf',
+          sSwfPath: Orkestra.basePath + '/bundles/orkestraapplication/swf/copy_csv_xls_pdf.swf',
           aButtons: [{
             sExtends:    'collection',
             sButtonText: 'Save',
