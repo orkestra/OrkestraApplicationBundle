@@ -2318,6 +2318,15 @@ class CountryAndRegionData extends AbstractFixture
 
         // South Africa
         $country = new Country('South Africa', 'ZA', 'ZAF');
+        $country->addRegion(new Region('Eastern Cape', 'EC'));
+        $country->addRegion(new Region('Free State', 'FS'));
+        $country->addRegion(new Region('Gauteng', 'GT'));
+        $country->addRegion(new Region('KwaZulu-Natal', 'NL'));
+        $country->addRegion(new Region('Limpopo', 'LP'));
+        $country->addRegion(new Region('Mpumalanga', 'MP'));
+        $country->addRegion(new Region('Northern Cape', 'NC'));
+        $country->addRegion(new Region('North-West', 'NW'));
+        $country->addRegion(new Region('Western Cape', 'WC'));
         $manager->persist($country);
 
         // South Georgia
