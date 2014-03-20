@@ -1271,32 +1271,6 @@ class CountryAndRegionData extends AbstractFixture
         $country->addRegion(new Region('Westmeath', 'WES'));
         $country->addRegion(new Region('Wexford', 'WEX'));
         $country->addRegion(new Region('Wicklow', 'WIC'));
-        $country->addRegion(new Region('Carlow', 'CW'));
-        $country->addRegion(new Region('Cavan', 'CN'));
-        $country->addRegion(new Region('Clare', 'CE'));
-        $country->addRegion(new Region('Cork', 'C'));
-        $country->addRegion(new Region('Donegal', 'DL'));
-        $country->addRegion(new Region('Dublin', 'D'));
-        $country->addRegion(new Region('Galway', 'G'));
-        $country->addRegion(new Region('Kerry', 'KY'));
-        $country->addRegion(new Region('Kildare', 'KE'));
-        $country->addRegion(new Region('Kilkenny', 'KK'));
-        $country->addRegion(new Region('Laois', 'LS'));
-        $country->addRegion(new Region('Leitrim', 'LM'));
-        $country->addRegion(new Region('Limerick', 'LK'));
-        $country->addRegion(new Region('Longford', 'LD'));
-        $country->addRegion(new Region('Louth', 'LH'));
-        $country->addRegion(new Region('Mayo', 'MO'));
-        $country->addRegion(new Region('Meath', 'MH'));
-        $country->addRegion(new Region('Monaghan', 'MN'));
-        $country->addRegion(new Region('Offaly', 'OY'));
-        $country->addRegion(new Region('Roscommon', 'RN'));
-        $country->addRegion(new Region('Sligo', 'SO'));
-        $country->addRegion(new Region('Tipperary', 'TA'));
-        $country->addRegion(new Region('Waterford', 'WD'));
-        $country->addRegion(new Region('Westmeath', 'WH'));
-        $country->addRegion(new Region('Wexford', 'WX'));
-        $country->addRegion(new Region('Wicklow', 'WW'));
         $manager->persist($country);
 
         // Israel
