@@ -288,6 +288,7 @@ class File extends AbstractEntity
         }
 
         $this->_uploadedFile->move(dirname($this->path), basename($this->path));
+        $this->_uploadedFile = null;
     }
 
     /**
