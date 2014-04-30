@@ -36,11 +36,11 @@ abstract class Controller extends BaseController
      */
     public function getFormFor($entity, $className = null, array $options = array())
     {
-        if (empty($this->_formHelper) && ($this->_formHelper = $this->get('orkestra.form_helper')) == null) {
+        if (empty($this->_formHelper) && ($this->_formHelper = $this->get('orkestra.application.helper.form')) == null) {
             throw new \RuntimeException('Orkestra FormHelper is not registered as a service');
         }
 
-        $type = $this->container->get('orkestra.form_helper')->getType($entity, $className);
+        $type = $this->container->get('orkestra.application.helper.form')->getType($entity, $className);
 
         return $this->createForm($type, $entity, $options);
     }
