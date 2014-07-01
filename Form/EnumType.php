@@ -23,7 +23,7 @@ class EnumType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer(new EnumTransformer($options['enum']));
+        $builder->addModelTransformer(new EnumTransformer($options['enum'], $options['expanded']));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
