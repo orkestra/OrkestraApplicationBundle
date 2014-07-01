@@ -16,56 +16,43 @@ use Symfony\Component\Form\DataTransformerInterface;
 class EnumTransformer implements DataTransformerInterface
 {
     protected $_className;
-    protected $_expanded;
+    protected $_multiple;
 
-    public function __construct($className, $expanded)
+    public function __construct($className, $multiple)
     {
         $this->_className = $className;
-        $this->_expanded = $expanded;
+        $this->_multiple = $multiple;
     }
 
     public function transform($val)
     {
         if (empty($val)) {
-            if ($this->_expanded) {
+            if ($this->_multiple) {
                 return array();
             }
-
             return '';
         }
 
-        if ($this->_expanded) {
-            $transformed = array();
-            foreach ($val as $enum) {
-                $transformed[] = $enum->getValue();
-            }
-
-            return $transformed;
+        if ($this->_multiple) {
+            return $val;
         }
-
         return $val->getValue();
     }
 
     public function reverseTransform($val)
     {
         if (empty($val)) {
-            if ($this->_expanded) {
+            if ($this->_multiple) {
                 return array();
             }
-
             return null;
         }
 
-        $className = $this->_className;
-        if ($this->_expanded) {
-            $reverseTransformed = array();
-            foreach ($val as $enum) {
-                $reverseTransformed[] = new $className($enum);
-            }
-
-            return $reverseTransformed;
+        if ($this->_multiple) {
+            return $val;
         }
 
+        $className = $this->_className;
         return new $className($val);
     }
 }
