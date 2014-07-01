@@ -30,12 +30,14 @@ class EnumTransformer implements DataTransformerInterface
             if ($this->_multiple) {
                 return array();
             }
+
             return '';
         }
 
         if ($this->_multiple) {
             return $val;
         }
+
         return $val->getValue();
     }
 
@@ -45,6 +47,7 @@ class EnumTransformer implements DataTransformerInterface
             if ($this->_multiple) {
                 return array();
             }
+
             return null;
         }
 
@@ -53,6 +56,7 @@ class EnumTransformer implements DataTransformerInterface
         }
 
         $className = $this->_className;
+
         return new $className($val);
     }
 }
