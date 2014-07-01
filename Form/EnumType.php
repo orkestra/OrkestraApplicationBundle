@@ -33,7 +33,7 @@ class EnumType extends AbstractType
             $values = $reflected->getConstants();
             if (!empty($options['exclude'])) {
                 $exclude = !is_array($options['exclude']) ? array($options['exclude']) : $options['exclude'];
-                $values = array_filter($values, function($value) use ($exclude) {
+                $values = array_filter($values, function ($value) use ($exclude) {
                     return !in_array($value, $exclude);
                 });
             }

@@ -30,16 +30,19 @@ class EnumTransformer implements DataTransformerInterface
             if ($this->_expanded) {
                 return array();
             }
+
             return '';
         }
 
         if ($this->_expanded) {
             $transformed = array();
-            foreach($val as $enum) {
+            foreach ($val as $enum) {
                 $transformed[] = $enum->getValue();
             }
+
             return $transformed;
         }
+
         return $val->getValue();
     }
 
@@ -49,15 +52,17 @@ class EnumTransformer implements DataTransformerInterface
             if ($this->_expanded) {
                 return array();
             }
+
             return null;
         }
 
         $className = $this->_className;
         if ($this->_expanded) {
             $reverseTransformed = array();
-            foreach($val as $enum) {
+            foreach ($val as $enum) {
                 $reverseTransformed[] = new $className($enum);
             }
+
             return $reverseTransformed;
         }
 
