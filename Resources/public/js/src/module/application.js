@@ -45,23 +45,26 @@
   };
 
   $(function() {
-    var $document = $(document),
-      spinner = new Spinner({
-        length:  6,
-        width:   4,
-        radius:  8,
-        lines:   10,
-        corners: 2,
-        color: '#FFF',
-        shadow: true
+    var $document = $(document);
+    
+    if (typeof(Spinner) == 'function') {
+      var spinner = new Spinner({
+        length : 6,
+        width : 4,
+        radius : 8,
+        lines : 10,
+        corners : 2,
+        color : '#FFF',
+        shadow : true
       }),
-      spinnerElement = document.getElementById('loading-spinner');
+        spinnerElement = document.getElementById('loading-spinner');
 
-    $document.ajaxStart(function() {
-      spinner.spin(spinnerElement);
-    }).ajaxStop(function() {
-      spinner.spin(false);
-    });
+      $document.ajaxStart(function () {
+        spinner.spin(spinnerElement);
+      }).ajaxStop(function () {
+        spinner.spin(false);
+      });
+    }
 
     Orkestra.sidebar = new Orkestra.SidebarManager(document.getElementById('main-nav'));
     Orkestra.bindEnhancements($document);
