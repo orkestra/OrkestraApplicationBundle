@@ -1,5 +1,5 @@
-;(function($, Modernizr) {
-  var _clickEvent = Modernizr.touch ? 'tap' : 'click';
+;(function($) {
+  var _clickEvent = 'click';
 
   var manager = function(target) {
     this.$el = $(target);
@@ -52,4 +52,4 @@
 
   window.Orkestra = window.Orkestra || {};
   window.Orkestra.SidebarManager = manager;
-})(jQuery, Modernizr);
+})(jQuery);

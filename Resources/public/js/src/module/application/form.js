@@ -1,4 +1,4 @@
-;(function($, Modernizr) {
+;(function($) {
   var _defaults = {
     /**
      * Automatically submit the form after it is bound
@@ -153,4 +153,4 @@
 
   window.Orkestra = window.Orkestra || {};
   window.Orkestra.FormHelper = helper;
-})(jQuery, Modernizr);
+})(jQuery);

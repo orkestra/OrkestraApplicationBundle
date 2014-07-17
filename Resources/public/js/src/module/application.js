@@ -1,7 +1,7 @@
-;(function($, Modernizr, window, document) {
+;(function($, window, document) {
   window.Orkestra = window.Orkestra || {};
 
-  var _clickEvent = Modernizr.touch ? 'tap' : 'click';
+  var _clickEvent = 'click';
   var _bindEnhancements = function(context) {
     /**
      * Bind special anchors
@@ -73,4 +73,4 @@
   Orkestra.modal    = new Orkestra.ModalHelper();
   Orkestra.table    = new Orkestra.TableHelper();
   Orkestra.bindEnhancements = _bindEnhancements;
-})(jQuery, Modernizr, this, this.document);
+})(jQuery, this, this.document);
