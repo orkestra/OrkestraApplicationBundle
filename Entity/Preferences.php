@@ -119,5 +119,8 @@ class Preferences extends AbstractEntity implements PreferencesInterface
     public function setUser(UserInterface $user)
     {
         $this->user = $user;
+        if ($user->getPreferences() !== $this) {
+            $user->setPreferences($this);
+        }
     }
 }
