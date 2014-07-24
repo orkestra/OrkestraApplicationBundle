@@ -25,8 +25,8 @@ class DateTimeType extends BaseDateTimeType
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults(array(
-            'data_timezone' => DateTime::getServerTimezone()->getName(),
-            'user_timezone' => DateTime::getUserTimezone()->getName()
+            'model_timezone' => DateTime::getServerTimezone()->getName(),
+            'view_timezone' => DateTime::getUserTimezone()->getName()
         ));
     }
 }
