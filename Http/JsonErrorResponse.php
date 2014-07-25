@@ -70,7 +70,7 @@ class JsonErrorResponse extends JsonResponse
         if (!empty($errors)) {
             $message .= implode('. ', array_map(function(FormError $error) {
                 return rtrim($error->getMessage(), '.');
-            }, $errors));
+            }, $errors instanceof \Iterator ? iterator_to_array($errors) : $errors));
 
         } else {
             $message .= 'The form contains invalid values.';
