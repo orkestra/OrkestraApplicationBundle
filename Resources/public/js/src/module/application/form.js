@@ -126,6 +126,11 @@
 
     // Social
     $('input.url', $form).formatUrl();
+    
+    // Integer
+    $('input.integer', $form).formatNumber({
+      initValue: true
+    });
   };
 
   var helper = function() {

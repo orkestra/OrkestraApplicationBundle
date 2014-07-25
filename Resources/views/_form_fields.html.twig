@@ -114,6 +114,15 @@
 {% endspaceless %}
 {% endblock money_widget %}
 
+{% block integer_widget %}
+{% spaceless %}
+    {% set type = 'number' %}
+    {% set attr = attr|merge({ class: (attr.class|default('') ~ ' integer')|trim }) %}
+    {% set prepend = '#' %}
+    {{ block('form_widget_simple') }}
+{% endspaceless %}
+{% endblock integer_widget %}
+
 {% block file_widget %}
     {% spaceless %}
         {% set type = 'file' %}
