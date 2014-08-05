@@ -1,0 +1,11 @@
+<script type="text/javascript">
+(function($, window) {
+  window.Orkestra = window.Orkestra || {};
+  window.Orkestra.basePath = {{ app.request.basePath|json_encode|raw }};
+  window.Orkestra.baseUrl  = {{ app.request.baseUrl|json_encode|raw }};
+
+  $(function() {
+    window.Orkestra.alert.showFlashes({{ app.session.flashBag.all|json_encode|raw }});
+  });
+})(jQuery, this);
+</script>
