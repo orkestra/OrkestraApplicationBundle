@@ -105,32 +105,60 @@
 
   var _bindEnhancements = function(form) {
     var $form = $(form);
-
-    // Datepicker
-    $('input.date', $form).datepicker({
-      format: 'mm/dd/yy',
-      autoclose: true
-    });
-
-    // Currency
-    $('input.currency', $form).formatCurrency(true);
-
-    // Telephone
-    $('input.telephone', $form).formatPhoneNumber();
     
-    // Social
-    $('input.social', $form).formatSocial();
+    // Date and time pickers
+    if ($.isFunction($.fn.datetimepicker)) {
+      $('input.date', $form).datetimepicker({
+        pickTime : false,
+        format : 'MM/DD/YY'
+      });
+      
+      $('input.timepicker', $form).datetimepicker({
+        useSeconds : false,
+        pickDate : false,
+        minuteStepping : 1,
+        format : 'hh:mm A'
+      });
+      
+      $('input.datetimepicker', $form).datetimepicker({
+        useSeconds : false,
+        format : 'MM/DD/YY hh:mm A'
+      });
+    }
 
-    // EIN
-    $('input.ein', $form).formatEin();
+    // USA Currency
+    if ($.isFunction($.fn.formatCurrency)) {
+      // Currency
+      $('input.currency', $form).formatCurrency(true);
+    }
 
-    // Social
-    $('input.url', $form).formatUrl();
-    
+    // USA Telephone
+    if ($.isFunction($.fn.formatPhoneNumber)) {
+      // Telephone
+      $('input.telephone', $form).formatPhoneNumber();
+    }
+
+    // USA SSN
+    if ($.isFunction($.fn.formatSocial)) {
+      $('input.social', $form).formatSocial();
+    }
+
+    // USA EIN
+    if ($.isFunction($.fn.formatEin)) {
+      $('input.ein', $form).formatEin();
+    }
+
+    // URL
+    if ($.isFunction($.fn.formatUrl)) {
+      $('input.url', $form).formatUrl();
+    }
+
     // Integer
-    $('input.integer', $form).formatNumber({
-      initValue: true
-    });
+    if ($.isFunction($.fn.formatNumber)) {
+      $('input.integer', $form).formatNumber({
+        initValue: true
+      });
+    }
   };
 
   var helper = function() {
