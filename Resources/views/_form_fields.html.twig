@@ -149,3 +149,21 @@
     {% endif %}
 {% endspaceless %}
 {% endblock date_widget %}
+
+{% block datetime_widget %}
+{% spaceless %}
+    {% if widget == 'single_text' %}
+        {% set type = 'text' %}
+        {% set attr = attr|merge({ class: (attr.class|default('') ~ ' datetimepicker')|trim, autocomplete: 'off' }) %}
+        {% set append = '<i class="fa fa-calendar"></i>' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+    <div {{ block('widget_container_attributes') }}>
+        {{ form_errors(form.date) }}
+        {{ form_errors(form.time) }}
+        {{ form_widget(form.date) }}
+        {{ form_widget(form.time) }}
+    </div>
+    {% endif %}
+{% endspaceless %}
+{% endblock datetime_widget %}
