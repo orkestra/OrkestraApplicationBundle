@@ -62,22 +62,33 @@
      * @see jQuery.validate.settings.errorPlacement
      */
     errorPlacement: function (error, element) {
-      $(element).closest('.form-group').find('.help-block').html(error.text()).show();
+      var $helpBlock = $(element).closest('.form-group').find('.help-block');
+      $helpBlock.data('last-text', $helpBlock.html());
+      $helpBlock.html(error.text()).show();
     },
 
     /**
      * @see jQuery.validate.settings.highlight
      */
     highlight: function(element, errorClass, validClass) {
-      $(element).closest('.form-group').addClass(errorClass).find('.help-block').show();
+      var $helpBlock = $(element).closest('.form-group').addClass(errorClass).find('.help-block').show();
     },
 
     /**
      * @see jQuery.validate.settings.unhighlight
      */
     unhighlight: function(element, errorClass, validClass) {
-      $(element).closest('.form-group').removeClass(errorClass).find('.help-block').text('').hide();
-    }
+      var $helpBlock = $(element).closest('.form-group').removeClass(errorClass).find('.help-block');
+      if ($helpBlock.data('last-text')) {
+        $helpBlock.html($helpBlock.data('last-text'));
+      } else {
+        $helpBlock.text('').hide();
+      }
+    },
+    
+    errorClass: 'error has-error',
+    
+    validClass: ''
   };
 
   var _submitHandlerFactory = function(options) {
@@ -181,7 +192,11 @@
       }
     },
 
-    bindEnhancements: _bindEnhancements
+    bindEnhancements: _bindEnhancements,
+    
+    setDefaults: function(options) {
+      $.extend(_defaults, options);
+    }
   });
 
   window.Orkestra = window.Orkestra || {};
