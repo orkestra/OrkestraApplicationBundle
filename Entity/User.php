@@ -177,14 +177,14 @@ class User extends AbstractEntity implements UserInterface, AdvancedUserInterfac
      */
     public function setGroups($groups)
     {
+        $this->groups->clear();
         if ($groups instanceof Group) {
-            $this->groups = new ArrayCollection(array($groups));
-        } elseif ($groups === null) {
-            $this->groups = new ArrayCollection();
-        } elseif (is_array($groups)) {
-            $this->groups = new ArrayCollection($groups);
-        } else {
-            $this->groups = $groups;
+            $this->groups->add($groups);
+            
+        } elseif ($groups instanceof \Traversable) {
+            foreach ($groups as $group) {
+                $this->groups->add($group);
+            }
         }
     }
 
