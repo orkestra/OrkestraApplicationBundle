@@ -181,7 +181,7 @@ class User extends AbstractEntity implements UserInterface, AdvancedUserInterfac
         if ($groups instanceof Group) {
             $this->groups->add($groups);
             
-        } elseif ($groups instanceof \Traversable) {
+        } elseif ($groups instanceof \Traversable || is_array($groups)) {
             foreach ($groups as $group) {
                 $this->groups->add($group);
             }
