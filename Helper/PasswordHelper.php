@@ -12,7 +12,7 @@
 namespace Orkestra\Bundle\ApplicationBundle\Helper;
 
 use Orkestra\Bundle\ApplicationBundle\Entity\HashedEntity;
-use Orkestra\Bundle\ApplicationBundle\Entity\User;
+use Orkestra\Bundle\ApplicationBundle\Model\UserInterface;
 
 class PasswordHelper
 {
@@ -64,7 +64,7 @@ class PasswordHelper
      *
      * @return HashedEntity
      */
-    public function sendPasswordResetEmail(User $user, $subject = 'Password reset request')
+    public function sendPasswordResetEmail(UserInterface $user, $subject = 'Password reset request')
     {
         $hashedEntity = $this->createHash($user);
         $this->emailHelper->createAndSendMessageFromTemplate(
@@ -84,7 +84,7 @@ class PasswordHelper
      * @param User $user
      * @return HashedEntity
      */
-    private function createHash(User $user)
+    private function createHash(UserInterface $user)
     {
         $hashedEntity = $this->hashedEntityHelper->create($user, new \DateTime('+1 day'));
 
