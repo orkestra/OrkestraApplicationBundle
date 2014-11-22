@@ -43,13 +43,14 @@ class PasswordHelper
     /**
      * Looks up a user with the given hash
      *
-     * @param $hash
-     * @return HashedEntity | null
+     * @param string $hash
+     * @param string $className
+     * @return null|HashedEntity
      */
-    public function lookup($hash)
+    public function lookup($hash, $className = 'Orkestra\Bundle\ApplicationBundle\Entity\User')
     {
         try {
-            return $this->hashedEntityHelper->lookup($hash, 'Orkestra\Bundle\ApplicationBundle\Entity\User');
+            return $this->hashedEntityHelper->lookup($hash, $className);
             
         } catch (\RuntimeException $e) {
             return null;
