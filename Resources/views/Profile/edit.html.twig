@@ -1,0 +1,43 @@
+{% extends '::modal_base.html.twig' %}
+
+{% form_theme form 'OrkestraApplicationBundle::_form_fields_horizontal.html.twig' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="tabbable span12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#profile-tab" data-toggle="tab">Edit Profile</a></li>
+            <li><a href="#password-tab" data-toggle="tab">Change Password</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="profile-tab" class="tab-pane active">
+                <form class="form-horizontal" id="profile-form" action="{{ path('orkestra_profile_update') }}" method="post">
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.firstName) }}
+                    {{ form_row(form.lastName) }}
+                    {{ form_row(form.preferences.timezone) }}
+                    <div class="hidden">
+                        {{ form_rest(form) }}
+                    </div>
+                </form>
+            </div>
+            <div id="password-tab" class="tab-pane">
+                {{ render(controller('OrkestraApplicationBundle:Profile:editPassword')) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    Orkestra.modal.current.bindControlsToForm(document.getElementById('profile-form'));
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        Orkestra.modal.current.bindControlsToForm($('form', $($(e.target).attr('href'))));
+    });
+</script>
+{% endblock %}

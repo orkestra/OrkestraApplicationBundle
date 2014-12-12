@@ -16,16 +16,26 @@ use Symfony\Component\Form\DataTransformerInterface;
 class EnumTransformer implements DataTransformerInterface
 {
     protected $_className;
+    protected $_multiple;
 
-    public function __construct($className)
+    public function __construct($className, $multiple)
     {
         $this->_className = $className;
+        $this->_multiple = $multiple;
     }
 
     public function transform($val)
     {
         if (empty($val)) {
+            if ($this->_multiple) {
+                return array();
+            }
+
             return '';
+        }
+
+        if ($this->_multiple) {
+            return $val;
         }
 
         return $val->getValue();
@@ -33,8 +43,16 @@ class EnumTransformer implements DataTransformerInterface
 
     public function reverseTransform($val)
     {
-        if (!$val) {
+        if (empty($val)) {
+            if ($this->_multiple) {
+                return array();
+            }
+
             return null;
+        }
+
+        if ($this->_multiple) {
+            return $val;
         }
 
         $className = $this->_className;

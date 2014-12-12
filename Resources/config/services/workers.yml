@@ -1,0 +1,12 @@
+parameters:
+  orkestra.worker_factory.class:            Orkestra\Bundle\ApplicationBundle\Worker\WorkerFactory
+
+services:
+  # Workers
+  orkestra.worker_factory:
+    class: %orkestra.worker_factory.class%
+  orkestra.worker.latitude_longitude:
+    class: Orkestra\Bundle\ApplicationBundle\Worker\LatitudeLongitudeWorker
+    arguments: [ @orkestra.entity_manager, @orkestra.guzzle_client ]
+    tags:
+      - { name: orkestra.worker }

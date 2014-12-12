@@ -1,0 +1,27 @@
+parameters:
+  orkestra.file_manager.base_path:          %kernel.root_dir%/files
+
+services:
+  # Helpers
+  orkestra.application.helper.email:
+    class: Orkestra\Bundle\ApplicationBundle\Helper\EmailHelper
+    arguments: [ @templating, @twig, @mailer, %orkestra.system_email_address% ]
+
+  orkestra.application.helper.form:
+    class: Orkestra\Bundle\ApplicationBundle\Helper\FormHelper
+    arguments: [ @service_container ]
+
+  orkestra.application.helper.password:
+    class: Orkestra\Bundle\ApplicationBundle\Helper\PasswordHelper
+    arguments:
+      - @orkestra.application.helper.email
+      - @orkestra.application.helper.hashed_entity
+
+  orkestra.application.helper.hashed_entity:
+    class: Orkestra\Bundle\ApplicationBundle\Helper\HashedEntityHelper
+    arguments:
+      - @orkestra.entity_manager
+      
+  orkestra.file_manager:
+    class: Orkestra\Bundle\ApplicationBundle\Manager\FileManager
+    arguments: [ %orkestra.file_manager.base_path% ]

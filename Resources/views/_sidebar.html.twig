@@ -1,0 +1,54 @@
+{% import 'OrkestraApplicationBundle::_macros.html.twig' as sidebar %}
+<a href="#" class="logo hidden-sm hidden-xs">
+  <i class="icon-tablet"></i>
+  <span>Application</span>
+</a>
+<div class="search-box">
+  <input type="text" placeholder="SEARCH" class="form-control">
+</div>
+<ul class="side-menu side-menu-notifications">
+  {{ sidebar.navitem({
+      label: 'Create Client',
+      icon: 'icon-user',
+      route: 'home',
+      active: is_current_route('home')
+  }) }}
+</ul>
+<div class="relative-w">
+    <ul class="side-menu" id="main-nav">
+        {{ sidebar.navitem({
+            label: 'Clients',
+            icon: 'icon-group',
+            route: 'home',
+            active: is_current_route('home'),
+        }) }}
+        {{ sidebar.navitem({
+            label: 'Settings',
+            icon: 'icon-gear',
+            children: [
+                {
+                    label: 'Test',
+                    icon: 'icon-group',
+                    route: 'home'
+                }
+            ]
+        }) }}
+        {{ sidebar.navitem({
+            label: 'Users',
+            icon: 'icon-user',
+            route: 'home',
+            active: is_current_route('home'),
+        }) }}
+        {{ sidebar.navitem({
+            label: 'Reports',
+            icon: 'icon-bar-chart',
+            children: [
+                {
+                    label: 'Test',
+                    icon: 'icon-group',
+                    route: 'home'
+                }
+            ]
+        }) }}
+    </ul>
+</div>

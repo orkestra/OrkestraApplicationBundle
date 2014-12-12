@@ -42,7 +42,7 @@ class Preferences extends AbstractEntity implements PreferencesInterface
     private $timeFormat = '';
 
     /**
-     * @ORM\OneToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Entity\User", inversedBy="preferences")
+     * @ORM\OneToOne(targetEntity="Orkestra\Bundle\ApplicationBundle\Model\UserInterface", inversedBy="preferences")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -119,5 +119,8 @@ class Preferences extends AbstractEntity implements PreferencesInterface
     public function setUser(UserInterface $user)
     {
         $this->user = $user;
+        if ($user->getPreferences() !== $this) {
+            $user->setPreferences($this);
+        }
     }
 }

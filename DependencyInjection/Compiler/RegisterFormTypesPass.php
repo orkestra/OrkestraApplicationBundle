@@ -19,11 +19,11 @@ class RegisterFormTypesPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('orkestra.form_helper')) {
+        if (!$container->hasDefinition('orkestra.application.helper.form')) {
             return;
         }
 
-        $definition = $container->getDefinition('orkestra.form_helper');
+        $definition = $container->getDefinition('orkestra.application.helper.form');
 
         foreach ($container->findTaggedServiceIds('orkestra.form_type') as $service => $tag) {
             if (empty($tag[0]['class'])) {

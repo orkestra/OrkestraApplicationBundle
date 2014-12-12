@@ -1,0 +1,29 @@
+{% set widget_classes = widget_classes|default({})|merge(['widget']) %}
+{% set title_inside_widget = title_inside_widget|default(false) %}
+{% set more_padding = more_padding|default(false) %}
+{% set less_margin = less_margin|default(false) %}
+<div class="{{ widget_classes|join(' ') }}">
+    <div class="widget-controls pull-right">
+        {% block controls %}{% endblock controls %}
+    </div>
+    {% if not title_inside_widget %}
+    <h3 class="section-title first-title clearfix{% if not less_margin %} more-margin{% endif %}">
+        {% if not omit_title %}
+            <i class="{{ title_icon|default('icon-tablet') }}"></i> {{ block('title') }}
+        {% endif %}
+    </h3>
+    {% endif %}
+    <div class="widget-content">
+        {% if more_padding %}<div class="padded">{% endif %}
+        {% if not omit_title and title_inside_widget %}
+        <h3 class="form-title form-title-first clearfix">
+            {% if not omit_title %}
+                {{ block('title') }}
+            {% endif %}
+        </h3>
+        {% endif %}
+        {% block content %}{% endblock content %}
+        {% if more_padding %}</div>{% endif %}
+    </div>
+    {% block javascripts %}{% endblock javascripts %}
+</div>

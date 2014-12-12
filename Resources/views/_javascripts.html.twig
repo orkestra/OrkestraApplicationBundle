@@ -1,0 +1,39 @@
+{{ include('OrkestraApplicationBundle::_init_javascripts.html.twig') }}
+<script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+{% javascripts filter='?yui_js' output='js/application.js'
+    'bundles/orkestraapplication/js/lib/json2.js'
+    'bundles/orkestraapplication/js/lib/modernizr.js'
+    'bundles/orkestraapplication/js/lib/underscore.js'
+    'bundles/orkestraapplication/js/lib/backbone.js'
+    'bundles/orkestraapplication/js/lib/moment.js'
+    'bundles/orkestraapplication/js/lib/select2.js'
+    'bundles/orkestraapplication/js/lib/spin.js'
+    'bundles/orkestraapplication/js/lib/bootstrap-modal.js'
+    'bundles/orkestraapplication/js/lib/bootstrap-datetimepicker.js'
+    'bundles/orkestraapplication/js/lib/bootstrap-modalmanager.js'
+    'bundles/orkestraapplication/js/lib/fullcalendar.js'
+    'bundles/orkestraapplication/js/lib/jquery.form.js'
+    'bundles/orkestraapplication/js/lib/jquery.gritter.js'
+    'bundles/orkestraapplication/js/lib/jquery.dataTables.js'
+    'bundles/orkestraapplication/js/lib/jquery.dataTables.tableTools.js'
+    'bundles/orkestraapplication/js/src/custom/jquery.dataTables.bootstrap.js'
+    'bundles/orkestraapplication/js/src/custom/bootstrap-editable.js'
+    'bundles/orkestraapplication/js/src/custom/jquery.dataTables.responsive.js'
+    'bundles/orkestraapplication/js/src/module/formatters.js'
+    'bundles/orkestraapplication/js/src/module/validators.js'
+    'bundles/orkestraapplication/js/src/module/modal/GenericModalView.js'
+    'bundles/orkestraapplication/js/src/module/modal/EmbeddedModalView.js'
+    'bundles/orkestraapplication/js/src/module/modal/RemoteModalView.js'
+    'bundles/orkestraapplication/js/src/module/application/sidebar.js'
+    'bundles/orkestraapplication/js/src/module/application/alert.js'
+    'bundles/orkestraapplication/js/src/module/application/form.js'
+    'bundles/orkestraapplication/js/src/module/application/response.js'
+    'bundles/orkestraapplication/js/src/module/application/modal.js'
+    'bundles/orkestraapplication/js/src/module/application/table.js'
+    'bundles/orkestraapplication/js/src/module/application.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}

@@ -1,0 +1,97 @@
+.tabbable {
+  .clearfix();
+}
+
+.tab-content {
+  background-color: @nav-tabs-active-link-hover-bg;
+  .box-shadow(~"0px 2px 8px 0px rgba(0,0,0,0.15), inset 1px 2px 2px 0px #fff");
+  border:           1px solid @nav-tabs-active-link-hover-border-color;
+  border-bottom:    1px solid #b2aca4;
+  border-radius:    4px 4px 4px 4px;
+}
+
+.tab-content {
+  .form-horizontal {
+    margin-top: 15px;
+
+    .form-group {
+      margin-left:  15px;
+      margin-right: 15px;
+    }
+  }
+}
+
+.nav-tabs {
+  padding-left: 10px;
+  > li {
+    float:         left;
+    // Make the list-items overlay the bottom border
+    margin-bottom: -1px;
+
+    // Actual tabs (as links)
+    > a {
+      margin-right:     5px;
+      line-height:      @line-height-base;
+      border:           1px solid transparent;
+      border-radius:    4px 4px 0px 0px;
+      font-family:      @font-family-alt;
+      color:            #493a38;
+      background-color: #f4f2ef;
+      border:           1px solid @nav-tabs-active-link-hover-border-color;
+      text-transform:   uppercase;
+      font-size:        16px;
+      padding:          10px 20px;
+      .box-shadow(~"inset 0px -2px 0px 0px rgba(0,0,0,0.05)");
+      i {
+        margin-right: 10px;
+        font-size:    18px;
+      }
+      &:hover {
+        // border-color: @nav-tabs-link-hover-border-color @nav-tabs-link-hover-border-color @nav-tabs-border-color;
+        background-color: #ffffff;
+      }
+    }
+
+    // Active state, and it's :hover to override normal :hover
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        color:               @nav-tabs-active-link-hover-color;
+        background-color:    @nav-tabs-active-link-hover-bg;
+        border:              1px solid @nav-tabs-active-link-hover-border-color;
+        border-bottom-color: transparent;
+        cursor:              default;
+        .box-shadow(~"0px 8px 0px 0px "@nav-tabs-active-link-hover-bg~", 0px 2px 8px 0px rgba(0,0,0,0.15), inset 1px 2px 2px 0px #fff");
+      }
+    }
+  }
+  // pulling this in mainly for less shorthand
+  &.nav-justified {
+    .nav-justified();
+    .nav-tabs-justified();
+  }
+
+  @media (max-width: @screen-xs) {
+    padding:         0px 5px;
+    li {
+      float:  none;
+      margin: 0px;
+      a {
+        margin:        0px;
+        border-radius: 0px;
+        .box-shadow(none);
+        border-bottom: none !important;
+        padding:       15px;
+      }
+      &.active > a {
+        &,
+        &:hover,
+        &:focus {
+          .box-shadow(none);
+          background-color: #ffffff;
+        }
+      }
+    }
+  }
+}

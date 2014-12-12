@@ -11,6 +11,7 @@
 
 namespace Orkestra\Bundle\ApplicationBundle;
 
+use Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler\ModifyServiceDefinitionsPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Doctrine\DBAL\Types\Type;
@@ -22,6 +23,8 @@ use Orkestra\Common\DbalType\EncryptedStringType;
 
 class OrkestraApplicationBundle extends Bundle
 {
+    const VERSION = '1.0.0-DEV';
+    
     /**
      * {@inheritDoc}
      */
@@ -53,6 +56,7 @@ class OrkestraApplicationBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
+        $container->addCompilerPass(new ModifyServiceDefinitionsPass());
         $container->addCompilerPass(new RegisterFormTypesPass());
         $container->addCompilerPass(new RegisterWorkersPass());
     }

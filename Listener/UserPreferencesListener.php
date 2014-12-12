@@ -11,6 +11,7 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Listener;
 
+use Orkestra\Bundle\ApplicationBundle\Model\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\Event;
@@ -39,7 +40,7 @@ class UserPreferencesListener
         if (!empty($token)) {
             $user = $token->getUser();
 
-            if ($user instanceof User && ($preferences = $user->getPreferences())) {
+            if ($user instanceof UserInterface && ($preferences = $user->getPreferences())) {
                 DateTime::setUserTimezone(new \DateTimeZone($preferences->getTimezone()));
                 $timeFormat = $preferences->getTimeFormat() ? ' ' . $preferences->getTimeFormat() : '';
                 DateTime::setDefaultFormat($preferences->getDateFormat() . $timeFormat);

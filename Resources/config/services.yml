@@ -1,6 +1,10 @@
+imports:
+  - { resource: services/forms.yml }
+  - { resource: services/helpers.yml }
+  - { resource: services/workers.yml }
+
 parameters:
-  orkestra.worker_factory.class:            Orkestra\Bundle\ApplicationBundle\Worker\WorkerFactory
-  orkestra.file_manager.base_path:          %kernel.root_dir%/files
+  app.version: 
 
 services:
   orkestra.entity_manager:
@@ -11,43 +15,9 @@ services:
       - ''
       - { 'curl.options': { 'CURLOPT_CAINFO': %orkestra.ca_bundle.path%, 'CURLOPT_SSL_VERIFYPEER': true } }
 
-  # Form types
-  orkestra.type.enum:
-    class: Orkestra\Bundle\ApplicationBundle\Form\EnumType
-    tags:
-      - { name: form.type, alias: enum }
-  orkestra.type.year:
-    class: Orkestra\Bundle\ApplicationBundle\Form\YearType
-    tags:
-      - { name: form.type, alias: year }
-  orkestra.type.phone:
-    class: Orkestra\Bundle\ApplicationBundle\Form\PhoneType
-    tags:
-      - { name: form.type, alias: tel }
-  orkestra.type.datetime:
-    class: Orkestra\Bundle\ApplicationBundle\Form\DateTimeType
-    tags:
-      - { name: form.type, alias: datetime }
-  orkestra.type.entity_choice:
-    class: Orkestra\Bundle\ApplicationBundle\Form\EntityChoiceType
-    arguments: [ @doctrine ]
-    tags:
-      - { name: form.type, alias: entity_choice }
-
-  # Helpers
-  orkestra.mail_helper:
-    class: Orkestra\Bundle\ApplicationBundle\Helper\MailHelper
-    arguments: [ @templating, @twig ]
-  orkestra.form_helper:
-    class: Orkestra\Bundle\ApplicationBundle\Helper\FormHelper
-    arguments: [ @service_container ]
-
-  orkestra.file_manager:
-    class: Orkestra\Bundle\ApplicationBundle\Manager\FileManager
-    arguments: [ %orkestra.file_manager.base_path% ]
-
   # Twig extensions
-  orkestra.twig_extension:
+  orkestra.application.twig_extension:
+    public: false
     class: Orkestra\Bundle\ApplicationBundle\Twig\OrkestraExtension
     calls:
       - [ setContainer, [ @service_container ] ]
@@ -55,23 +25,21 @@ services:
       - { name: twig.extension }
 
   # Listeners
-  orkestra.user_preferences_listener:
+  orkestra.application.user_preferences_listener:
     class: Orkestra\Bundle\ApplicationBundle\Listener\UserPreferencesListener
     arguments: [ @service_container ]
     tags:
        - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+  orkestra.application.json_response_listener:
+    class: Orkestra\Bundle\ApplicationBundle\Listener\JsonResponseListener
+    tags:
+      - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 128 }
 
   # Subscribers
-  orkestra.subscriber.latitude_longitude:
+  orkestra.application.subscriber.latitude_longitude:
+    public: false
     class: Orkestra\Bundle\ApplicationBundle\Subscriber\LatitudeLongitudeSubscriber
     tags:
       - { name: doctrine.event_subscriber }
 
-  # Workers
-  orkestra.worker_factory:
-    class: %orkestra.worker_factory.class%
-  orkestra.worker.latitude_longitude:
-    class: Orkestra\Bundle\ApplicationBundle\Worker\LatitudeLongitudeWorker
-    arguments: [ @orkestra.entity_manager, @orkestra.guzzle_client ]
-    tags:
-      - { name: orkestra.worker }
+  

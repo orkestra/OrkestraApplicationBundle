@@ -26,10 +26,11 @@ class LatitudeLongitudeSubscriber implements EventSubscriber
             return;
         }
 
+
         if (!$event->hasChangedField('street')
-            || !$event->hasChangedField('city')
-            || !$event->hasChangedField('region')
-            || !$event->hasChangedField('postalCode')
+            && !$event->hasChangedField('city')
+            && !$event->hasChangedField('region')
+            && !$event->hasChangedField('postalCode')
         ) {
             return;
         }
@@ -42,6 +43,7 @@ class LatitudeLongitudeSubscriber implements EventSubscriber
             $entity->setLongitude(null);
         }
 
+        $entity->setValidated(false);
         // This "hack" is the only way to change a 'new' value in a preUpdate
         $em = $event->getEntityManager();
         $uow = $em->getUnitOfWork();
