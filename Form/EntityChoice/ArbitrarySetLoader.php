@@ -55,7 +55,7 @@ class ArbitrarySetLoader implements EntityLoaderInterface
     public function getEntitiesByIds($identifier, array $values)
     {
         $accessor = PropertyAccess::getPropertyAccessor();
-        return array_filter($this->entities->toArray(), function ($entity) use ($identifier, $values, $accessor) {
+        return array_filter(is_array($this->entities) ? $this->entities : $this->entities->toArray(), function ($entity) use ($identifier, $values, $accessor) {
             return in_array($accessor->getValue($entity, $identifier), $values);
         });
     }
