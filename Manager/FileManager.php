@@ -60,6 +60,8 @@ class FileManager
             $path = $this->basePath;
         }
 
+        $this->ensureDirectoryExists($path);
+
         if (null === $filename) {
             $filename = md5(uniqid('imagepng', true)) . '.png';
         }
@@ -74,5 +76,24 @@ class FileManager
         $file = new File($fullPath, $filename, 'image/png', filesize($fullPath));
 
         return $file;
+    }
+
+    /**
+     * Attempts to create the given directory, throwing an exception if unable to
+     *
+     * @param string $path
+     *
+     * @return string            $path
+     * @throws \RuntimeException
+     */
+    private function ensureDirectoryExists($path)
+    {
+        if (!is_dir($path)) {
+            if (!mkdir($path, 0777, true)) {
+                throw new \RuntimeException(sprintf('Could not create directory "%s"', $path));
+            }
+        }
+
+        return $path;
     }
 }
