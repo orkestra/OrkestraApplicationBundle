@@ -75,5 +75,7 @@
   Orkestra.form     = new Orkestra.FormHelper();
   Orkestra.modal    = new Orkestra.ModalHelper();
   Orkestra.table    = new Orkestra.TableHelper();
+  Orkestra.router   = new Orkestra.RouteHelper();
+
   Orkestra.bindEnhancements = _bindEnhancements;
 })(jQuery, this, this.document);
