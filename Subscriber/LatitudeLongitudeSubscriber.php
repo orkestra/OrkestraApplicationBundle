@@ -14,7 +14,7 @@ namespace Orkestra\Bundle\ApplicationBundle\Subscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Orkestra\Bundle\ApplicationBundle\Entity\Contact\Address;
+use Orkestra\Bundle\ApplicationBundle\Model\Contact\AddressInterface;
 
 class LatitudeLongitudeSubscriber implements EventSubscriber
 {
@@ -22,7 +22,7 @@ class LatitudeLongitudeSubscriber implements EventSubscriber
     {
         $entity = $event->getEntity();
 
-        if (!$entity instanceof Address) {
+        if (!$entity instanceof AddressInterface) {
             return;
         }
 
