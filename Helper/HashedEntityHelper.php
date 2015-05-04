@@ -11,6 +11,7 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Helper;
 
+use Doctrine\Common\Persistence\Proxy;
 use Doctrine\ORM\EntityManager;
 use Orkestra\Bundle\ApplicationBundle\Entity\HashedEntity;
 use Orkestra\Bundle\ApplicationBundle\Model\PersistentModelInterface;
@@ -40,6 +41,10 @@ class HashedEntityHelper
     public function create(PersistentModelInterface $entity, \DateTime $expiration = null)
     {
         $entityClass = get_class($entity);
+        if ($entity instanceof Proxy) {
+            $reflClass = new \ReflectionClass($entity);
+            $entityClass = $reflClass->getParentClass()->getName();
+        }
 
         $hash = $this->entityManager->getRepository('OrkestraApplicationBundle:HashedEntity')
             ->createQueryBuilder('h')
