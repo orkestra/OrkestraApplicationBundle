@@ -11,8 +11,8 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Form\EntityChoice;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
-use Symfony\Component\Form\Util\PropertyPath;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
@@ -27,6 +27,8 @@ class ArbitrarySetLoader implements EntityLoaderInterface
     {
         if ($setClosure instanceof \Closure) {
             $this->entities = $setClosure();
+        } elseif (is_array($setClosure) || $setClosure instanceof Collection) {
+            $this->entities = $setClosure;
         } else {
             throw new UnexpectedTypeException($setClosure, '\Closure');
         }
