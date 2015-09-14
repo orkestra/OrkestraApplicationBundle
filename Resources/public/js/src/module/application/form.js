@@ -116,24 +116,24 @@
 
   var _bindEnhancements = function(form) {
     var $form = $(form);
-    
+
     // Date and time pickers
     if ($.isFunction($.fn.datetimepicker)) {
       $('input.date', $form).datetimepicker({
         pickTime : false,
-        format : 'MM/DD/YY'
+        format : Orkestra.dateFormat || 'MM/DD/YY'
       });
-      
+
       $('input.timepicker', $form).datetimepicker({
         useSeconds : false,
         pickDate : false,
         minuteStepping : 1,
         format : 'hh:mm A'
       });
-      
+
       $('input.datetimepicker', $form).datetimepicker({
         useSeconds : false,
-        format : 'MM/DD/YY hh:mm A'
+        format : Orkestra.dateFormat + ' hh:mm A' || 'MM/DD/YY hh:mm A'
       });
     }
 
