@@ -119,21 +119,30 @@
 
     // Date and time pickers
     if ($.isFunction($.fn.datetimepicker)) {
-      $('input.date', $form).datetimepicker({
-        pickTime : false,
-        format : Orkestra.dateFormat || 'MM/DD/YY'
+      $('input.date', $form).each(function (index,elem) {
+        var data = $(elem).data() || {};
+        $(elem).datetimepicker({
+          pickTime : false,
+          format : data['format'] || Orkestra.dateFormat || 'MM/DD/YY'
+        });
       });
 
-      $('input.timepicker', $form).datetimepicker({
-        useSeconds : false,
-        pickDate : false,
-        minuteStepping : 1,
-        format : 'hh:mm A'
+      $('input.timepicker', $form).each(function (index,elem) {
+        var data = $(elem).data() || {};
+        $(elem).datetimepicker({
+          useSeconds : data['useSeconds'] || false,
+          pickDate : false,
+          minuteStepping : data['minuteStep'] || 1,
+          format : data['format'] || Orkestra.timeFormat || 'hh:mm A'
+        });
       });
 
-      $('input.datetimepicker', $form).datetimepicker({
-        useSeconds : false,
-        format : Orkestra.dateFormat + ' hh:mm A' || 'MM/DD/YY hh:mm A'
+      $('input.datetimepicker', $form).each(function (index,elem) {
+        var data = $(elem).data() || {};
+        $(elem).datetimepicker({
+          useSeconds : data['useSeconds'] || false,
+          format : data['format'] || Orkestra.dateFormat + Orkestra.timeFormat || 'MM/DD/YY hh:mm A'
+        });
       });
     }
 
