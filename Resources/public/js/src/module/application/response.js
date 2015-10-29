@@ -26,7 +26,7 @@
       _.each(response.field_errors, function(messages, field) {
         var message = messages.join(' ');
 
-        $(document.getElementById(field)).closest('.form-group').addClass('error').find('.help-block').text(message).show();
+        $(document.getElementById(field)).closest('.form-group').addClass('error').addClass('has-error').find('.help-block').text(message).show();
       });
     },
 

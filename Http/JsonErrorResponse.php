@@ -90,8 +90,14 @@ class JsonErrorResponse extends JsonResponse
     {
         $errors = array();
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $errors;
+        }
+
         $id = $form->createView()->vars['id'];
+
         foreach ($form->getErrors() as $error) {
+
             if (!isset($errors[$id])) {
                 $errors[$id] = array();
             }
