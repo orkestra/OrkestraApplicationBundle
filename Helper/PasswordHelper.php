@@ -22,18 +22,18 @@ class PasswordHelper
     private $hashedEntityHelper;
 
     /**
-     * @var EmailHelper
+     * @var EmailHelperInterface
      */
     private $emailHelper;
 
     /**
      * Constructor
      * 
-     * @param EmailHelper        $emailHelper
-     * @param HashedEntityHelper $hashedEntityHelper
+     * @param EmailHelperInterface $emailHelper
+     * @param HashedEntityHelper   $hashedEntityHelper
      */
     public function __construct(
-        EmailHelper $emailHelper,  
+        EmailHelperInterface $emailHelper,
         HashedEntityHelper $hashedEntityHelper
     ) {
         $this->emailHelper = $emailHelper;

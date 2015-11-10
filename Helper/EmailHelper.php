@@ -20,7 +20,7 @@ use Orkestra\Bundle\ApplicationBundle\Entity\EmailTemplate;
 /**
  * Provides additional functionality to Swift_Mailer
  */
-class EmailHelper
+class EmailHelper implements EmailHelperInterface
 {
     /**
      * @var \Symfony\Component\Templating\EngineInterface
