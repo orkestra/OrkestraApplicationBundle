@@ -11,7 +11,6 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler;
 
-use Orkestra\Bundle\ApplicationBundle\OrkestraApplicationBundle;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -26,6 +25,7 @@ class ModifyServiceDefinitionsPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $this->overrideAuthenticationServices($container);
+        $this->configureEmailHelper($container);
     }
 
     /**
@@ -37,5 +37,19 @@ class ModifyServiceDefinitionsPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('security.authentication.failure_handler');
         $definition->setClass('Orkestra\Bundle\ApplicationBundle\Security\Authentication\AuthenticationFailureHandler');
+    }
+
+    /**
+     * Configures the EmailHelper
+     *
+     * @param ContainerBuilder $container
+     */
+    private function configureEmailHelper(ContainerBuilder $container)
+    {
+        if (!class_exists('Swift_Mailer')) {
+            $definition = $container->getDefinition('orkestra.application.helper.email');
+            $definition->setClass('Orkestra\Bundle\ApplicationBundle\Helper\EmailHelper\MisconfiguredEmailHelper');
+            $definition->setArguments(array());
+        }
     }
 }
