@@ -16,7 +16,9 @@
     displayLength: 10,
     initComplete: $.noop,
     clickable: false,
-    autoWidth: false
+    autoWidth: false,
+    dtOptions: {
+    }
   };
 
   var _bootstrapifyFilters = function(oSettings) {
@@ -30,38 +32,78 @@
   };
 
   helper.prototype = $.extend(helper.prototype, {
-    getDataTableDefaults: function(options) {
-      return {
-        aaSorting : options.sort,
-        bLengthChange : true,
-        iDisplayLength : options.displayLength,
-        fnInitComplete : options.initComplete,
-        bAutoWidth : options.autoWidth,
+    bind: function(table, options) {
+      var self = this;
+      options = $.extend(true, _defaults, options);
+
+      if (options.path || options.sAjaxSource || options.dtOptions.sAjaxSource) {
+        options.dtOptions.sAjaxSource = options.path || options.sAjaxSource || options.dtOptions.sAjaxSource;
+
+        if (options.transformer || options.transformer === false) {
+          this.transformer = options.transformer;
+        }
+
+        if (options.template) {
+          this.template = options.template;
+        }
+
+        options.dtOptions.fnServerData = function ( sSource, aoData, fnCallback, oSettings ) {
+          oSettings.jqXHR = $.ajax( {
+            dataType: 'json',
+            type: "POST",
+            url: sSource,
+            data: aoData,
+            success: function (data, string, xhr) {
+              if (self.transformer) {
+                self.transformer(data,string,xhr);
+              }
+              fnCallback(data,string,xhr);
+              Orkestra.bindEnhancements(table);
+            },
+            error: Orkestra.response.error
+          } );
+        };
+
+        options.dtOptions.bProcessing = true;
+        options.dtOptions.bServerSide = true;
+      }
+
+      var dtOptions = $.extend({
+        aaSorting: options.sort,
+        bLengthChange: true,
+        iDisplayLength: options.displayLength,
+        fnInitComplete: options.initComplete,
+        bAutoWidth:     options.autoWidth,
+        aoColumns:      [],
         oTableTools : {
           sSwfPath : Orkestra.basePath + '/bundles/orkestraapplication/swf/copy_csv_xls_pdf.swf',
-          aButtons : [
+            aButtons : [
             {
               sExtends : 'collection',
               sButtonText : 'Save',
-              aButtons : [ 'xls', 'pdf', 'print' ]
+              aButtons : options.dtOptions.buttons
             }
           ]
         }
+      }, options.dtOptions);
+
+      if (!dtOptions.oTableTools.aButtons[0].aButtons) {
+        delete dtOptions.oTableTools;
+
+        if (dtOptions.sDom) {
+          dtOptions.sDom.replace(/T/g, '');
+        } else {
+          dtOptions.sDom = 'lfrtip';
+        }
       }
-    },
-
-    bind: function(table, options) {
-      options = $.extend(true, _defaults, options);
-
-      var dtOptions = this.getDataTableDefaults(options);
 
       var $table = $(table),
-        headRow = $table.find('tr:first'),
-        columnDefs = [];
-      headRow.children().each(function() {
+          headRow = $table.find('tr:first'),
+          columnDefs = [];
+      headRow.children().each(function(index) {
         var data = $(this).data();
 
-        var columnDef = {};
+        var columnDef = dtOptions.aoColumns[index] || {};
         if (false === data.sortable) {
           columnDef.bSortable = false;
         }
@@ -80,30 +122,41 @@
       dtOptions.aoColumns = columnDefs;
 
       if (false !== options.responsive) {
-        dtOptions = $.extend(dtOptions, (function($) {
+        var existingDtOptions = dtOptions;
+        dtOptions = $.extend({}, dtOptions, (function($) {
           var responsiveHelper;
 
           return {
             fnPreDrawCallback: function (oSettings) {
+              if (existingDtOptions.fnPreDrawCallback) {
+                existingDtOptions.fnPreDrawCallback.apply(this, arguments);
+              }
+
               if (!responsiveHelper) {
                 responsiveHelper = new ResponsiveDatatablesHelper($(oSettings.nTable), options.responsive.breakpoints);
               }
             },
             fnRowCallback  : function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+              if (existingDtOptions.fnRowCallback) {
+                existingDtOptions.fnRowCallback.apply(this, arguments);
+              }
+
               responsiveHelper.createExpandIcon(nRow);
             },
             fnDrawCallback : function (oSettings) {
+              if (existingDtOptions.fnDrawCallback) {
+                existingDtOptions.fnDrawCallback.apply(this, arguments);
+              }
+
               responsiveHelper.respond();
             }
           };
         })($));
       }
 
-      dtOptions.fnInitComplete = _bootstrapifyFilters;
-
       if (false !== options.clickable) {
         var callback = options.clickable,
-          modal = false;
+            modal = false;
         if (typeof(options.clickable) == 'object') {
           if (options.clickable.route) {
             callback = options.clickable.route;
@@ -122,7 +175,7 @@
         }
 
         var clickableIntercepted = false;
-        $table.addClass('table-clickable table-hover').find('.clickable').bind('click.clickable', function(e) {
+        $table.addClass('table-clickable').on('click.clickable', '.clickable', function(e) {
           if (clickableIntercepted) {
             // Check to see if something below the clickable row was clicked.
             // This is to prevent issues dealing with stopping propagation breaking
@@ -141,12 +194,22 @@
           }
         });
 
-        $table.find('.clickable a').bind('click.clickable', function(e) {
+        $table.on('click.clickable', '.clickable a', function(e) {
           clickableIntercepted = true;
         });
       }
 
-      $table.dataTable(dtOptions);
+      return $table.dataTable(dtOptions);
+    },
+
+    transformer: function (data) {
+      var self = this;
+      if (this.template) {
+        $.each(data['aaData'], function(key, value) {
+          var actionIndex = value.length - 1;
+          value[actionIndex] = self.template.replace(/__id__/g, value[actionIndex]);
+        });
+      }
     }
   });
 
