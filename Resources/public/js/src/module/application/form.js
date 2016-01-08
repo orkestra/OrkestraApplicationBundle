@@ -141,7 +141,7 @@
         var data = $(elem).data() || {};
         $(elem).datetimepicker({
           useSeconds : data['useSeconds'] || false,
-          format : data['format'] || Orkestra.dateFormat + Orkestra.timeFormat || 'MM/DD/YY hh:mm A'
+          format : data['format'] || ((Orkestra.dateFormat && Orkestra.timeFormat) ? (Orkestra.dateFormat + ' ' + Orkestra.timeFormat) : false) || 'MM/DD/YY hh:mm A'
         });
       });
     }
