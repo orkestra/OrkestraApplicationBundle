@@ -34,7 +34,7 @@
   helper.prototype = $.extend(helper.prototype, {
     bind: function(table, options) {
       var self = this;
-      options = $.extend(true, _defaults, options);
+      options = $.extend(true, {},_defaults, options);
 
       if (options.path || options.sAjaxSource || options.dtOptions.sAjaxSource) {
         options.dtOptions.sAjaxSource = options.path || options.sAjaxSource || options.dtOptions.sAjaxSource;
@@ -90,10 +90,11 @@
       if (!dtOptions.oTableTools.aButtons[0].aButtons) {
         delete dtOptions.oTableTools;
 
+        // removes T from sDom definition if it is not in a quoted string (strings define classes for DOM elements to be created)
         if (dtOptions.sDom) {
-          dtOptions.sDom.replace(/T/g, '');
+          dtOptions.sDom = dtOptions.sDom.replace(/T(?=([^']*'[^']*')*[^']*$)/g, '').replace(/T(?=([^"]*"[^"]*")*[^"]*$)/g, '');
         } else {
-          dtOptions.sDom = 'lfrtip';
+          dtOptions.sDom = $.fn.dataTable.defaults.sDom.replace(/T(?=([^']*'[^']*')*[^']*$)/g, '').replace(/T(?=([^"]*"[^"]*")*[^"]*$)/g, '');
         }
       }
 
@@ -153,6 +154,8 @@
           };
         })($));
       }
+
+      dtOptions.fnInitComplete = _bootstrapifyFilters;
 
       if (false !== options.clickable) {
         var callback = options.clickable,
