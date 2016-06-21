@@ -99,9 +99,19 @@
       }
 
       var $table = $(table),
-          headRow = $table.find('tr:first'),
+          headRow = $table.find('thead tr'),
           columnDefs = [];
       headRow.children().each(function(index) {
+        /*
+         TODO this may not be the best way of supporting complex headers
+         currently we are just telling it to skip tr with colspan attr and look at all
+         tr in the thead element. This allows for multiple tr and potentially column grouping
+         but any column specific attributes
+         */
+        if ($(this).attr('colspan')) {
+          return;
+        }
+
         var data = $(this).data();
 
         var columnDef = dtOptions.aoColumns[index] || {};
