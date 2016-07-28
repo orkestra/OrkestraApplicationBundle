@@ -66,6 +66,8 @@
 
         options.dtOptions.bProcessing = true;
         options.dtOptions.bServerSide = true;
+      } else {
+        Orkestra.bindEnhancements(table);
       }
 
       var dtOptions = $.extend({
