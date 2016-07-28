@@ -17,8 +17,16 @@
     initComplete: $.noop,
     clickable: false,
     autoWidth: false,
-    dtOptions: {
-    }
+    dtOptions: {},
+    transformer: function (data, string, xhr, template) {
+      if (template) {
+        $.each(data['aaData'], function(key, value) {
+          var actionIndex = value.length - 1;
+          value[actionIndex] = template.replace(/__id__/g, value[actionIndex]);
+        });
+      }
+    },
+    template: ''
   };
 
   var _bootstrapifyFilters = function(oSettings) {
@@ -34,18 +42,10 @@
   helper.prototype = $.extend(helper.prototype, {
     bind: function(table, options) {
       var self = this;
-      options = $.extend(true, {},_defaults, options);
-
+      options = $.extend(true, {}, _defaults, options);
+      
       if (options.path || options.sAjaxSource || options.dtOptions.sAjaxSource) {
         options.dtOptions.sAjaxSource = options.path || options.sAjaxSource || options.dtOptions.sAjaxSource;
-
-        if (options.transformer || options.transformer === false) {
-          this.transformer = options.transformer;
-        }
-
-        if (options.template) {
-          this.template = options.template;
-        }
 
         options.dtOptions.fnServerData = function ( sSource, aoData, fnCallback, oSettings ) {
           oSettings.jqXHR = $.ajax( {
@@ -54,8 +54,8 @@
             url: sSource,
             data: aoData,
             success: function (data, string, xhr) {
-              if (self.transformer) {
-                self.transformer(data,string,xhr);
+              if (options.transformer) {
+                options.transformer(data, string, xhr, options.template);
               }
               fnCallback(data,string,xhr);
               Orkestra.bindEnhancements(table);
@@ -213,16 +213,6 @@
       }
 
       return $table.dataTable(dtOptions);
-    },
-
-    transformer: function (data) {
-      var self = this;
-      if (this.template) {
-        $.each(data['aaData'], function(key, value) {
-          var actionIndex = value.length - 1;
-          value[actionIndex] = self.template.replace(/__id__/g, value[actionIndex]);
-        });
-      }
     }
   });
 
