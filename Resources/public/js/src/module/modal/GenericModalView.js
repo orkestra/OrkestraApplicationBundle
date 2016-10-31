@@ -135,7 +135,7 @@
 
     show: function() {
       this.trigger('show', function() {
-        this.$el.modal();
+        this.$el.modal(this.options);
       });
     },
 

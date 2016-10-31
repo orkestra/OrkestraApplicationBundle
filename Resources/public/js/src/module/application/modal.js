@@ -24,19 +24,28 @@
       $.modal('hide');
     },
 
-    content: function(content, title) {
-      return this.create({
+    content: function(content, title, config) {
+      var options = {
         title: title,
         content: content
-      });
+      };
+      if (config != undefined) {
+        options = $.extend(options,config);
+      }
+      return this.create(options);
     },
 
-    remote: function(url, title) {
-      return this.create({
-        type: 'RemoteModalView',
+    remote: function(url, title, config) {
+      var options = {
         title: title,
         url: url
-      });
+      };
+      if (config != undefined) {
+        options = $.extend(options,config);
+      }
+      options.type = 'RemoteModalView';
+
+      return this.create(options);
     },
 
     embedded: function(options) {
