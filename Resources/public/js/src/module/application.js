@@ -9,7 +9,7 @@
     $('a[data-modal=true]', context).unbind(_clickEvent + '.modal').bind(_clickEvent + '.modal', function(e) {
       e.preventDefault();
 
-      Orkestra.modal.remote($(this).attr('href')).show();
+      Orkestra.modal.remote($(this).attr('href'), undefined, {backdrop: 'static'}).show();
     });
 
     $('a[data-method]', context).unbind(_clickEvent + '.custom-method').bind(_clickEvent + '.custom-method', function(e) {
