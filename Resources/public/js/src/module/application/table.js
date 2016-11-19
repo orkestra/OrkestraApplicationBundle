@@ -26,7 +26,44 @@
         });
       }
     },
-    template: ''
+    template: '',
+    listeners: false,
+    // {// this is an example of a listener
+    //   modal: [{
+    //     regexp: /\b\B/, // this regexp never matches anything so handler will never be called
+    //     handler: function (dtable, row, $el, newVal, transformer, template) {
+    //       newVal.on('show', function(){
+    //         newVal.bindControlsToForm(newVal.$el.find('form'), {onSuccess: function(data,response) {
+    //           // update row with response
+    //           if (response.type == 'success') {
+    //             transformer({aaData: [response.data]}, null, null, template);
+    //             dtable.fnUpdate(response.data, row, undefined, false);
+    //             Orkestra.bindEnhancements(row);
+    //             newVal.hide();
+    //           }
+    //           return true;
+    //         }});
+    //       });
+    //     }
+    //   }]
+    // },
+    handler: {
+      modal: function (dtable, listeners, transformer, template, property, oldVal, newVal) {
+        if (newVal !== null && newVal !== undefined) {
+          var $el = $(document.activeElement);
+          var row = $el.closest('tr')[0];
+          for (var i in listeners) {
+            if (listeners.hasOwnProperty(i)
+                && (listeners[i].regexp.test(newVal.options.url)
+                    || listeners[i].regexp.test($el.attr('href')) )
+            ) {
+              listeners[i].handler(dtable, row, $el, newVal, transformer, template);
+            }
+          }
+        }
+        return newVal;
+      }
+    }
   };
 
   var _bootstrapifyFilters = function(oSettings) {
@@ -214,7 +251,15 @@
         });
       }
 
-      return $table.dataTable(dtOptions);
+      dtTable = $table.dataTable(dtOptions);
+
+      if (options.handler.modal && options.listeners.modal) {
+        Orkestra.modal.watch('current', function(property, oldVal, newVal) {
+          options.handler.modal(dtTable, options.listeners.modal, options.transformer, options.template, property, oldVal, newVal);
+        });
+      }
+
+      return dtTable;
     }
   });
 
