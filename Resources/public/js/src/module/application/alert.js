@@ -40,6 +40,10 @@
       _showAlert('success', message);
     },
 
+    data: function(message, response) {
+      this[response.type](message);
+    },
+
     showFlashes: function(flashes) {
       _.each(flashes, function(messages, type) {
         if (! (type in this)) {
