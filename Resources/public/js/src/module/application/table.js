@@ -27,26 +27,27 @@
       }
     },
     template: '',
-    listeners: false,
-    // {// this is an example of a listener
-    //   modal: [{
-    //     regexp: /\b\B/, // this regexp never matches anything so handler will never be called
-    //     handler: function (dtable, row, $el, newVal, transformer, template) {
-    //       newVal.on('show', function(){
-    //         newVal.bindControlsToForm(newVal.$el.find('form'), {onSuccess: function(data,response) {
-    //           // update row with response
-    //           if (response.type == 'success') {
-    //             transformer({aaData: [response.data]}, null, null, template);
-    //             dtable.fnUpdate(response.data, row, undefined, false);
-    //             Orkestra.bindEnhancements(row);
-    //             newVal.hide();
-    //           }
-    //           return true;
-    //         }});
-    //       });
-    //     }
-    //   }]
-    // },
+    listeners:
+        // false,
+    {// this is an example of a listener
+      modal: [{
+        regexp: /\b\B/, // this regexp never matches anything so handler will never be called
+        handler: function (dtable, row, $el, newVal, transformer, template) {
+          newVal.on('show', function(){
+            newVal.bindControlsToForm(newVal.$el.find('form'), {onSuccess: function(data,response) {
+              // update row with response
+              if (response.type == 'success') {
+                transformer({aaData: [response.data]}, null, null, template);
+                dtable.fnUpdate(response.data, row, undefined, false);
+                Orkestra.bindEnhancements(row);
+                newVal.hide();
+              }
+              return true;
+            }});
+          });
+        }
+      }]
+    },
     handler: {
       modal: function (dtable, listeners, transformer, template, property, oldVal, newVal) {
         if (newVal !== null && newVal !== undefined) {
@@ -255,7 +256,7 @@
 
       if (options.handler.modal && options.listeners.modal) {
         Orkestra.modal.watch('current', function(property, oldVal, newVal) {
-          options.handler.modal(dtTable, options.listeners.modal, options.transformer, options.template, property, oldVal, newVal);
+          return options.handler.modal(dtTable, options.listeners.modal, options.transformer, options.template, property, oldVal, newVal);
         });
       }
 
