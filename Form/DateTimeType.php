@@ -13,14 +13,14 @@ namespace Orkestra\Bundle\ApplicationBundle\Form;
 
 use Orkestra\Common\Type\DateTime;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType as BaseDateTimeType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Handles automatically setting of timezones
  */
 class DateTimeType extends BaseDateTimeType
 {
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
 
