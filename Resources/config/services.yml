@@ -13,21 +13,21 @@ services:
     class: Guzzle\Http\Client
     arguments:
       - ''
-      - { 'curl.options': { 'CURLOPT_CAINFO': %orkestra.ca_bundle.path%, 'CURLOPT_SSL_VERIFYPEER': true } }
+      - { 'curl.options': { 'CURLOPT_CAINFO': '%orkestra.ca_bundle.path%', 'CURLOPT_SSL_VERIFYPEER': true } }
 
   # Twig extensions
   orkestra.application.twig_extension:
     public: false
     class: Orkestra\Bundle\ApplicationBundle\Twig\OrkestraExtension
     calls:
-      - [ setContainer, [ @service_container ] ]
+      - [ setContainer, [ '@service_container' ] ]
     tags:
       - { name: twig.extension }
 
   # Listeners
   orkestra.application.user_preferences_listener:
     class: Orkestra\Bundle\ApplicationBundle\Listener\UserPreferencesListener
-    arguments: [ @service_container ]
+    arguments: [ '@service_container' ]
     tags:
        - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
   orkestra.application.json_response_listener:

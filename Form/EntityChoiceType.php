@@ -12,8 +12,8 @@
 namespace Orkestra\Bundle\ApplicationBundle\Form;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Bridge\Doctrine\Form\Type\DoctrineType;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\ORMQueryBuilderLoader;
+use Symfony\Bridge\Doctrine\Form\Type\DoctrineType;
 
 class EntityChoiceType extends DoctrineType
 {
@@ -32,7 +32,7 @@ class EntityChoiceType extends DoctrineType
         );
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'entity_choice';
     }

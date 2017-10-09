@@ -11,11 +11,11 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Monolog\Logger;
-use Symfony\Component\Templating\EngineInterface;
-
 use Orkestra\Bundle\ApplicationBundle\Entity\EmailTemplate;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Symfony\Component\Templating\EngineInterface;
 
 /**
  * Provides additional functionality to Swift_Mailer

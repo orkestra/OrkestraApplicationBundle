@@ -11,8 +11,11 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
-use Symfony\Component\Security\Core\SecurityContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Security\Core\SecurityContext;
 
 /**
  * User authentication controller
@@ -30,9 +33,9 @@ class AuthController extends Controller
         $session = $request->getSession();
 
         $form = $this->createFormBuilder()
-            ->add('username', 'text', array('label' => 'Username'))
-            ->add('password', 'password', array('label' => 'Password'))
-            ->add('rememberMe', 'checkbox', array('label' => 'Remember Me', 'required' => false))
+            ->add('username', TextType::class, array('label' => 'Username'))
+            ->add('password', PasswordType::class, array('label' => 'Password'))
+            ->add('rememberMe', CheckboxType::class, array('label' => 'Remember Me', 'required' => false))
             ->getForm();
 
         if ($session->has(SecurityContext::LAST_USERNAME)) {

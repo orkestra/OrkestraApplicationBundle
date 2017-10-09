@@ -14,8 +14,8 @@ namespace Orkestra\Bundle\ApplicationBundle\Worker;
 use Doctrine\ORM\EntityManager;
 use Guzzle\Http\ClientInterface;
 use Orkestra\Bundle\ApplicationBundle\Entity\Contact\Address;
-use Symfony\Component\HttpFoundation\Request;
 use Orkestra\Common\Kernel\HttpKernel;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Populates latitude and longitude in addresses

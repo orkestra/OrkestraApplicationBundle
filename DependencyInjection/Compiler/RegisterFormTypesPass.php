@@ -11,9 +11,9 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\Reference,
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface,
     Symfony\Component\DependencyInjection\ContainerBuilder,
-    Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    Symfony\Component\DependencyInjection\Reference;
 
 class RegisterFormTypesPass implements CompilerPassInterface
 {

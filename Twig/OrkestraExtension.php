@@ -43,10 +43,10 @@ class OrkestraExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'current_controller' => new \Twig_Function_Method($this, 'getController'),
-            'current_action'     => new \Twig_Function_Method($this, 'getAction'),
-            'is_currently_on'    => new \Twig_Function_Method($this, 'isCurrentlyOn'),
-            'is_current_route'   => new \Twig_Function_Method($this, 'isCurrentRoute'),
+            new \Twig_SimpleFunction('current_controller', array($this, 'getController')),
+            new \Twig_SimpleFunction('current_action', array($this, 'getAction')),
+            new \Twig_SimpleFunction('is_currently_on', array($this, 'isCurrentlyOn')),
+            new \Twig_SimpleFunction('is_current_route', array($this, 'isCurrentRoute')),
         );
     }
 

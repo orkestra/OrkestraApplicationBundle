@@ -12,8 +12,8 @@
 namespace Orkestra\Bundle\ApplicationBundle\Subscriber;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\Events;
 use Orkestra\Bundle\ApplicationBundle\Model\Contact\AddressInterface;
 
 class LatitudeLongitudeSubscriber implements EventSubscriber

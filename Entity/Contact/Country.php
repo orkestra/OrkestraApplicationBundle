@@ -11,8 +11,8 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Entity\Contact;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Orkestra\Bundle\ApplicationBundle\Model\Contact\CountryInterface;
 use Orkestra\Bundle\ApplicationBundle\Model\Contact\RegionInterface;
 use Orkestra\Common\Entity\AbstractEntity;

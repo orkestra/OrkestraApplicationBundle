@@ -11,12 +11,12 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\Exception\UploadException;
+use Doctrine\ORM\Mapping as ORM;
 use Orkestra\Common\Entity\AbstractEntity;
 use Orkestra\Common\Type\DateTime;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * File Entity

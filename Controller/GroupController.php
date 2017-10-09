@@ -11,13 +11,13 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Orkestra\Bundle\ApplicationBundle\Controller\Controller;
 use Orkestra\Bundle\ApplicationBundle\Entity\Group;
 use Orkestra\Bundle\ApplicationBundle\Form\GroupType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Group controller.
@@ -76,7 +76,7 @@ class GroupController extends Controller
     public function newAction()
     {
         $group = new Group();
-        $form = $this->createForm(new GroupType(), $group);
+        $form = $this->createForm(GroupType::class, $group);
 
         return array(
             'group' => $group,
@@ -96,7 +96,7 @@ class GroupController extends Controller
     {
         $group = new Group();
 
-        $form = $this->createForm(new GroupType(), $group);
+        $form = $this->createForm(GroupType::class, $group);
         $form->bindRequest($this->getRequest());
 
         if ($form->isValid()) {
@@ -133,7 +133,7 @@ class GroupController extends Controller
             throw $this->createNotFoundException('Unable to locate Group');
         }
 
-        $form = $this->createForm(new GroupType(), $group);
+        $form = $this->createForm(GroupType::class, $group);
 
         return array(
             'group' => $group,
@@ -159,7 +159,7 @@ class GroupController extends Controller
             throw $this->createNotFoundException('Unable to locate Group');
         }
 
-        $form = $this->createForm(new GroupType(), $group);
+        $form = $this->createForm(GroupType::class, $group);
 
         $form->bindRequest($this->getRequest());
 

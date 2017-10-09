@@ -11,9 +11,9 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Listener;
 
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Orkestra\Bundle\ApplicationBundle\Http\JsonRedirectResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class JsonResponseListener
 {

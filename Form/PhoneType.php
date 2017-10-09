@@ -12,15 +12,16 @@
 namespace Orkestra\Bundle\ApplicationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class PhoneType extends AbstractType
 {
     public function getParent()
     {
-        return 'text';
+        return TextType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'tel';
     }

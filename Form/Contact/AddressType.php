@@ -11,10 +11,11 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Form\Contact;
 
-use Symfony\Component\Form\AbstractType;
 use Doctrine\ORM\EntityRepository;
+use Orkestra\Bundle\ApplicationBundle\Form\PhoneType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddressType extends AbstractType
 {
@@ -23,8 +24,8 @@ class AddressType extends AbstractType
         $countryCode = $options['country_code'];
 
         $builder
-            ->add('phone', 'tel')
-            ->add('altPhone', 'tel', array('required' => false, 'label' => 'Alternate Phone'))
+            ->add('phone', PhoneType::class)
+            ->add('altPhone', PhoneType::class, array('required' => false, 'label' => 'Alternate Phone'))
             ->add('street')
             ->add('suite', null, array('required' => false))
             ->add('city')
@@ -46,7 +47,7 @@ class AddressType extends AbstractType
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'country_code' => 'US',
@@ -54,7 +55,7 @@ class AddressType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'address';
     }

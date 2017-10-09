@@ -18,5 +18,5 @@ security:
         password_parameter: "form[password]"
       logout: ~
       remember_me:
-        key: nice_remember_me_key_here
+        secret: nice_remember_me_key_here
         remember_me_parameter: "form[remember_me]"

@@ -11,10 +11,10 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * File controller
@@ -40,7 +40,7 @@ class FileController extends Controller
             throw $this->createNotFoundException('Unable to locate File');
         }
 
-        $securityContext = $this->get('security.context');
+        $securityContext = $this->get('security.authorization_checker');
 
         foreach ($file->getGroups() as $group) {
             if (!$securityContext->isGranted($group->getRole())) {
@@ -84,7 +84,7 @@ class FileController extends Controller
             throw $this->createNotFoundException('Unable to locate File');
         }
 
-        $securityContext = $this->get('security.context');
+        $securityContext = $this->get('security.authorization_checker');
 
         foreach ($file->getGroups() as $group) {
             if (!$securityContext->isGranted($group->getRole())) {

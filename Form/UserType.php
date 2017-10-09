@@ -12,8 +12,10 @@
 namespace Orkestra\Bundle\ApplicationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
@@ -22,20 +24,20 @@ class UserType extends AbstractType
         $builder->add('username');
 
         if (false !== $options['include_password']) {
-            $builder->add('password', 'password');
+            $builder->add('password', PasswordType::class);
         }
 
-        $builder->add('firstName', null, array('label' => 'First Name'))
-                ->add('lastName', null, array('label' => 'Last Name'))
-                ->add('email', null, array('label' => 'Email Address'))
-                ->add('expired', null, array('required' => false))
-                ->add('locked', null, array('required' => false))
-                ->add('active', null, array('required' => false))
-                ->add('groups', null, array('required' => false))
-                ->add('preferences', new PreferencesType());
+        $builder->add('firstName', TextType::class, array('label' => 'First Name'))
+                ->add('lastName', TextType::class, array('label' => 'Last Name'))
+                ->add('email', TextType::class, array('label' => 'Email Address'))
+                ->add('expired', TextType::class, array('required' => false))
+                ->add('locked', TextType::class, array('required' => false))
+                ->add('active', TextType::class, array('required' => false))
+                ->add('groups', TextType::class, array('required' => false))
+                ->add('preferences', PreferencesType::class);
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'include_password' => true,
@@ -43,7 +45,7 @@ class UserType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'user';
     }

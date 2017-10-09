@@ -11,8 +11,8 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Form;
 
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType as BaseDateTimeType;
 use Orkestra\Common\Type\DateTime;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType as BaseDateTimeType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**

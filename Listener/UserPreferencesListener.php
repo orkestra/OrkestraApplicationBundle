@@ -11,15 +11,15 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Listener;
 
+use Orkestra\Bundle\ApplicationBundle\Entity\User;
 use Orkestra\Bundle\ApplicationBundle\Model\UserInterface;
+use Orkestra\Common\Type\Date;
+use Orkestra\Common\Type\DateTime;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\Event;
 
-use Orkestra\Common\Type\DateTime;
-use Orkestra\Common\Type\Date;
-
-use Orkestra\Bundle\ApplicationBundle\Entity\User;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Configures the current user's time and date formatting
@@ -35,7 +35,7 @@ class UserPreferencesListener
 
     public function onKernelController(Event $event)
     {
-        $token = $this->container->get('security.context')->getToken();
+        $token = $this->container->get('security.token_storage')->getToken();
 
         if (!empty($token)) {
             $user = $token->getUser();
