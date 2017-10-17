@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 
 /**
@@ -27,9 +28,8 @@ class AuthController extends Controller
      *
      * @Template
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
-        $request = $this->getRequest();
         $session = $request->getSession();
 
         $form = $this->createFormBuilder()
@@ -38,8 +38,9 @@ class AuthController extends Controller
             ->add('rememberMe', CheckboxType::class, array('label' => 'Remember Me', 'required' => false))
             ->getForm();
 
-        if ($session->has(SecurityContext::LAST_USERNAME)) {
-            $form->setData(array('username' => $session->get(SecurityContext::LAST_USERNAME)));
+        $helper = $this->get('security.authentication_utils');
+        if ($lastUsername = $helper->getLastUsername()) {
+            $form->setData(array('username' => $lastUsername));
         }
 
         return array(

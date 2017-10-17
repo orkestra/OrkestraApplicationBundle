@@ -45,7 +45,7 @@ class EnumType extends AbstractType
                 }
             }
 
-            return $values;
+            return array_flip($values);
         };
 
         $resolver->setRequired(array(

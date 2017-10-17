@@ -23,23 +23,29 @@ class PreferencesType extends AbstractType
         $builder
             ->add('timezone', ChoiceType::class, array(
                 'choices' => array(
-                    'Etc/GMT' => 'Greenwich Mean Time (Etc/GMT)',
-                    'America/Puerto_Rico' => 'Atlantic Standard Time (America/Puerto_Rico)',
-                    'America/New_York' => 'Eastern Standard Time (America/New_York)',
-                    'America/Chicago' => 'Central Standard Time (America/Chicago)',
-                    'America/Boise' => 'Mountain Standard Time (America/Boise)',
-                    'America/Los_Angeles' => 'Pacific Standard Time (America/Los_Angeles)',
-                    'America/Juneau' => 'Alaska (America/Juneau)',
-                    'Pacific/Honolulu' => 'Hawaii (Pacific/Honolulu)',
+                    'Greenwich Mean Time (Etc/GMT)' =>  'Etc/GMT' ,
+                    'Atlantic Standard Time (America/Puerto_Rico)' =>  'America/Puerto_Rico' ,
+                    'Eastern Standard Time (America/New_York)' =>  'America/New_York' ,
+                    'Central Standard Time (America/Chicago)' =>  'America/Chicago' ,
+                    'Mountain Standard Time (America/Boise)' =>  'America/Boise' ,
+                    'Pacific Standard Time (America/Los_Angeles)' =>  'America/Los_Angeles' ,
+                    'Alaska (America/Juneau)' =>  'America/Juneau' ,
+                    'Hawaii (Pacific/Honolulu)' =>  'Pacific/Honolulu' ,
                 ),
             ))
             ->add('dateFormat', ChoiceType::class, array(
                 'label' => 'Date Format',
-                'choices' => array('Y-m-d' => '2011-12-31', 'm-d-Y' => '12-31-2011', 'm/d/y' => '12/31/2011'),
-            ))
+                'choices' => array(
+                    '2011-12-31' =>  'Y-m-d' ,
+                    '12-31-2011' =>  'm-d-Y' ,
+                    '12/31/2011' =>  'm/d/y' ,
+            )))
             ->add('timeFormat', ChoiceType::class, array(
                 'label' => 'Time Format',
-                'choices' => array('H:i:s' => '16:12:45 (24-hour)', 'h:i:s A' => '04:12:45 PM'),
+                'choices' => array(
+                    '16:12:45 (24-hour)' =>  'H:i:s' ,
+                    '04:12:45 PM' => 'h:i:s A'
+                ),
                 'required' => false,
                 'placeholder' => 'Hide timestamps',
             ))
