@@ -35,6 +35,9 @@ class OrkestraExtension extends \Twig_Extension
      */
     protected $action;
 
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
     private $request;
 
     /**
@@ -64,8 +67,8 @@ class OrkestraExtension extends \Twig_Extension
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
-        if ($this->container->isScopeActive('request')) {
-            $this->request = $this->container->get('request');
+        if ($this->container->has('request_stack')) {
+            $this->request = $this->container->get('request_stack')->getCurrentRequest();
         }
     }
 
@@ -140,8 +143,8 @@ class OrkestraExtension extends \Twig_Extension
     protected function getCurrentRequest()
     {
         if (!$this->request) {
-            if ($this->container->isScopeActive('request')) {
-                $this->request = $this->container->get('request');
+            if ($this->container->has('request_stack')) {
+                $this->request = $this->container->get('request_stack')->getCurrentRequest();
             } else {
                 throw new \RuntimeException('Unable to get "request" service');
             }
