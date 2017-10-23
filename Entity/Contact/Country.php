@@ -28,7 +28,7 @@ class Country extends AbstractEntity implements CountryInterface
     /**
      * @var string $name
      *
-     * @ORM\Column(name="name", type="string", length=30)
+     * @ORM\Column(name="name", type="string", length=60)
      */
     protected $name;
 
