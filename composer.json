@@ -24,7 +24,8 @@
   "target-dir": "Orkestra/Bundle/ApplicationBundle",
   "extra": {
     "branch-alias": {
-      "dev-develop": "1.0-dev"
+      "dev-develop": "1.0-dev",
+      "dev-2.x-develop": "2.0-dev"
     }
   }
 }
