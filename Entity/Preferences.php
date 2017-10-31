@@ -11,8 +11,8 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
-use Orkestra\Bundle\ApplicationBundle\Model\PreferencesInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Orkestra\Bundle\ApplicationBundle\Model\PreferencesInterface;
 use Orkestra\Bundle\ApplicationBundle\Model\UserInterface;
 use Orkestra\Common\Entity\AbstractEntity;
 

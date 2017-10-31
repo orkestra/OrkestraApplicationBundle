@@ -11,13 +11,14 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Form;
 
+use Orkestra\Bundle\ApplicationBundle\Form\DataTransformer\EnumTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\ChoiceList\SimpleChoiceList;
-use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\Options;
 
-use Orkestra\Bundle\ApplicationBundle\Form\DataTransformer\EnumTransformer;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EnumType extends AbstractType
 {
@@ -26,7 +27,7 @@ class EnumType extends AbstractType
         $builder->addModelTransformer(new EnumTransformer($options['enum'], $options['multiple']));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $choiceList = function (Options $options) {
             $reflected = new \ReflectionClass($options['enum']);
@@ -44,20 +45,20 @@ class EnumType extends AbstractType
                 }
             }
 
-            return new SimpleChoiceList($values);
+            return array_flip($values);
         };
 
         $resolver->setRequired(array(
             'enum'
         ));
 
-        $resolver->setOptional(array(
+        $resolver->setDefined(array(
             'exclude',
             'labels'
         ));
 
         $resolver->setDefaults(array(
-            'choice_list' => $choiceList,
+            'choices' => $choiceList,
             'exclude' => array(),
             'labels' => array()
         ));
@@ -65,10 +66,10 @@ class EnumType extends AbstractType
 
     public function getParent()
     {
-        return 'choice';
+        return ChoiceType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'enum';
     }

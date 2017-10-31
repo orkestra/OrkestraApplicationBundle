@@ -4,9 +4,9 @@ parameters:
 services:
   # Workers
   orkestra.worker_factory:
-    class: %orkestra.worker_factory.class%
+    class: '%orkestra.worker_factory.class%'
   orkestra.worker.latitude_longitude:
     class: Orkestra\Bundle\ApplicationBundle\Worker\LatitudeLongitudeWorker
-    arguments: [ @orkestra.entity_manager, @orkestra.guzzle_client ]
+    arguments: [ '@orkestra.entity_manager', '@orkestra.guzzle_client' ]
     tags:
       - { name: orkestra.worker }

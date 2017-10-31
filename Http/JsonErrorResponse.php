@@ -11,9 +11,9 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Http;
 
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Form\Form;
 
 /**
  * A JsonSuccessResponse containing error information tailored to the Orkestra client side library

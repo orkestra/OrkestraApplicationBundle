@@ -95,7 +95,7 @@ class FormHelper
     {
         $value = null;
         try {
-            $value = PropertyAccess::getPropertyAccessor()->getValue($item, $content);
+            $value = PropertyAccess::createPropertyAccessor()->getValue($item, $content);
         } catch (UnexpectedTypeException $e) {
             // Suppress potentially null values
         }

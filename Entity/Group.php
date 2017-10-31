@@ -11,12 +11,12 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
-use Orkestra\Bundle\ApplicationBundle\Model\GroupInterface;
-use Orkestra\Bundle\ApplicationBundle\Model\UserInterface;
-use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Orkestra\Bundle\ApplicationBundle\Model\GroupInterface;
+use Orkestra\Bundle\ApplicationBundle\Model\UserInterface;
 use Orkestra\Common\Entity\AbstractEntity;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * Group Entity

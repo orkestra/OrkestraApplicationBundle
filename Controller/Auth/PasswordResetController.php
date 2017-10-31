@@ -11,13 +11,14 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller\Auth;
 
+use Orkestra\Bundle\ApplicationBundle\Controller\Controller;
 use Orkestra\Bundle\ApplicationBundle\Http\JsonErrorResponse;
 use Orkestra\Bundle\ApplicationBundle\Http\JsonSuccessResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Orkestra\Bundle\ApplicationBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route
@@ -75,7 +76,7 @@ class PasswordResetController extends Controller
     private function getResetForm()
     {
         return $this->createFormBuilder()
-            ->add('email', 'email')
+            ->add('email', EmailType::class)
             ->getForm();
     }
 }

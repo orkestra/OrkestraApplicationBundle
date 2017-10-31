@@ -11,13 +11,13 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Orkestra\Bundle\ApplicationBundle\Model\GroupInterface;
 use Orkestra\Bundle\ApplicationBundle\Model\PreferencesInterface;
 use Orkestra\Bundle\ApplicationBundle\Model\UserInterface;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Orkestra\Common\Entity\AbstractEntity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * User Entity

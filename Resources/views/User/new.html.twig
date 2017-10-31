@@ -3,7 +3,7 @@
 {% block title %}New User{% endblock %}
 
 {% block content %}
-<form action="{{ path('orkestra_user_create') }}" method="post" {{ form_enctype(form) }}>
+{{ form_start(form, {'action':  path('orkestra_user_create') , 'method': 'post' }) }}
 <div class="well">
     {{ form_widget(form) }}
     <div class="control-group">
@@ -12,5 +12,5 @@
         </div>
     </div>
 </div>
-</form>
+{{ form_end(form) }}
 {% endblock %}

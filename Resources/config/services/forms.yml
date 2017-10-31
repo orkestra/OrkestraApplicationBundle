@@ -18,6 +18,6 @@ services:
       - { name: form.type, alias: datetime }
   orkestra.type.entity_choice:
     class: Orkestra\Bundle\ApplicationBundle\Form\EntityChoiceType
-    arguments: [ @doctrine ]
+    arguments: [ '@doctrine' ]
     tags:
       - { name: form.type, alias: entity_choice }

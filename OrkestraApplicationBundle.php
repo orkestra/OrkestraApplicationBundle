@@ -11,15 +11,15 @@
 
 namespace Orkestra\Bundle\ApplicationBundle;
 
-use Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler\ModifyServiceDefinitionsPass;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Doctrine\DBAL\Types\Type;
-use Orkestra\Common\Type\Date;
-use Orkestra\Common\Type\DateTime;
+use Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler\ModifyServiceDefinitionsPass;
 use Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler\RegisterFormTypesPass;
 use Orkestra\Bundle\ApplicationBundle\DependencyInjection\Compiler\RegisterWorkersPass;
 use Orkestra\Common\DbalType\EncryptedStringType;
+use Orkestra\Common\Type\Date;
+use Orkestra\Common\Type\DateTime;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class OrkestraApplicationBundle extends Bundle
 {

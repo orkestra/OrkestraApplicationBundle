@@ -4,17 +4,17 @@
   "type": "symfony-bundle",
   "license": "MIT",
   "require": {
-    "php": ">=5.3.3",
+    "php": ">=5.5.9",
     "orkestra/common": "~1.0",
-    "symfony/symfony": "~2.3"
+    "symfony/symfony": "~2.3|~3.0"
   },
   "suggest": {
     "doctrine/doctrine-fixtures-bundle": "Allows easy initial database population"
   },
   "require-dev": {
-    "symfony/framework-bundle": "~2.3",
+    "symfony/framework-bundle": "~2.3|~3.0",
     "doctrine/orm": "~2.3",
-    "doctrine/doctrine-bundle": "~1.3",
+    "doctrine/doctrine-bundle": "~1.6",
     "doctrine/doctrine-fixtures-bundle": "dev-master",
     "twig/twig": "~1.16"
   },

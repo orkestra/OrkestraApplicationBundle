@@ -13,8 +13,8 @@ namespace Orkestra\Bundle\ApplicationBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region;
 use Orkestra\Bundle\ApplicationBundle\Entity\Contact\Country;
+use Orkestra\Bundle\ApplicationBundle\Entity\Contact\Region;
 
 /**
  * Loads country and region data into the database

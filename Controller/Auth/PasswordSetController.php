@@ -12,12 +12,14 @@
 namespace Orkestra\Bundle\ApplicationBundle\Controller\Auth;
 
 use Doctrine\ORM\EntityNotFoundException;
-use Orkestra\Bundle\ApplicationBundle\Http\JsonErrorResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Orkestra\Bundle\ApplicationBundle\Controller\Controller;
+use Orkestra\Bundle\ApplicationBundle\Http\JsonErrorResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route
@@ -94,8 +96,8 @@ class PasswordSetController extends Controller
     private function getSetPasswordForm()
     {
         return $this->createFormBuilder()
-            ->add('password', 'repeated', array(
-                'type'        => 'password',
+            ->add('password', RepeatedType::class, array(
+                'type'        => PasswordType::class,
                 'first_name'  => 'password',
                 'second_name' => 'confirm'
             ))

@@ -11,16 +11,16 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Orkestra\Bundle\ApplicationBundle\Form\ChangePasswordType;
+use Orkestra\Bundle\ApplicationBundle\Form\ProfileType;
 use Orkestra\Bundle\ApplicationBundle\Http\JsonErrorResponse;
 use Orkestra\Bundle\ApplicationBundle\Http\JsonReloadResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\FormError;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use Orkestra\Bundle\ApplicationBundle\Form\ProfileType;
-use Orkestra\Bundle\ApplicationBundle\Form\ChangePasswordType;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Profile controller.
@@ -39,7 +39,7 @@ class ProfileController extends Controller
     public function editAction()
     {
         $user = $this->getUser();
-        $form = $this->createForm(new ProfileType(), $user);
+        $form = $this->createForm(ProfileType::class, $user);
 
         return array(
             'form' => $form->createView(),
@@ -56,7 +56,7 @@ class ProfileController extends Controller
     public function updateAction(Request $request)
     {
         $user = $this->getUser();
-        $form = $this->createForm(new ProfileType(), $user);
+        $form = $this->createForm(ProfileType::class, $user);
 
         $form->bind($request);
 
@@ -87,7 +87,7 @@ class ProfileController extends Controller
      */
     public function editPasswordAction()
     {
-        $form = $this->createForm(new ChangePasswordType());
+        $form = $this->createForm(ChangePasswordType::class);
 
         return array(
             'form' => $form->createView(),
@@ -104,7 +104,7 @@ class ProfileController extends Controller
     public function updatePasswordAction(Request $request)
     {
         $user = $this->getUser();
-        $form = $this->createForm(new ChangePasswordType());
+        $form = $this->createForm(ChangePasswordType::class);
 
         $form->bind($request);
         $data = $form->getData();

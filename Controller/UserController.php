@@ -11,13 +11,13 @@
 
 namespace Orkestra\Bundle\ApplicationBundle\Controller;
 
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Orkestra\Bundle\ApplicationBundle\Entity\User;
+use Orkestra\Bundle\ApplicationBundle\Form\ChangePasswordType;
+use Orkestra\Bundle\ApplicationBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use Orkestra\Bundle\ApplicationBundle\Entity\User;
-use Orkestra\Bundle\ApplicationBundle\Form\UserType;
-use Orkestra\Bundle\ApplicationBundle\Form\ChangePasswordType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -77,7 +77,7 @@ class UserController extends Controller
     public function newAction()
     {
         $user = new User();
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(UserType::class, $user);
 
         return array(
             'user' => $user,
@@ -96,7 +96,7 @@ class UserController extends Controller
     public function createAction(Request $request)
     {
         $user = new User();
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -135,7 +135,7 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to locate User');
         }
 
-        $form = $this->createForm(new ChangePasswordType(), null, array('require_current' => false));
+        $form = $this->createForm(ChangePasswordType::class, null, array('require_current' => false));
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -178,7 +178,7 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to locate User');
         }
 
-        $form = $this->createForm(new UserType(), $user, array('include_password' => false));
+        $form = $this->createForm(UserType::class, $user, array('include_password' => false));
 
         return array(
             'user' => $user,
@@ -203,7 +203,7 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to locate User');
         }
 
-        $form = $this->createForm(new UserType(), $user, array('include_password' => false));
+        $form = $this->createForm(UserType::class, $user, array('include_password' => false));
         $form->bind($request);
 
         if ($form->isValid()) {
