@@ -33,11 +33,6 @@ class EmailHelper implements EmailHelperInterface
     protected $environment;
 
     /**
-     * @var \Twig_LoaderInterface
-     */
-    protected $templateLoader;
-
-    /**
      * @var \Swift_Mailer
      */
     protected $mailer;
@@ -61,8 +56,6 @@ class EmailHelper implements EmailHelperInterface
         $this->environment = $environment;
         $this->mailer = $mailer;
         $this->defaultSender = $defaultSender;
-        
-        $this->templateLoader = new \Twig_Loader_String();
     }
 
     /**
@@ -164,13 +157,8 @@ class EmailHelper implements EmailHelperInterface
      */
     protected function renderStringTemplate($template, $parameters = array())
     {
-        $existingLoader = $this->environment->getLoader();
-        $this->environment->setLoader($this->templateLoader);
+        $template = $this->environment->createTemplate($template);
 
-        $template = $this->environment->loadTemplate($template);
-
-        $this->environment->setLoader($existingLoader);
-        
-        return $this->templating->render($template, $parameters);
+        return $template->render($parameters);
     }
 }
