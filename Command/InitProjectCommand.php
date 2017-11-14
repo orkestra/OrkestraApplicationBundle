@@ -14,9 +14,11 @@ namespace Orkestra\Bundle\ApplicationBundle\Command;
 use Orkestra\Bundle\ApplicationBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\DialogHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class InitProjectCommand extends ContainerAwareCommand
 {
@@ -40,25 +42,25 @@ class InitProjectCommand extends ContainerAwareCommand
             ''
         ));
 
-        if ($dialog->askConfirmation($output, '<info>Do you want to create the database?</info> [no] ', false)) {
+        if ($dialog->ask($input, $output, new ConfirmationQuestion('<info>Do you want to create the database?</info> [no] ', false))) {
             $command = $this->getApplication()->find('doctrine:database:create');
             $input = new ArrayInput(array());
             $command->run($input, $output);
         }
 
-        if ($dialog->askConfirmation($output, '<info>Do you want to create the schema?</info> [no] ', false)) {
+        if ($dialog->ask($input, $output, new ConfirmationQuestion('<info>Do you want to create the schema?</info> [no] ', false))) {
             $command = $this->getApplication()->find('doctrine:schema:create');
             $input = new ArrayInput(array());
             $command->run($input, $output);
         }
 
-        if ($dialog->askConfirmation($output, '<info>Do you want to load database fixtures?</info> [no] ', false)) {
+        if ($dialog->ask($input, $output, new ConfirmationQuestion('<info>Do you want to load database fixtures?</info> [no] ', false))) {
             $command = $this->getApplication()->find('doctrine:fixtures:load');
             $input = new ArrayInput(array());
             $command->run($input, $output);
         }
 
-        if ($dialog->askConfirmation($output, '<info>Do you want to create a bundle?</info> [no] ', false)) {
+        if ($dialog->ask($input, $output, new ConfirmationQuestion('<info>Do you want to create a bundle?</info> [no] ', false))) {
             $command = $this->getApplication()->find('generate:bundle');
             $input = new ArrayInput(array());
             $command->run($input, $output);
@@ -68,13 +70,13 @@ class InitProjectCommand extends ContainerAwareCommand
     }
 
     /**
-     * @return \Symfony\Component\Console\Helper\DialogHelper
+     * @return \Symfony\Component\Console\Helper\QuestionHelper
      */
     protected function getDialogHelper()
     {
-        $dialog = $this->getHelperSet()->get('dialog');
+        $dialog = $this->getHelperSet()->get('question');
         if (!$dialog) {
-            $this->getHelperSet()->set($dialog = new DialogHelper());
+            $this->getHelperSet()->set($dialog = new QuestionHelper());
         }
 
         return $dialog;
