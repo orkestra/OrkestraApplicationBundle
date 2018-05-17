@@ -17,7 +17,26 @@
     initComplete: $.noop,
     clickable: false,
     autoWidth: false,
-    dtOptions: {},
+    dtOptions: {
+      fnServerData: function(table, transformer, template) {
+        return function (sSource, aoData, fnCallback, oSettings ) {
+          oSettings.jqXHR = $.ajax({
+            dataType: 'json',
+            type: "POST",
+            url: sSource,
+            data: aoData,
+            success: function (data, string, xhr) {
+              if (transformer) {
+                transformer(data, string, xhr, template);
+              }
+              fnCallback(data, string, xhr);
+              Orkestra.bindEnhancements(table);
+            },
+            error: Orkestra.response.error
+          })
+        };
+      }
+    },
     transformer: function (data, string, xhr, template) {
       if (template) {
         $.each(data['aaData'], function(key, value) {
@@ -30,23 +49,23 @@
     listeners: {
       // this is an example of a listener
       // modal: [{
-      //   handler: function (dtable, row, $el, newVal, transformer, template) {
-      //     if (!url in newVal.options) {
-      //        return;
-      //     }
-      //     newVal.on('show', function(){
-      //       newVal.bindControlsToForm(newVal.$el.find('form'), {onSuccess: function(data,response) {
-      //         // update row with response
-      //         if (response.type == 'success') {
-      //           transformer({aaData: [response.data]}, null, null, template);
-      //           dtable.fnUpdate(response.data, row, undefined, false);
-      //           Orkestra.bindEnhancements(row);
-      //           newVal.hide();
-      //         }
-      //         return true;
-      //       }});
-      //     });
+      //  handler: function (dtable, row, $el, newVal, transformer, template) {
+      //   if (!url in newVal.options) {
+      //    return;
       //   }
+      //   newVal.on('show', function(){
+      //    newVal.bindControlsToForm(newVal.$el.find('form'), {onSuccess: function(data,response) {
+      //     // update row with response
+      //     if (response.type == 'success') {
+      //      transformer({aaData: [response.data]}, null, null, template);
+      //      dtable.fnUpdate(response.data, row, undefined, false);
+      //      Orkestra.bindEnhancements(row);
+      //      newVal.hide();
+      //     }
+      //     return true;
+      //    }});
+      //   });
+      //  }
       // }]
     },
     handlers: {
@@ -82,27 +101,10 @@
     bind: function(table, options) {
       var self = this;
       options = $.extend(true, {}, _defaults, options);
-      
+
       if (options.path || options.sAjaxSource || options.dtOptions.sAjaxSource) {
         options.dtOptions.sAjaxSource = options.path || options.sAjaxSource || options.dtOptions.sAjaxSource;
-
-        options.dtOptions.fnServerData = function ( sSource, aoData, fnCallback, oSettings ) {
-          oSettings.jqXHR = $.ajax( {
-            dataType: 'json',
-            type: "POST",
-            url: sSource,
-            data: aoData,
-            success: function (data, string, xhr) {
-              if (options.transformer) {
-                options.transformer(data, string, xhr, options.template);
-              }
-              fnCallback(data,string,xhr);
-              Orkestra.bindEnhancements(table);
-            },
-            error: Orkestra.response.error
-          } );
-        };
-
+        options.dtOptions.fnServerData = options.dtOptions.fnServerData(table, options.transformer, options.template)
         options.dtOptions.bProcessing = true;
         options.dtOptions.bServerSide = true;
       } else {
@@ -114,11 +116,11 @@
         bLengthChange: true,
         iDisplayLength: options.displayLength,
         fnInitComplete: options.initComplete,
-        bAutoWidth:     options.autoWidth,
-        aoColumns:      [],
+        bAutoWidth:   options.autoWidth,
+        aoColumns:   [],
         oTableTools : {
           sSwfPath : Orkestra.basePath + '/bundles/orkestraapplication/swf/copy_csv_xls_pdf.swf',
-            aButtons : [
+          aButtons : [
             {
               sExtends : 'collection',
               sButtonText : 'Save',
@@ -140,8 +142,8 @@
       }
 
       var $table = $(table),
-          headRow = $table.find('thead tr'),
-          columnDefs = [];
+        headRow = $table.find('thead tr'),
+        columnDefs = [];
       headRow.children().each(function(index) {
         /*
          TODO this may not be the best way of supporting complex headers
@@ -188,7 +190,7 @@
                 responsiveHelper = new ResponsiveDatatablesHelper($(oSettings.nTable), options.responsive.breakpoints);
               }
             },
-            fnRowCallback  : function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            fnRowCallback : function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
               if (existingDtOptions.fnRowCallback) {
                 existingDtOptions.fnRowCallback.apply(this, arguments);
               }
@@ -210,7 +212,7 @@
 
       if (false !== options.clickable) {
         var callback = options.clickable,
-            modal = false;
+          modal = false;
         if (typeof(options.clickable) == 'object') {
           if (options.clickable.route) {
             callback = options.clickable.route;
